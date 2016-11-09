@@ -16,23 +16,23 @@ import {
   nodeDefinitions,
 } from 'graphql-relay'
 
-import {
-  resolver,
-  attributeFields,
-} from 'graphql-sequelize'
 
 import models from 'models'
+import getAuthorsSchema from './authors'
+import getPostsSchema from './posts'
 
 class Viewer extends Object {}
-const getViewer = () => new Viewer();
+const getViewer = () => new Viewer()
 
 const {nodeInterface, nodeField} = nodeDefinitions(
   (globalId) => {
-    const {id, type} = fromGlobalId(globalId);
-
+    const {id, type} = fromGlobalId(globalId)
+    console.log(type)
     switch (type) {
-    case 'User':
-      return models.User.findById(id);
+    case 'authors':
+      return models.authors.findById(id)
+    case 'posts':
+      return models.posts.findById(id)
     case 'Viewer':
       return getViewer();
     default:
@@ -40,44 +40,29 @@ const {nodeInterface, nodeField} = nodeDefinitions(
     }
   },
   (obj) => {
-    if (obj instanceof Vewer) {
-      return viewerType;
-    } else if (obj instanceof models.User) {
-      return userType; // eslint-disable-line
+    switch(obj.constructor) {
+      case Viewer:
+        return viewerType
+      case models.authors:
+        return authorType
+      case models.posts:
+        return postType
+      default:
+        return null;
     }
-
-    return null;
   },
 )
 
-const userType = new GraphQLObjectType({
-  name: 'User',
-  fields: () => ({
-    ...attributeFields(models.User),
-    id: globalIdField('User'),
-  }),
-  interfaces: [nodeInterface],
-})
+const {authorType, authors} = getAuthorsSchema(nodeInterface)
+const {postType, posts} = getPostsSchema(nodeInterface)
 
-const {connectionType: userConnection} = connectionDefinitions({
-  name: 'User',
-  nodeType: userType,
-})
-
+// root query
 const viewerType = new GraphQLObjectType({
   name: 'Viewer',
   fields: () => ({
-    id: globalIdField('Viewer'),
-    users: {
-      type: userConnection,
-      args: connectionArgs,
-      resolve: async (_, args) => connectionFromArray(
-        await models.User.findAll({
-          limit: args.first,
-        }),
-        args
-      ),
-    }
+    id: globalIdField('Viewer'),    
+    authors,
+    posts:posts,
   }),
   interfaces: [nodeInterface],
 })

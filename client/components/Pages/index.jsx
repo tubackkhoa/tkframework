@@ -5,16 +5,16 @@ import * as loginSelectors from 'store/selectors/login'
 import Relay from 'react-relay'
 
 class Index extends React.Component {
-
+  
   render(){  
-    console.log('render')
+    
     return (  
     	<div>
     		<h1>User List</h1>
         <p><input type="text" onChange={e => this.setLimit(e.target.value)} /></p>
         {
-          this.props.viewer.users.edges.map(user => 
-            <h2 key={user.node.id}>{user.node.username} {user.node.createdAt}</h2>
+          this.props.viewer.posts.edges.map(item => 
+            <h2 key={item.node.id}>{item.node.title} {item.node.createdAt}</h2>
           )
         }
     	</div>
@@ -42,11 +42,11 @@ export default Relay.createContainer(Index, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on Viewer {
-        users(first: $limit) {
+        posts(first: $limit) {
           edges {
             node {
               id
-              username
+              title
               createdAt
             },
           },

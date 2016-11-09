@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(cors())
 
-app.use('/users', require('./routes/users'))
+app.use('/authors', require('./routes/authors'))
 
 // GraphQL
 app.use('/graphql', require('./routes/graphql'))

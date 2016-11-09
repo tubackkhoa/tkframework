@@ -5,8 +5,8 @@ var router  = express.Router()
 
 router.get('/', (req, res) => {
 
-  models.User.findAll().then(function(users) {
-    res.send(users)
+  models.authors.findAll().then(function(authors) {
+    res.send(authors)
   })
 
 })
