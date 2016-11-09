@@ -1,0 +1,36 @@
+.zindex-10{
+	z-index: 10;  
+}
+.text-truncate{
+	@include text-overflow();
+}
+.text-uppercase{
+	text-transform: uppercase;
+}
+.text-color-white{
+	color: white;
+}
+
+body{
+	margin: 0;
+}
+.app-bar{
+	height: 70px!important;
+}
+
+.headingText{
+		color: $heading-text-color;
+		font-size: 24px;
+		clear: both;
+}
+
+
+.media-wrapper{
+	clear: both;
+	.button{
+	  font-size: 20px !important;
+		margin: 0 auto;
+		display: block;
+    border-radius: 50px !important;
+	}
+}

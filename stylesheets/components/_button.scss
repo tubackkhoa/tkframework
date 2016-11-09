@@ -1,0 +1,40 @@
+.button {
+  button {    
+    background-color: #eff2f9!important;  
+    border-radius: 18px!important;                
+  }
+
+  button {
+    * {
+      border-radius: 18px!important;
+      font-size: 13px!important;
+      text-transform: none!important;
+      font-weight: normal!important;
+    }
+    .material-icons{
+      font-size: 18px!important;
+    }
+  }
+}
+
+.button{    
+  border-radius: 18px!important;
+}
+
+.arrow{
+  position: absolute;
+  right:-7px; 
+  top: 9px;
+}
+
+.default button *{    
+  color:#7583a2!important;
+}
+
+.primary button{    
+  background-color: #0592e0!important;          
+}
+
+.green button{    
+  background-color: #7dc707!important;          
+}

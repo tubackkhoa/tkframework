@@ -1,0 +1,20 @@
+.outlineButton {
+  -webkit-border-radius: 18;
+  -moz-border-radius: 18;
+  border-radius: 18px;
+  font-size: 13px;
+  padding: 8px 20px;
+  text-decoration: none;
+  text-align: center;
+  float: left;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #75839e;
+  //transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  cursor: pointer;
+
+  &.active{
+    color: #0592e0 !important;
+    border: solid #0592e0 2px;
+  }
+}

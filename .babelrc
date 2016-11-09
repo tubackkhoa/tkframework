@@ -1,0 +1,13 @@
+{  
+  "plugins": ["transform-decorators-legacy", "transform-runtime", "transform-class-properties"],
+	"presets": ["es2015", "stage-3", "react"],
+	"env": {
+		"development": {
+			"plugins": ["react-relay", "react-hot-loader/babel"]			
+		},
+    "production": {
+      "plugins": ["react-relay"]
+    },    
+	}
+}
+

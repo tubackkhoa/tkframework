@@ -1,0 +1,93 @@
+
+.headbar{
+	.info-bar{
+		height: 200px; 
+		//background-color: rgba(224, 5, 5, 0.2) !important;
+		background-color: $primary-color;
+	}
+	.menu-bar{
+		height: 70px;
+		box-shadow: 0 4px 2px -2px #e5e7eb;
+	}
+	.picture{
+		@include square(200px);
+		@include border-radius(30px);
+		overflow: hidden;
+		float: right;
+		background: #fff;
+	    position: relative;
+	    border: 7px solid #fff;
+	    @include mask-image-transparent();
+		img{
+			width: auto;
+			height: 100%;
+		    position: absolute;
+		    top: 50%;
+		    left: 50%;
+		    width: auto;
+		    transform: translate(-50%, -50%);
+		    -webkit-transform: translate(-50%, -50%);
+		    -ms-transform: translate(-50%, -50%);
+		}
+	}
+	.head-panel{
+		float:left;
+	}
+	.title{
+		color: #ffffff !important;
+		font-size: 36px;
+		font-weight: 300;
+		float: left;
+		max-height: 126px;
+		overflow: hidden;
+		min-height: 90px;
+		width: 100%;
+		position: relative;
+		@include text-truncate();
+
+		span{
+			position: absolute;
+			bottom: 0;
+			left: 0;
+		}
+	}
+	.member-badge{
+		background: rgb(0, 113, 176);
+		color: white;
+		font-size: 13px;
+			width: 160px;
+			height: 36px;
+			float: left;
+			clear: both;
+			@include border-radius(18px);
+	}
+	.top-rate{
+		background: url('../images/rating_frame.png') no-repeat top center;
+			float: right;
+			width: 100px;
+			height: 130px;
+			right: 75px;
+			text-align: center;
+
+		span{
+				color: #7782a2 !important;
+				font-size: 14px;
+				line-height: 13px;
+				text-transform: uppercase;
+				font-weight: 500;
+		}
+		.rating{
+			font-size: 17px;
+			color: $primary-color;
+				font-weight: 600;
+				margin-top: 5px;
+		}
+		.viewmore{
+			font-size: 13px;
+			color: white;
+			margin-top: 40px;
+				display: block;
+				cursor: pointer;
+		}
+	}
+}

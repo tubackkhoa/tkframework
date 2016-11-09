@@ -1,0 +1,13 @@
+.book {
+  
+  img {
+    border-radius: 20px;    
+  }
+
+  .title{
+    color: $color-purple;
+    font-size: $font-size-book;
+    width: 200px;
+    margin: 5px auto;
+  }
+}

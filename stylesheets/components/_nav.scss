@@ -1,0 +1,31 @@
+.nav-wrapper {
+  display: flex;
+  min-height: 3.8rem;
+  padding: 0 1rem;
+  box-shadow: 0 .2rem .4rem rgba(0,0,0,.1);
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1;
+}
+
+
+.nav-wrapper {
+  .heading {
+    color: black;
+    font-weight: 400;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .spinner {
+    color: grey;
+    font-size: .8rem;
+    text-align: center;
+    animation-name: rotate;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear-abc-def;
+  }
+}
+
+

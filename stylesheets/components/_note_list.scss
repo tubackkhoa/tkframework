@@ -1,0 +1,47 @@
+.node-list-wrapper {
+  width: 22rem;
+  padding: 1rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #00cf87;
+}
+
+.node-list-wrapper {
+  
+  .add-note-button {          
+    text-align: center;
+    text-transform: uppercase;
+    border: 1px solid white;
+    border-radius: 3;
+    color: white;
+  }
+
+  .note {    
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: 3;
+    color: black;
+    background-color: white;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.1);
+    transition: border-right 0.1s linear;
+  }
+
+  .new-note-label {
+    color: #c3c3c3;
+  }
+
+  .selected {
+    border-right: 0.8rem solid #f3805b;
+  }
+
+  .blankslate {
+    padding: 1rem;
+    font-size: 0.75rem;
+    text-align: center;
+    color: white;
+    opacity: 0.6;
+  }
+  
+}

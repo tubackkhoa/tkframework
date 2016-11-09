@@ -1,0 +1,229 @@
+.track-list{
+  
+}
+
+.track-list {
+  .title {
+    font-size: $font-size-book;
+    font-weight: 700;
+    color: $color-blue;
+  }
+
+  .description {
+    font-size: $font-size-light;
+    color: $color-grey;
+  }
+
+  .track-item {
+    .title{
+      color: $color-black;
+      font-weight: 400;
+      font-size: $font-size-light;
+    }
+  }
+
+  .track-item.active {
+    .title{
+      color: $color-white;
+    }
+  }
+}
+
+.track-item {
+  @include unselectable();
+  
+  .description{
+    color: $color-grey !important;    
+    font-size: $font-size-sm !important;    
+    height: 24px!important;
+    fill: $color-grey;
+  }
+  .description {
+    span {
+      margin-right: 5px;
+    }
+    svg {
+      width: 17px!important;
+      height: 17px!important;      
+      top: 3px;
+    }
+
+    .rounded {
+      border-radius: 7px;
+      padding:0 3px; 
+      border: 1px solid $color-grey-light;
+    }
+  }  
+}
+
+.track-item.active {
+  background-color: $color-blue;
+  color: $color-white;
+}
+
+.track-item.active {
+  .description{
+    color: $color-white !important;
+    fill: $color-white;
+  }
+
+  .description {
+    .rounded {
+      border: 1px solid $color-white;
+    }
+  }
+}
+
+.listening {
+
+  .right-panel{
+    border-left: 1px solid $color-box-shadow;
+    border-right: 1px solid $color-box-shadow;
+  }
+
+  .header {    
+    @include box-shadow(0 4px 2px -2px $color-box-shadow);
+  }
+
+  .player {
+    @include box-shadow(0 -4px 2px -2px $color-box-shadow);
+  }
+
+  .header {
+    .title {
+      font-size: $font-size-book;
+      color: $color-purple;
+    }
+  }
+
+  .right-panel,.left-panel{
+    height: #{$listening-panel-height};
+  }
+
+  .left-panel{
+    overflow-y: auto;
+  }
+
+  .right-panel {
+    .chat-box{
+      height: #{$listening-panel-height - 170};
+      overflow-y: auto;
+      padding-bottom: 20px;
+    }
+    .player{
+      display: inline-block;
+    }
+  }
+
+  .chat-box {
+    >div{
+      padding:0!important;
+    }
+
+    .rounded-text-item {
+      height: 40px;
+      /* black background with a gradient */            
+      font-size: $font-size-book;               
+      clear: both;      
+      margin-bottom: 1px;
+    }    
+
+    .rounded-text-item {
+      .title{
+        margin: 12px 15px;
+        display: inline-block;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space:nowrap;
+        max-width: 600px;
+      }
+
+      .playhead{
+        visibility: hidden;
+        left:0;
+      }
+    }
+
+    .left-chat {
+      .rounded-text-item {
+        float: left; 
+        background-color: $color-grey-lightest;
+        color: $color-black;
+        border-radius: 0 20px 20px 0;  
+      }
+
+      .rounded-text-item {
+        .sound-wrapper,.sound-controls {
+          border-bottom-left-radius: 0;
+          border-top-left-radius: 0;
+        }
+      }
+      
+      .rounded-text-item:first-child {
+        border-top-left-radius: 20px;
+      }
+
+      .rounded-text-item:first-child {
+        .sound-wrapper,.sound-controls{
+          border-top-left-radius: 20px;          
+        }
+      }
+
+
+      .rounded-text-item:last-child {
+        border-bottom-left-radius: 20px;
+      }
+
+      .rounded-text-item:last-child {
+        .sound-wrapper,.sound-controls{
+          border-bottom-left-radius: 20px;          
+        }
+      }
+    }
+
+    .right-chat {
+      position: absolute;
+      right: 70px;
+    }
+
+    .right-chat{
+      .rounded-text-item {
+        float: right;
+        background-color: $color-blue;
+        color: $color-white;
+        border-radius: 20px 0 0 20px;
+      }
+
+      .rounded-text-item {
+        .sound-wrapper,.sound-controls {
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 0;
+        }
+      }
+
+      .rounded-text-item:first-child {
+        border-top-right-radius: 20px;        
+      }
+
+      .rounded-text-item:first-child {
+        .sound-wrapper,.sound-controls{
+          border-top-right-radius: 20px;          
+        }
+      }
+
+      .rounded-text-item:last-child {
+        border-bottom-right-radius: 20px;
+      }
+
+      .rounded-text-item:last-child {
+        .sound-wrapper,.sound-controls{
+          border-bottom-right-radius: 20px;          
+        }
+      }
+
+    }
+  }
+}
+
+
+

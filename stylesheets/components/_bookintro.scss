@@ -1,0 +1,79 @@
+h3{
+  color: #0592e0 !important;
+}
+.popup_block{
+  position: fixed;
+  top: 0px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.2);
+  z-index: 1;
+  overflow:auto;
+}
+
+//.popup_window {
+//  position: absolute;
+//  left: 50%;
+//  top: 30%;
+//  transform: translate(-50%, -25%);
+//  background: #ffffff;
+//  padding: 20px 25px;
+//  border-radius: 15px;
+//  width: 464px;
+//  .time-schedule{
+//    padding: 10px 10px;
+//    margin-bottom: 10px;
+//    border: solid 1px #f3f3f3;
+//    border-radius: 8px;
+//    .time{
+//      width: 50%;
+//      float: left;
+//      text-align: center;
+//      border-bottom: solid 1px #bdc3c7;
+//    }
+//    .duration{
+//      width: 50%;
+//      float: right;
+//      text-align: center;
+//    }
+//    .day{
+//
+//
+//      margin: auto;
+//      text-align: center;
+//      display: inline-block;
+//    }
+//  }
+//  .learn-now{
+//    margin-top: 30px;
+//  }
+//}
+
+.dialog-body{
+  padding: 0 40px;
+  .time-schedule{
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    border: solid 1px #f3f3f3;
+    border-radius: 8px;
+    .time .duration{
+      padding: 5px 10px;
+      width: 50%;
+      float: left;
+      text-align: center;
+      border-bottom: solid 1px #f3f3f3;
+    }
+    //.duration{
+    //  width: 50%;
+    //  float: right;
+    //  text-align: center;
+    //  border-bottom: solid 1px #f3f3f3;
+    //}
+    .day{
+      margin: auto;
+      text-align: center;
+      display: inline-block;
+    }
+  }
+}

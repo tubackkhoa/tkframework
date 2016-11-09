@@ -1,0 +1,106 @@
+
+.DateBar{
+	width: 400px;
+	height: auto;
+	background: black;
+	display: block;
+}
+.quote{
+	background-color: #82d400;
+		width: 200px;
+		min-height: 200px;
+		@include border-radius(10px);
+		float: right;
+		padding: 25px;
+		color: white;
+		font-style: italic;
+		text-align: justify;
+
+		.avatar-wrapper{
+				position: absolute;
+			bottom: -25px;
+			margin: 0 25px;
+		}
+}
+
+.Commit{
+	border-bottom: 1px solid #f1f1f1;
+	height: 50px;
+	clear: both;
+		
+	.time-schedule{
+		float: left;
+
+			width: 150px;
+			padding-top: 22px;
+			margin-top:-7px;
+			text-align:center;
+	}
+
+	.time-schedule{
+
+		hr{
+			display:none!important;
+		}
+
+		input {
+			color: $color-black!important;
+		}
+	}
+
+	.DayCommitBar{
+			float: left;
+			width: 210px;
+			padding: 11px 0px 16px 26px;
+	}
+	.DeleteButton{
+			padding: 12px 0;
+			float: left;
+	}
+}
+
+.DeleteButton{
+		cursor: pointer;
+		width: 24px;
+}
+.DayCommitBar{
+	.day{
+		@include border-radius(50px);
+		color: $primary-color;
+		background-color: white;
+		font-weight: 500;
+		font-size: 15px;
+		border: 2px solid;
+		width: 21px;
+		height: 21px;
+		float: left;
+		text-align: center;
+		margin-right: 5px;
+		cursor: pointer;
+		@include unselectable();
+
+		&:last-child{
+			margin-right: 0;
+		}
+
+		&.inactive{
+				padding-top: 2px;
+			color: white !important;
+			background-color: #969eb3;
+			border: 0;
+			border-color: #979eae;
+		}			
+	}
+	&.large{
+		.day{
+			width: 41px;
+			height: 41px;
+			font-size: 25px;
+		}
+	}
+}
+.Commit-footer{
+	height: 80px;
+	text-align: center;
+	padding: 10px 60px;
+}

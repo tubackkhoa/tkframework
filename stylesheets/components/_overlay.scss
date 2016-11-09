@@ -1,0 +1,15 @@
+.overlay {
+	height: 100%;
+	width: 100%;
+	background-color: rgba(255, 255, 255, 0.81);
+	position: absolute;
+	z-index: 2;
+	top: 2px;
+	.overlay-content{
+		position: relative;
+		top: 10%;
+		width: 100%;
+		text-align: center;
+		padding-top: 30px;
+	}
+}

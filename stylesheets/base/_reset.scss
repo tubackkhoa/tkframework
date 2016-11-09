@@ -1,0 +1,24 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+  position: relative;  
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+html, body {  
+  border: 0;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;  
+  /* Makes font rendering look closer to illustrator (crisp). */
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow: hidden;
+  overflow-y: auto;
+}

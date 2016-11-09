@@ -1,0 +1,1 @@
+cross-env PORT=$npm_package_config_DEV_PORT NODE_ENV=development GRAPHQL_ENDPOINT=$npm_package_config_GRAPHQL nodemon --watch .babelrc --watch webpack-dev-server.js --watch webpack.config.js webpack-dev-server.js --ignore server

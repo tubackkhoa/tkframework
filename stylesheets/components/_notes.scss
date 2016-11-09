@@ -1,0 +1,23 @@
+.note-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; 
+}
+
+
+.note-wrapper {
+  .row {
+    display: flex;
+    flex-grow: 1;
+  }
+
+  .notice {
+    color: #d8d8d8;
+    text-align: center;
+    font-size: 1.4rem;
+    padding: 5rem 2rem 2rem;
+    background-color: #fafafa;
+    height: 100vh;
+  }
+}
+

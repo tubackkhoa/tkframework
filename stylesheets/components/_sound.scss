@@ -1,0 +1,308 @@
+/* root element should be positioned relatively so that
+    child elements can be positioned absolutely 
+    we can show if it is video
+    */
+
+.sound-wrapper {
+    width: 250px;
+}
+
+.sound-player object {
+    position: absolute;
+    left: -1000px;
+}
+
+.sound-wrapper {
+    .sound-controls {
+        position: relative;
+        height: 40px;        
+        border-radius: 20px;
+        overflow: hidden;
+        -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+    }
+}
+
+.sound-wrapper.blue {
+  .sound-controls {
+    background-color: $color-blue;
+  }
+}
+
+.sound-wrapper.light {
+  .sound-controls {
+    background-color: $color-grey-lightest;
+  }
+}
+
+
+/* play/pause button */
+
+.sound-controls {
+    .play,
+    .pause,
+    .mute,
+    .unmute {        
+        cursor: pointer;
+        z-index: 9;        
+        position: absolute;                
+        width: 24px;
+        height: 24px;
+    }
+    
+    .play,
+    .pause {
+        left: 8px;
+        top: 8px;
+    }
+
+    .play:hover {}
+    .pause:hover {}
+    /* the timeline (or "scrubber")  */
+    .track {
+        left: 0;
+        position: absolute;
+        cursor: pointer;
+        width: 100%;
+        border-radius: 20px;
+        height: 100%;
+    }
+    /* the draggable playhead */
+    .playhead {
+        position: absolute;
+        left:-3px;
+        cursor: pointer;        
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        width: 1px;
+        height: 40px;
+        border-right: 1px solid #777;
+    }
+    /* buffer- and progress bars. upon runtime the width of these elements grows */
+    .progress,
+    .buffer {
+        position: absolute;                      
+        width: 0px;
+        height: 40px;
+    }
+    .buffer {        
+        opacity: 0.1;
+        filter: alpha(opacity=10);
+    }
+    /* time display */
+    .time {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        padding: 12px 40px;        
+        font-size: 14px;        
+    }
+
+    .time.nomute {
+      padding-right: 15px;
+    }
+
+    /* total duration in time display */
+    .time strong {
+        font-weight: normal;        
+        float: right;
+    }
+    /* mute / unmute buttons */
+    .mute,
+    .unmute {        
+        right: 8px;
+        top: 8px;        
+    }
+    .mute:hover {
+        
+    }    
+    .unmute:hover {
+        
+    }
+}
+
+
+.sound-wrapper.light {
+  .sound-controls {
+    .play,
+    .pause,
+    .mute,
+    .unmute{
+      color: $color-grey;
+      fill: $color-grey;
+    }
+
+    .playhead,
+    .buffer {
+      background-color: $color-grey;
+    }
+
+    .progress {
+      background-color: $color-grey-lighter;  
+    }    
+
+    .time,
+    .time strong {
+      color: $color-black;
+    }
+
+  }
+}
+
+.sound-wrapper.blue {
+  .sound-controls {
+    .play,
+    .pause,
+    .mute,
+    .unmute{
+      color: $color-white;
+      fill: $color-white;
+    }
+
+    .playhead,
+    .buffer {
+      background-color: $color-blue-lighter;
+    }
+
+    .progress {
+      background-color: $color-blue-light;  
+    }    
+
+    .time,
+    .time strong {
+      color: $color-white;
+    }
+
+  }  
+}
+
+.sound-wrapper.sound-playlist {
+    width: 500px;
+}
+
+.sound-wrapper.sound-playlist {
+  .sound-controls{
+    background-color: transparent;
+    height: 50px;
+  }
+  .sound-controls {
+
+    .play,
+    .pause,
+    .mute,
+    .unmute,
+    .next,
+    .back {
+      border: 2px solid $color-blue;
+      top:0;
+      text-align: center;
+      padding:5px 0;
+    }
+    
+    .next,
+    .back{
+      position: absolute;      
+      cursor: pointer;
+    }
+    .back{
+      left:0;
+    }
+
+    .next {
+      left: 110px;
+    }
+
+    .play,
+    .pause {
+      left:55px;
+      font-size: 35px;
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;      
+    }
+
+    .play,
+    .pause {
+      svg {
+        width: 35px!important;
+        height: 35px!important;
+      }  
+    }
+
+    .mute,
+    .unmute,
+    .next,
+    .back { 
+      height: 40px;
+      width: 40px;
+      margin: 5px;
+      border-radius: 20px;       
+    }
+    
+    .playhead{
+      left:0;
+      border-radius: 0 5px 5px 0;
+      border-right:0;
+      visibility: hidden;
+    }
+
+    .track,
+    .playhead,
+    .buffer,
+    .progress {
+      height: 10px; 
+      border-radius: 5px;
+    }
+
+    .track{
+      top:0;
+      left:0;
+      overflow: hidden;
+      position: relative;
+      margin:20px 10px 20px 170px;
+      width: 260px;      
+      background-color: $color-blue-lightest;
+    }
+
+    .playhead,
+    .buffer {
+      background-color:$color-blue-lighter;    
+      border:0;  
+    }
+
+    .progress {
+      background-color:$color-blue;      
+    }        
+
+    .time{      
+      width: 240px;
+      top:32px;
+      left: 180px;     
+      padding:0; 
+      font-size:$font-size-xs;
+      height:12px;
+    }
+    .time strong {
+      margin-left:10px;
+    }
+    .time,
+    .time strong{
+      color: $color-blue-light;
+    }
+
+  }  
+}
+
+.sound-wrapper.sound-playlist.blue {
+  .sound-controls {
+    .play,
+    .pause,
+    .mute,
+    .unmute,
+    .next,
+    .back {
+      color: $color-blue;
+      fill: $color-blue;
+    }
+
+  }
+}
