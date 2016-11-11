@@ -22,32 +22,20 @@ import {
 } from 'graphql-sequelize'
 
 import models from 'models'
+import getModel from 'schema/paging/getModel'
+import authorize from 'schema/authorize'
 
 const getAuthorsSchema = (nodeInterface) => {
   const authorType = new GraphQLObjectType({
-    name: 'authors',
+    name: 'Author',
     fields: () => ({
       ...attributeFields(models.authors),
-      id: globalIdField('authors'),
+      id: globalIdField('Author'),
     }),
     interfaces: [nodeInterface],
   })
 
-  const {connectionType} = connectionDefinitions({
-    name: 'authors',
-    nodeType: authorType,
-  })
-
-  const authors = {
-    type: connectionType,
-    args: connectionArgs,
-    resolve: async (_, args) => connectionFromArray(
-      await models.authors.findAll({
-        limit: args.first,
-      }),
-      args
-    ),
-  }
+  const authors = getModel(authorType, authorize)
 
   return {authorType, authors}
 }

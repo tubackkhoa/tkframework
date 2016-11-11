@@ -5,8 +5,8 @@ var router  = express.Router()
 
 router.get('/', (req, res) => {
 
-  models.authors.findAll().then(function(authors) {
-    res.send(authors)
+  models.posts.findById(1).then(function(post){
+    res.send((post instanceof models.posts) ? 'true' : 'false')
   })
 
 })

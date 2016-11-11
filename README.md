@@ -32,3 +32,4 @@ Usage
 ### Production
 - Create minified bundle: *npm run bundle*
 - Serve ./public with your production server of choice
+- Run sshpass -p "password" npm run deploy to deploy on server

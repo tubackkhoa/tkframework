@@ -18,43 +18,42 @@ import {
 
 
 import models from 'models'
-import getAuthorsSchema from './authors'
-import getPostsSchema from './posts'
+import getAuthorsSchema from './models/authors'
+import getPostsSchema from './models/posts'
 
-class Viewer extends Object {}
+class Viewer extends Object {type: 'viewerType'}
 const getViewer = () => new Viewer()
 
 const {nodeInterface, nodeField} = nodeDefinitions(
   (globalId) => {
-    const {id, type} = fromGlobalId(globalId)
-    console.log(type)
+    const {id, type} = fromGlobalId(globalId)    
     switch (type) {
-    case 'authors':
+    case 'Author':
       return models.authors.findById(id)
-    case 'posts':
+    case 'Post':
       return models.posts.findById(id)
     case 'Viewer':
-      return getViewer();
+      return getViewer()
     default:
-      return null;
+      return null
     }
   },
   (obj) => {
-    switch(obj.constructor) {
-      case Viewer:
+    switch(obj.type) {
+      case 'viewerType':
         return viewerType
-      case models.authors:
+      case 'authorType':
         return authorType
-      case models.posts:
+      case 'postType':
         return postType
       default:
-        return null;
+        return null
     }
   },
 )
 
 const {authorType, authors} = getAuthorsSchema(nodeInterface)
-const {postType, posts} = getPostsSchema(nodeInterface)
+const {postType, posts, updatePost} = getPostsSchema(nodeInterface)
 
 // root query
 const viewerType = new GraphQLObjectType({
@@ -62,13 +61,13 @@ const viewerType = new GraphQLObjectType({
   fields: () => ({
     id: globalIdField('Viewer'),    
     authors,
-    posts:posts,
+    posts,    
   }),
   interfaces: [nodeInterface],
 })
 
 const queryType = new GraphQLObjectType({
-  name: 'RootQuery',
+  name: 'Query',
   fields: () => ({
     node: nodeField,
     viewer: {
@@ -78,6 +77,14 @@ const queryType = new GraphQLObjectType({
   }),
 })
 
+const mutationType = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: () => ({
+    updatePost,
+  }),
+})
+
 export default new GraphQLSchema({
   query: queryType,
+  mutation: mutationType
 })

@@ -1,7 +1,8 @@
 import Relay from 'react-relay'
 
-import {GRAPHQL_ENDPOINT} from 'store/constants/api'
-import DefaultNetworkLayer from 'react-relay/lib/RelayDefaultNetworkLayer'
+
+// import DefaultNetworkLayer from 'react-relay/lib/RelayDefaultNetworkLayer'
+import injectNetworkLayer from './network/injectNetworkLayer'
 
 const SUCCESS_MODIFIER = '_SUCCESS'
 const RESPONSE_MODIFIER = '_RESPONSE'
@@ -84,7 +85,9 @@ function parseRequestData(request) {
  * @param {Function}          dispatch    Store.dispatch
  * we call this internal so no need to publish as sagas
  */
-export function configureRelayWithStore({dispatch}) {
+export function configureRelayWithStore(store) {
+  const {dispatch} = store
+  window.store = store
   if (typeof dispatch !== 'function') {
     throw new Error(
       'RelayNetworkDispatch(...): you did not pass a dispatch function ' +
@@ -93,7 +96,8 @@ export function configureRelayWithStore({dispatch}) {
     )
   }
   // inject network
-  Relay.injectNetworkLayer(new DefaultNetworkLayer(GRAPHQL_ENDPOINT))
+  // Relay.injectNetworkLayer(new DefaultNetworkLayer(GRAPHQL_ENDPOINT))
+  injectNetworkLayer(store)
 
   Relay.Store.addNetworkSubscriber(
     query => dispatch(
@@ -104,3 +108,4 @@ export function configureRelayWithStore({dispatch}) {
     ),
   )
 }
+

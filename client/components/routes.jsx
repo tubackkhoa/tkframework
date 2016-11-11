@@ -1,5 +1,8 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
+
+import ViewerQueries from 'store/relay/queries/ViewerQueries'
+
 import General from './General'
 import Exercises from './General/Exercises'
 import Extra from './General/Extra'
@@ -9,8 +12,6 @@ import App from './Pages/app'
 import Book from './Pages/book'
 import Index from './Pages/index'
 import BookIntroduce from './BookIntroduce'
-import Login from './Pages/login'
-import Register from './Pages/register'
 import Dashboard from './Pages/dashboard'
 import NotFound from './Pages/notFound'
 import * as loginSelectors from 'store/selectors/login'
@@ -33,11 +34,8 @@ const checkAuth = (store) => {
 }
 
 export const Routes = (store) => (
-  <Route component={App}>
-   
-    <Route path='/' component={Dashboard} />        
-    <Route path='/index/:limit' component={Index}  
-      prepareParams={params => ({...params, limit: +params.limit})} />
+  <Route component={App}>         
+    <Route path='/' component={Index} queries={ViewerQueries} />
     <Route onEnter={checkAuth(store)}>
       <Route component={Book}>
         <Route path='/nghe/:bookId' component={Listening} />
@@ -46,7 +44,6 @@ export const Routes = (store) => (
         <Route path='/tongquan/:bookId' component={General} />
         <Route path='/gioithieu/:bookId' component={BookIntroduce} />
       </Route>
-
     </Route>
     
     <Route path='*' component={NotFound} />

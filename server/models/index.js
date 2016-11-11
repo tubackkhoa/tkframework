@@ -1,13 +1,13 @@
 "use strict"
 
-var fs        = require("fs")
-var path      = require("path")
-var Sequelize = require("sequelize")
-var config    = require('config/database.json').connection
+const fs        = require("fs")
+const path      = require("path")
+const Sequelize = require("sequelize")
+const config    = require('config/database.json').connection
 
-var sequelize = new Sequelize(config.database, config.username, config.password, config)
+const sequelize = new Sequelize(config.database, config.username, config.password, config)
 
-var db = {}
+const db = {}
 
 fs
   .readdirSync(__dirname)

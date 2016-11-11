@@ -7,7 +7,7 @@
 		},
     "production": {
       "plugins": ["react-relay"]
-    },    
+    }
 	}
 }
 
