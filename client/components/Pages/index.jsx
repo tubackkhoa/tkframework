@@ -33,15 +33,10 @@ class Index extends React.Component {
 
 }
 
-Index.propTypes = {
-
-}
-
 export default Relay.createContainer(Index, {
 
   initialVariables: {
-    limit: 10,
-    move: 'first'
+    limit: 10,    
   },
 
   fragments: {

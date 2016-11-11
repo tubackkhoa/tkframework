@@ -1,0 +1,1 @@
+cross-env NODE_PATH=server NODE_ENV=test tape --require babel-register server/**/*.spec.js | tap-spec || true

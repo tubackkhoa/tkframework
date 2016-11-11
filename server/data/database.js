@@ -10,40 +10,89 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// Model types
-export class Game {}
-export class HidingSpot {}
+export class Todo extends Object {}
+export class User extends Object {}
 
-// Mock data
-const game = new Game();
-game.id = '1';
+// Mock authenticated ID
+const VIEWER_ID = 'me';
 
-const hidingSpots = [];
-(function() {
-  let hidingSpot;
-  const indexOfSpotWithTreasure = Math.floor(Math.random() * 9);
-  for (let i = 0; i < 9; i++) {
-    hidingSpot = new HidingSpot();
-    hidingSpot.id = `${i}`;
-    hidingSpot.hasTreasure = (i === indexOfSpotWithTreasure);
-    hidingSpot.hasBeenChecked = false;
-    hidingSpots.push(hidingSpot);
-  }
-})();
+// Mock user data
+const viewer = new User({type:'userType'});
+viewer.id = VIEWER_ID;
+const usersById = {
+  [VIEWER_ID]: viewer,
+};
 
-let turnsRemaining = 3;
+// Mock todo data
+const todosById = {};
+const todoIdsByUser = {
+  [VIEWER_ID]: [],
+};
+let nextTodoId = 0;
+addTodo('Taste JavaScript', true);
+addTodo('Buy a unicorn', false);
 
-export function checkHidingSpotForTreasure(id) {
-  if (hidingSpots.some(hs => hs.hasTreasure && hs.hasBeenChecked)) {
-    return;
-  }
-  turnsRemaining--;
-  const hidingSpot = getHidingSpot(id);
-  hidingSpot.hasBeenChecked = true;
+export function addTodo(text, complete) {
+  const todo = new Todo({type:'todoType'});
+  todo.complete = !!complete;
+  todo.id = `${nextTodoId++}`;
+  todo.text = text;
+  todosById[todo.id] = todo;
+  todoIdsByUser[VIEWER_ID].push(todo.id);
+  return todo.id;
 }
-export function getHidingSpot(id) {
-  return hidingSpots.find(hs => hs.id === id);
+
+export function changeTodoStatus(id, complete) {
+  const todo = getTodo(id);
+  todo.complete = complete;
 }
-export function getGame() { return game; }
-export function getHidingSpots() { return hidingSpots; }
-export function getTurnsRemaining() { return turnsRemaining; }
+
+export function getTodo(id) {
+  return todosById[id];
+}
+
+export function getTodos(status = 'any') {
+  const todos = todoIdsByUser[VIEWER_ID].map(id => todosById[id]);
+  if (status === 'any') {
+    return todos;
+  }
+  return todos.filter(todo => todo.complete === (status === 'completed'));
+}
+
+export function getUser(id) {
+  return usersById[id];
+}
+
+export function getUserViewer() {
+  return getUser(VIEWER_ID);
+}
+
+export function markAllTodos(complete) {
+  const changedTodos = [];
+  getTodos().forEach(todo => {
+    if (todo.complete !== complete) {
+      todo.complete = complete;
+      changedTodos.push(todo);
+    }
+  });
+  return changedTodos.map(todo => todo.id);
+}
+
+export function removeTodo(id) {
+  const todoIndex = todoIdsByUser[VIEWER_ID].indexOf(id);
+  if (todoIndex !== -1) {
+    todoIdsByUser[VIEWER_ID].splice(todoIndex, 1);
+  }
+  delete todosById[id];
+}
+
+export function removeCompletedTodos() {
+  const todosToRemove = getTodos().filter(todo => todo.complete);
+  todosToRemove.forEach(todo => removeTodo(todo.id));
+  return todosToRemove.map(todo => todo.id);
+}
+
+export function renameTodo(id, text) {
+  const todo = getTodo(id);
+  todo.text = text;
+}

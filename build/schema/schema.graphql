@@ -1,0 +1,215 @@
+input AddTodoInput {
+  text: String!
+  clientMutationId: String
+}
+
+type AddTodoPayload {
+  todoEdge: TodoEdge
+  viewer: User
+  clientMutationId: String
+}
+
+type Author implements Node {
+  # The ID of an object
+  id: ID!
+  type: String
+  email: String
+  introduction: String
+  description: String
+  name: String
+  image: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+# A connection to a list of items.
+type AuthorConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [AuthorEdge]
+}
+
+# An edge in a connection.
+type AuthorEdge {
+  # The item at the end of the edge
+  node: Author
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+input ChangeTodoStatusInput {
+  complete: Boolean!
+  id: ID!
+  clientMutationId: String
+}
+
+type ChangeTodoStatusPayload {
+  todo: Todo
+  viewer: User
+  clientMutationId: String
+}
+
+input MarkAllTodosInput {
+  complete: Boolean!
+  clientMutationId: String
+}
+
+type MarkAllTodosPayload {
+  changedTodos: [Todo]
+  viewer: User
+  clientMutationId: String
+}
+
+type Mutation {
+  updatePost(input: UpdatePostInput!): UpdatePostPayload
+  addTodo(input: AddTodoInput!): AddTodoPayload
+  changeTodoStatus(input: ChangeTodoStatusInput!): ChangeTodoStatusPayload
+  markAllTodos(input: MarkAllTodosInput!): MarkAllTodosPayload
+  removeCompletedTodos(input: RemoveCompletedTodosInput!): RemoveCompletedTodosPayload
+  removeTodo(input: RemoveTodoInput!): RemoveTodoPayload
+  renameTodo(input: RenameTodoInput!): RenameTodoPayload
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+type Post implements Node {
+  # The ID of an object
+  id: ID!
+  type: String
+  title: String
+  lead_sentence: String
+  createdAt: String!
+  updatedAt: String!
+}
+
+# A connection to a list of items.
+type PostConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [PostEdge]
+}
+
+# An edge in a connection.
+type PostEdge {
+  # The item at the end of the edge
+  node: Post
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+type Query {
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+  viewer: Viewer
+}
+
+input RemoveCompletedTodosInput {
+  clientMutationId: String
+}
+
+type RemoveCompletedTodosPayload {
+  deletedTodoIds: [String]
+  viewer: User
+  clientMutationId: String
+}
+
+input RemoveTodoInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type RemoveTodoPayload {
+  deletedTodoId: ID
+  viewer: User
+  clientMutationId: String
+}
+
+input RenameTodoInput {
+  id: ID!
+  text: String!
+  clientMutationId: String
+}
+
+type RenameTodoPayload {
+  todo: Todo
+  clientMutationId: String
+}
+
+type Todo implements Node {
+  # The ID of an object
+  id: ID!
+  text: String
+  complete: Boolean
+}
+
+# A connection to a list of items.
+type TodoConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [TodoEdge]
+}
+
+# An edge in a connection.
+type TodoEdge {
+  # The item at the end of the edge
+  node: Todo
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+input UpdatePostInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type UpdatePostPayload {
+  post: Post
+  clientMutationId: String
+}
+
+type User implements Node {
+  # The ID of an object
+  id: ID!
+  todos(status: String = "any", after: String, first: Int, before: String, last: Int): TodoConnection
+  totalCount: Int
+  completedCount: Int
+}
+
+type Viewer implements Node {
+  # The ID of an object
+  id: ID!
+  authors(after: String, first: Int, before: String, last: Int): AuthorConnection
+  posts(after: String, first: Int, before: String, last: Int): PostConnection
+  user: User
+}

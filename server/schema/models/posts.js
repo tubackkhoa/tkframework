@@ -41,7 +41,7 @@ const getPostsSchema = (nodeInterface) => {
 
   const updatePost = mutationWithClientMutationId({
     name: 'UpdatePost',
-    inputFields: {
+    inputFields: { 
       id: { type: new GraphQLNonNull(GraphQLID) },
     },
     outputFields: {

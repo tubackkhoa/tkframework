@@ -28,18 +28,19 @@ if (OPTIMIZE) {
 	plugins.push(new Webpack.optimize.OccurrenceOrderPlugin())
 	// plugins.push(new Webpack.optimize.DedupePlugin())
 	plugins.push(new Webpack.optimize.UglifyJsPlugin({
-		compressor: {
-			warnings: false,
-			unused: true,
-      dead_code: true,
-      drop_console: true
-		},
+		// compressor: {
+		// 	warnings: false,
+		// 	unused: true,
+  //     // dead_code: true,
+  //     drop_console: true,
+  //     screw_ie8: true
+		// },
 
 		output: {
       comments: false
     },
     // turn off mangling entirely in case of variable rename
-    // compress: false,
+    compress: false,
     sourceMap: false,
  		// mangle: false
 	}))
