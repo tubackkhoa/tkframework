@@ -22,7 +22,7 @@ import getPostsSchema from './models/posts'
 
 import getTodoSchema from './models/todo'
 import getUserSchema from './models/user'
-import getTodoMutationSchema from './mutation/todo'
+import getTodoMutationSchema from './mutations/todo'
 
 import {getUserViewer, getTodo} from 'data/database'
 

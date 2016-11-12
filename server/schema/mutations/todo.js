@@ -56,7 +56,7 @@ const getTodoMutationSchema = (GraphQLTodo, GraphQLTodoEdge, GraphQLUser) => {
           };
         },
       },
-      viewer: {
+      user: {
         type: GraphQLUser,
         resolve: () => getUserViewer(),
       },
@@ -78,7 +78,7 @@ const getTodoMutationSchema = (GraphQLTodo, GraphQLTodoEdge, GraphQLUser) => {
         type: GraphQLTodo,
         resolve: ({localTodoId}) => getTodo(localTodoId),
       },
-      viewer: {
+      user: {
         type: GraphQLUser,
         resolve: () => getUserViewer(),
       },
@@ -100,7 +100,7 @@ const getTodoMutationSchema = (GraphQLTodo, GraphQLTodoEdge, GraphQLUser) => {
         type: new GraphQLList(GraphQLTodo),
         resolve: ({changedTodoLocalIds}) => changedTodoLocalIds.map(getTodo),
       },
-      viewer: {
+      user: {
         type: GraphQLUser,
         resolve: () => getUserViewer(),
       },
@@ -119,7 +119,7 @@ const getTodoMutationSchema = (GraphQLTodo, GraphQLTodoEdge, GraphQLUser) => {
         type: new GraphQLList(GraphQLString),
         resolve: ({deletedTodoIds}) => deletedTodoIds,
       },
-      viewer: {
+      user: {
         type: GraphQLUser,
         resolve: () => getUserViewer(),
       },
@@ -141,7 +141,7 @@ const getTodoMutationSchema = (GraphQLTodo, GraphQLTodoEdge, GraphQLUser) => {
         type: GraphQLID,
         resolve: ({id}) => id,
       },
-      viewer: {
+      user: {
         type: GraphQLUser,
         resolve: () => getUserViewer(),
       },

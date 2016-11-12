@@ -11,6 +11,7 @@ import Listening from './Listening'
 import App from './Pages/app'
 import Book from './Pages/book'
 import Index from './Pages/index'
+import Todo from './Pages/todo'
 import BookIntroduce from './BookIntroduce'
 import Dashboard from './Pages/dashboard'
 import NotFound from './Pages/notFound'
@@ -33,9 +34,11 @@ const checkAuth = (store) => {
   }
 }
 
+// must specify queries for relay
 export const Routes = (store) => (
   <Route component={App}>         
     <Route path='/' component={Index} queries={ViewerQueries} />
+    <Route path='/todo' component={Todo} queries={ViewerQueries} />
     <Route onEnter={checkAuth(store)}>
       <Route component={Book}>
         <Route path='/nghe/:bookId' component={Listening} />
