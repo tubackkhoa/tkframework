@@ -16,9 +16,9 @@ test('incrementAsync Saga test', (assert) => {
     }
   }
 
- 
+  const permanent = true 
 
-  console.log(opt)
+  console.log(`${permanent}`)
 
   const gen = incrementAsync()
 

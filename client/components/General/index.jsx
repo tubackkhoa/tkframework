@@ -17,7 +17,7 @@ import * as scheduleSelectors from 'store/selectors/book/schedule'
 import * as bookSelectors from 'store/selectors/book'
 import * as actionCreators from 'store/actions/book'
 import * as scheduleCreators from 'store/actions/book/schedule'
-import * as loginSelectors from 'store/selectors/login'
+import * as authSelectors from 'store/selectors/auth'
 import * as commonSelectors from 'store/selectors/common'
 
 //page: Tong quan
@@ -169,7 +169,7 @@ const mapStateToProps = (state) => ({
 
   // },
   book: bookSelectors.getOpenBook(state),
-  token: loginSelectors.getToken(state),    
+  token: authSelectors.getToken(state),    
 
   
   schedules: scheduleSelectors.getBookSchedule(state),

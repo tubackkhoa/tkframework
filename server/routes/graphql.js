@@ -1,28 +1,32 @@
-import GraphHTTP from 'express-graphql'
+import graphqlHTTP from 'express-graphql'
 // import { graphqlExpress } from 'graphql-server-express'
 import {Router} from 'express'
 import schema from 'schema'
+import DataLoader from 'dataloader'
 import { graphqlBatchHTTPWrapper } from 'react-relay-network-layer'
 
 const router  = new Router()
 
-const graphQLServer = GraphHTTP((req, res)=> ({
-  schema: schema,
-  pretty: true,
-  rootValue: {user: req.user},
+// prepare `graphqlHTTP` express-middleware per request settings
+const graphqlServer = graphqlHTTP((request) => ({
+  schema,
   graphiql: true,
-  // better errors for development. `stack` used in `gqErrors` middleware
   formatError: (error) => ({ 
     message: error.message,
     stack: error.stack.split('\n'),
   }),
+  pretty: true,
+  context: {
+    request, // pass request to context, so we will check request.user
+    // dataLoaders: initDataLoaders(), by default we use loaders for finding item with id
+  },
 }))
 
-// normal graphql
-router.use('/', graphQLServer)
+// declare route for batch query, sub queries will be call first
+router.use('/batch', graphqlBatchHTTPWrapper(graphqlServer))
 
-// declare route for batch query
-router.use('/batch', graphqlBatchHTTPWrapper(graphQLServer))
+// normal graphql, by default
+router.use('/', graphqlServer)
 
 // use this way we just comment out 1 line instead of import then add to code
 export default router

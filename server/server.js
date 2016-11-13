@@ -1,6 +1,6 @@
 // now normal code
 import path       from 'path'
-import express   from'express'
+import express   from 'express'
 import bodyParser from 'body-parser'
 import cors  from 'cors'
 import constants   from 'config/constants.json'
@@ -20,17 +20,20 @@ app.use(express.static(publicPath))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(passport.initialize())
-
+app.use(authenticate)
 // Additional middleware which will set headers that we need on each request.
 app.use(cors())
 
 /***** use require directly help use change only one line :D *****/
+app.get('/me', function(req, res) {  
+  res.status(200).json(req.user);
+});
 
 // we use normal authentication for universal access
 app.use('/auth', require('./routes/auth').default)
 
 // GraphQL
-app.use('/graphql', authenticate, require('./routes/graphql').default)
+app.use('/graphql', require('./routes/graphql').default)
 
 // by default we can serve the public as standalone app
 app.get('*', (req, res) => {

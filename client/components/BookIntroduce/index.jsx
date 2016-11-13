@@ -16,7 +16,7 @@ import {List, ListItem, FontIcon} from 'material-ui'
 import TrackList from 'components/Listening/tracklist'
 import * as bookSelectors from 'store/selectors/book'
 import * as commonSelectors from 'store/selectors/common'
-import * as loginSelectors from 'store/selectors/login'
+import * as authSelectors from 'store/selectors/auth'
 import * as bookCreators from 'store/actions/book'
 
 //page: Gioi thieu ve sach
@@ -91,7 +91,7 @@ class BookIntroduce extends React.Component {
 
 const mapStateToProps = (state) => ({
 audio: bookSelectors.getAudio(state),
-token: loginSelectors.getToken(state),
+token: authSelectors.getToken(state),
 book: bookSelectors.getOpenBook(state),
 readBookRequest: commonSelectors.getRequest(state, 'getBook'),
 tracks: [

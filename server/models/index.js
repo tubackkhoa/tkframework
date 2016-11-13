@@ -1,11 +1,11 @@
-"use strict"
+import fs        from "fs"
+import path      from "path"
+import Sequelize from "sequelize"
+import dataloaderSequelize from 'dataloader/sequelize'
 
-const fs        = require("fs")
-const path      = require("path")
-const Sequelize = require("sequelize")
-const config    = require('config/database.json').connection
-
+const config     = require('config/database.json').connection
 const sequelize = new Sequelize(config.database, config.username, config.password, config)
+dataloaderSequelize(sequelize)
 
 const db = {}
 
@@ -16,6 +16,7 @@ fs
   )
   .forEach(file => {
     const model = sequelize.import(path.join(__dirname, file))    
+    dataloaderSequelize(model)
     db[model.name] = model
   })
 

@@ -18,13 +18,36 @@ let auth = {
       method: 'POST',      
     })
   },
+
+  login (username, password, permanent=true) {
+    return fetchJson(`/auth?permanent=${permanent}`, {
+      method: 'POST',
+      body: JSON.stringify({username, password})
+    })
+  },
+
+  refreshAccessToken (refreshToken) {
+    return fetchJson(`/auth/token`, {
+      method: 'POST',
+      body: JSON.stringify({refreshToken})
+    })
+  },
+
+  reject (refreshToken) {
+    return fetchJson(`/auth/reject`, {
+      method: 'POST',
+      body: JSON.stringify({refreshToken})
+    })
+  },
   
   /**
   * Logs the current user out
   */
-  logout (token) {
+  logout () {
     // return fetchJsonWithToken(token, `/logout`)
-    return new Promise((resolve, reject)=>resolve(token))
+    return fetchJson(`/auth/logout`, {
+      method: 'POST',      
+    })
   },
 
 }

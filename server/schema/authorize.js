@@ -1,5 +1,5 @@
-export default function authorize (root) {
-  if (!root.user) {
+export default function authorize (request) {
+  if (!request.user) {
     throw new Error('Unauthorized')
   }
   return true  

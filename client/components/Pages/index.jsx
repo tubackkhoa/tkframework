@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Playlist from 'components/Sound/playlist'
-import * as loginSelectors from 'store/selectors/login'
+import * as authSelectors from 'store/selectors/auth'
 import Relay from 'react-relay'
+
+import { Link } from 'react-router'
 
 import Post from './post'
 import PostsMutation from 'store/relay/mutations/posts'
@@ -11,24 +13,22 @@ import Posts from 'store/relay/mutations/posts'
 class Index extends React.Component {
   
   render(){  
-    
+    const {viewer:{posts:{edges}}, children} = this.props    
     return (  
-    	<div>
+    	<div className="container">
     		<h1>User List</h1>
-        <p><input type="text" onChange={e => this.setLimit(e.target.value)} /></p>
-        {
-          this.props.viewer.posts.edges.map(item => 
-            <h2 key={item.node.id}>{item.node.title} {item.node.createdAt}</h2>
-          )
-        }
+        <div className="col-md-6">
+        {edges.map(post=>
+          <div key={post.node.id}>
+            <Link to={`/index/${post.node.id}`}>
+              <h2>{post.node.title}</h2>
+            </Link>            
+          </div>
+        )}
+        </div>
+        <div className="col-md-6">{children}</div>
     	</div>
     )
-  }
-
-  setLimit(limit){
-    this.props.relay.setVariables({
-      limit: limit
-    })
   }
 
 }
@@ -42,19 +42,16 @@ export default Relay.createContainer(Index, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on Viewer {
-        posts(first: $limit) {
-          edges {            
+        posts(first: $limit){
+          edges {
             node {
               id
               title
             }
           }
-          pageInfo {
-            hasNextPage
-          }
         }
       }
-    `,
+    `
   },
 })
 

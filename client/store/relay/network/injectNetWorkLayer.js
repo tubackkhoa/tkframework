@@ -6,9 +6,13 @@ import {
 } from 'react-relay-network-layer'
 
 import {API_BASE} from 'store/constants/api'
+import api from 'store/api'
+import * as authSelectors from 'store/selectors/auth'
+import {saveRefreshToken} from 'store/actions/auth'
 
 const injectNetWorkLayer = (store) => {
   const state = store.getState()
+  const token = authSelectors.getToken(state)  
   // use selector to get token, later we can use selector library for smaller state
   Relay.injectNetworkLayer(new RelayNetworkLayer([
     urlMiddleware({
@@ -29,10 +33,23 @@ const injectNetWorkLayer = (store) => {
       statusCodes: [500, 503, 504],
     }),
     authMiddleware({
-      token: () => 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsIm5hbWUiOiJ0aGFuaHR1IiwiaWF0IjoxNDc4ODQxNTM3fQ.codNq-eiN0i300WFajkLw5HQhsIltbvgL6AZJIvA02Q',
+      token: () => token ? token.accessToken : null,
+      allowEmptyToken: true,
       tokenRefreshPromise: (req) => {
         console.log('[client.js] resolve token refresh', req)
+        if(!token){
+          return new Promise((resolve, reject)=>resolve(null))
+        }
         // call refresh token action here
+        return api.auth.refreshAccessToken(token.refreshToken)          
+          .then(newToken => {
+            const accessToken = newToken.accessToken
+            // call action creator to update
+            store.dispatch(saveRefreshToken(newToken))
+            // then return accessToken
+            return accessToken
+          })
+          .catch(err => console.log('[client.js] ERROR can not refresh token', err))
       },
     }),
 

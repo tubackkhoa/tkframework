@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Playlist from 'components/Sound/playlist'
-import * as loginSelectors from 'store/selectors/login'
+import * as authSelectors from 'store/selectors/auth'
 import Relay from 'react-relay'
 
 import AddTodoMutation from 'store/relay/mutations/AddTodoMutation'

@@ -12,7 +12,7 @@ import ListeningPlaylist from './listening_playlist'
 import ListeningTrackLists from './listening_tracklists'
 import ChatLogList from './chatlog_list'
 
-import * as loginSelectors from 'store/selectors/login'
+import * as authSelectors from 'store/selectors/auth'
 import * as bookSelectors from 'store/selectors/book'
 import * as commonSelectors from 'store/selectors/common'
 import * as actionCreators from 'store/actions/book'
@@ -92,7 +92,7 @@ Listening.propTypes = {
 }
 
 const mapStateToProps = (state) => ({    
-  token: loginSelectors.getToken(state),
+  token: authSelectors.getToken(state),
 })
 
 export default connect(mapStateToProps, actionCreators)(Listening)

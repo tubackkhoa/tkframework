@@ -8,7 +8,7 @@ import InfoIcon from 'material-ui/svg-icons/action/info'
 
 import * as bookSelectors from 'store/selectors/book'
 import * as actionCreators from 'store/actions/book'
-import * as loginSelectors from 'store/selectors/login'
+import * as authSelectors from 'store/selectors/auth'
 import * as commonSelectors from 'store/selectors/common'
 
 const styles = {

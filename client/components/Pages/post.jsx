@@ -6,11 +6,12 @@ import PostsMutation from 'store/relay/mutations/posts';
 class Post extends React.Component {
 
   render() {
-    console.log(this.props)
+    const {post} = this.props
     return (
       <blockquote>
-        <p>{this.props.post.title}</p>
-        <footer>{this.props.post.createdAt}</footer>        
+        <p>{post.title}</p>
+        <span>{post.createdAt}</span>
+        <p>{post.lead_sentence}</p>        
       </blockquote>
     );
   }
@@ -20,7 +21,10 @@ export default Relay.createContainer(Post, {
   fragments: {
     post: () => Relay.QL `
       fragment OnePost on Post {
-        ${PostsMutation.getFragment('post')}        
+        id
+        title
+        lead_sentence
+        createdAt
       }
     `
   }

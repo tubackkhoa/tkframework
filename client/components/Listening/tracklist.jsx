@@ -9,7 +9,7 @@ import {green300} from 'material-ui/styles/colors'
 
 import TrackItem from './trackitem'
 import * as bookSelectors from 'store/selectors/book'
-import * as loginSelectors from 'store/selectors/login'
+import * as authSelectors from 'store/selectors/auth'
 import * as actionCreators from 'store/actions/book'
 
 class TrackList extends React.Component {

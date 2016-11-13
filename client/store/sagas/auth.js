@@ -10,7 +10,7 @@ import {
   saveFacebookUser, 
   saveGoogleUser, 
   removeLoggedUser 
-} from 'store/actions/login'
+} from 'store/actions/auth'
 
 // Little helper function to abstract going to different pages
 const forwardTo = (location) => {
@@ -67,7 +67,7 @@ const requestLogoutAsync = createRequestSaga({
 
 
 // root saga reducer
-const asyncLoginWatchers = [
+const asyncAuthWatchers = [
   // like case return, this is take => call
   // inner function we use yield*
   // from direct watcher we just yield value
@@ -87,5 +87,5 @@ const asyncLoginWatchers = [
   }
 ]
 
-export default asyncLoginWatchers
+export default asyncAuthWatchers
 

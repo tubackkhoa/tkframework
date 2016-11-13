@@ -21,7 +21,7 @@ const generateAccessToken = (req, res, next) => {
     id: req.user.id,
     email: req.user.email
   }, constants.jwtSecret, {
-    expiresIn: 60   // just 1 minute, user can refresh token automatically at client
+    expiresIn: 60*60*24,   // just 1 minute, user can refresh token automatically at client
   },(err, accessToken) => {    
     req.token = {
       accessToken,
@@ -68,7 +68,7 @@ const validateRefreshToken = (req, res, next) => {
 
 
 // now we route it, from the root
-router.post('/', passport.authenticate('local', {
+router.post('/login', passport.authenticate('local', {
   session: false
 }), serialize, generateAccessToken, generateRefreshToken, ({user, token}, res) => {  
   res.send({

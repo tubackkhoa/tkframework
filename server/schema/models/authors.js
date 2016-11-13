@@ -1,23 +1,12 @@
 import {
   GraphQLObjectType,
-  GraphQLString,
-  GraphQLInt,
-  GraphQLSchema,
-  GraphQLList,
-  GraphQLNonNull
 } from 'graphql'
 
 import {
-  connectionArgs,
-  connectionDefinitions,
-  connectionFromArray,
-  fromGlobalId,
   globalIdField,
-  nodeDefinitions,
 } from 'graphql-relay'
 
-import {
-  resolver,
+import {  
   attributeFields,
 } from 'graphql-sequelize'
 
@@ -35,9 +24,9 @@ const getAuthorsSchema = (nodeInterface) => {
     interfaces: [nodeInterface],
   })
 
-  const authors = getModel(authorType, authorize)
+  const {models: authors, edgeType:authorEdge} = getModel(authorType, authorize)
 
-  return {authorType, authors}
+  return {authorType, authorEdge, authors}
 }
 
 export default  getAuthorsSchema

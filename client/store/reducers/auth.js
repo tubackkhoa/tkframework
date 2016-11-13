@@ -13,7 +13,7 @@ const initialState = {
 
 // Takes care of changing the application state
 // state is previous state, 
-const loginReducer = (state = initialState, {type, payload}) => {
+const authReducer = (state = initialState, {type, payload}) => {
   switch (type) {   
     case 'app/setAuthState':
       return {...state, loggedIn: payload}
@@ -23,7 +23,9 @@ const loginReducer = (state = initialState, {type, payload}) => {
       return {...state, ...payload}  // {user,token}
     case 'app/removeLoggedUser':
       return {...state, user: null, token: null}
-
+    case 'app/saveRefreshToken':
+      return {...state, token: {...state.token, ...payload.token}}
+    // save reject token do nothing
     case REHYDRATE:      
       const incoming = payload.loginReducer      
       if (incoming) {
@@ -39,4 +41,4 @@ const loginReducer = (state = initialState, {type, payload}) => {
   }
 }
 
-export default loginReducer
+export default authReducer

@@ -46,6 +46,13 @@ export const saveGoogleUser = (data) => ({
   }
 })
 
+export const saveRefreshToken = (data) => ({
+  type: 'app/saveRefreshToken',
+  payload: {
+    token: data,
+  }
+})
+
 /**
  * Tells the app we want to log out a user
  */

@@ -22,7 +22,7 @@ import { FacebookIcon, GoogleIcon } from 'components/Login/Icon'
 
 import AvatarButton from 'components/AvatarButton'
 import LoadingButton from 'components/Common/loading_button'
-import * as loginSelectors from 'store/selectors/login'
+import * as authSelectors from 'store/selectors/auth'
 
 
 class AppBar extends React.Component {
@@ -144,8 +144,8 @@ AppBar.propTypes = {
 // and ofcourse don't listen to any store (part of the whole state)
 // later information will be re-hygrate, but this first state is initial from localStorage 
 const mapStateToProps = (state) => ({  
-  loggedIn : loginSelectors.isLogged(state),
-  user: loginSelectors.getUser(state)
+  loggedIn : authSelectors.isLogged(state),
+  user: authSelectors.getUser(state)
 })
 
 export default connect(mapStateToProps)(AppBar)

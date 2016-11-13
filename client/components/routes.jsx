@@ -11,16 +11,17 @@ import Listening from './Listening'
 import App from './Pages/app'
 import Book from './Pages/book'
 import Index from './Pages/index'
+import Post from './Pages/post'
 import Todo from './Pages/todo'
 import BookIntroduce from './BookIntroduce'
 import Dashboard from './Pages/dashboard'
 import NotFound from './Pages/notFound'
-import * as loginSelectors from 'store/selectors/login'
+import * as authSelectors from 'store/selectors/auth'
 
 // login for check login, may be put in other file
 const checkAuth = (store) => {
   return (nextState, replace) => {    
-    const loggedIn = loginSelectors.isLogged(store.getState())   
+    const loggedIn = authSelectors.isLogged(store.getState())   
     
     // Check if the path isn't dashboard. That way we can apply specific logic to
     // display/render the path we want to
@@ -37,7 +38,9 @@ const checkAuth = (store) => {
 // must specify queries for relay
 export const Routes = (store) => (
   <Route component={App}>         
-    <Route path='/' component={Index} queries={ViewerQueries} />
+    <Route path='/' component={Index} queries={ViewerQueries}>
+      <Route path='/index/:postID' component={Post} queries={{post: () => Relay.QL`query { node(id: $postID) }`,}} />
+    </Route>
     <Route path='/todo' component={Todo} queries={ViewerQueries} />
     <Route onEnter={checkAuth(store)}>
       <Route component={Book}>

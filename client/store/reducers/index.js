@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import { requests, toast, relayStore } from './common'
 
-import loginReducer from './login'
+import authReducer from './auth'
 import generalReducer from './general'
 import dashboardReducer from './dashboard'
 import bookReducer from './book'
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   }),
   relayStore,
   requests,    
-  loginReducer,
+  authReducer,
 
   generalReducer,
   dashboardReducer,
