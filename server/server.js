@@ -25,9 +25,6 @@ app.use(authenticate)
 app.use(cors())
 
 /***** use require directly help use change only one line :D *****/
-app.get('/me', function(req, res) {  
-  res.status(200).json(req.user);
-});
 
 // we use normal authentication for universal access
 app.use('/auth', require('./routes/auth').default)

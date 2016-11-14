@@ -1,76 +1,18 @@
-input AddTodoInput {
-  text: String!
+input AddPostInput {
+  title: String!
   clientMutationId: String
 }
 
-type AddTodoPayload {
-  todoEdge: TodoEdge
-  viewer: User
-  clientMutationId: String
-}
-
-type Author implements Node {
-  # The ID of an object
-  id: ID!
-  type: String
-  email: String
-  introduction: String
-  description: String
-  name: String
-  image: String
-  createdAt: String!
-  updatedAt: String!
-}
-
-# A connection to a list of items.
-type AuthorConnection {
-  # Information to aid in pagination.
-  pageInfo: PageInfo!
-
-  # A list of edges.
-  edges: [AuthorEdge]
-}
-
-# An edge in a connection.
-type AuthorEdge {
-  # The item at the end of the edge
-  node: Author
-
-  # A cursor for use in pagination
-  cursor: String!
-}
-
-input ChangeTodoStatusInput {
-  complete: Boolean!
-  id: ID!
-  clientMutationId: String
-}
-
-type ChangeTodoStatusPayload {
-  todo: Todo
-  viewer: User
-  clientMutationId: String
-}
-
-input MarkAllTodosInput {
-  complete: Boolean!
-  clientMutationId: String
-}
-
-type MarkAllTodosPayload {
-  changedTodos: [Todo]
-  viewer: User
+type AddPostPayload {
+  viewer: Viewer
+  postEdge: PostEdge
   clientMutationId: String
 }
 
 type Mutation {
+  addPost(input: AddPostInput!): AddPostPayload
   updatePost(input: UpdatePostInput!): UpdatePostPayload
-  addTodo(input: AddTodoInput!): AddTodoPayload
-  changeTodoStatus(input: ChangeTodoStatusInput!): ChangeTodoStatusPayload
-  markAllTodos(input: MarkAllTodosInput!): MarkAllTodosPayload
-  removeCompletedTodos(input: RemoveCompletedTodosInput!): RemoveCompletedTodosPayload
-  removeTodo(input: RemoveTodoInput!): RemoveTodoPayload
-  renameTodo(input: RenameTodoInput!): RenameTodoPayload
+  removePost(input: RemovePostInput!): RemovePostPayload
 }
 
 # An object with an ID
@@ -95,9 +37,10 @@ type PageInfo {
 }
 
 type Post implements Node {
+  type: String
+
   # The ID of an object
   id: ID!
-  type: String
   title: String
   lead_sentence: String
   createdAt: String!
@@ -131,65 +74,20 @@ type Query {
   viewer: Viewer
 }
 
-input RemoveCompletedTodosInput {
-  clientMutationId: String
-}
-
-type RemoveCompletedTodosPayload {
-  deletedTodoIds: [String]
-  viewer: User
-  clientMutationId: String
-}
-
-input RemoveTodoInput {
+input RemovePostInput {
   id: ID!
   clientMutationId: String
 }
 
-type RemoveTodoPayload {
-  deletedTodoId: ID
-  viewer: User
+type RemovePostPayload {
+  viewer: Viewer
+  postId: ID
   clientMutationId: String
-}
-
-input RenameTodoInput {
-  id: ID!
-  text: String!
-  clientMutationId: String
-}
-
-type RenameTodoPayload {
-  todo: Todo
-  clientMutationId: String
-}
-
-type Todo implements Node {
-  # The ID of an object
-  id: ID!
-  text: String
-  complete: Boolean
-}
-
-# A connection to a list of items.
-type TodoConnection {
-  # Information to aid in pagination.
-  pageInfo: PageInfo!
-
-  # A list of edges.
-  edges: [TodoEdge]
-}
-
-# An edge in a connection.
-type TodoEdge {
-  # The item at the end of the edge
-  node: Todo
-
-  # A cursor for use in pagination
-  cursor: String!
 }
 
 input UpdatePostInput {
   id: ID!
+  title: String!
   clientMutationId: String
 }
 
@@ -198,18 +96,11 @@ type UpdatePostPayload {
   clientMutationId: String
 }
 
-type User implements Node {
-  # The ID of an object
-  id: ID!
-  todos(status: String = "any", after: String, first: Int, before: String, last: Int): TodoConnection
-  totalCount: Int
-  completedCount: Int
-}
-
+# CMS Graph
 type Viewer implements Node {
   # The ID of an object
   id: ID!
-  authors(after: String, first: Int, before: String, last: Int): AuthorConnection
-  posts(after: String, first: Int, before: String, last: Int): PostConnection
-  user: User
+
+  # A list of posts
+  posts(after: String, first: Int, before: String, last: Int, offset: Int): PostConnection
 }

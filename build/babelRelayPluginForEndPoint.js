@@ -1,3 +1,6 @@
+// only use this when we access from remote graphql
+// but we can not see what happend
+
 const getBabelRelayPlugin = require('babel-relay-plugin')
 const { parse, resolveSchema } = require('graphql-config-parser')
 const { loopWhile } = require('deasync')

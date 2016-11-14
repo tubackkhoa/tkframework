@@ -121,11 +121,12 @@
     "react-tap-event-plugin": "^1.0.0",
     "react-virtualized": "^8.4.1",
     "redux": "^3.6.0",
+    "redux-form": "^6.2.0",
     "redux-logger": "^2.7.0",
     "redux-persist": "^4.0.0-alpha6",
     "redux-saga": "^0.12.1",
     "relay-cursor-paging": "^0.1.1",
-    "sequelize": "^3.24.8",
+    "sequelize": "^3.25.0",
     "uuid": "^2.0.3"
   }
 }

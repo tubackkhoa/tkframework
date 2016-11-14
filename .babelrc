@@ -3,7 +3,7 @@
 	"presets": ["es2015", "stage-3", "react"],
 	"env": {
 		"development": {
-			"plugins": ["./build/babelRelayPluginForDev", "react-hot-loader/babel"]			
+			"plugins": ["./build/babelRelayPlugin", "react-hot-loader/babel"]			
 		},
     "production": {      
       "plugins": ["./build/babelRelayPlugin"]

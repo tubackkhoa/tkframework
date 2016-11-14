@@ -43,6 +43,20 @@ new WebpackDevServer(Webpack(WebpackConfig), {
 	  }
 	})
 
+	watch('server/graphql', function(filename) {
+		if (/\.(?:js)$/.test(filename)) {	  		  	
+	  	// just output to console
+	    exec('npm run update-schema', function(error, stdout, stderr) {	    	
+			  if (error) {
+			    console.error(colors.red(error));
+			    return;
+			  } else {
+			  	console.log(colors.green('Update schema for : ' + filename));
+			  }
+			})
+	  }
+	})
+
 })
 
 

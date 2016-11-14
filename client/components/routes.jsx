@@ -12,7 +12,7 @@ import App from './Pages/app'
 import Book from './Pages/book'
 import Index from './Pages/index'
 import Post from './Pages/post'
-import Todo from './Pages/todo'
+// import Todo from './Pages/todo'
 import BookIntroduce from './BookIntroduce'
 import Dashboard from './Pages/dashboard'
 import NotFound from './Pages/notFound'
@@ -41,7 +41,7 @@ export const Routes = (store) => (
     <Route path='/' component={Index} queries={ViewerQueries}>
       <Route path='/index/:postID' component={Post} queries={{post: () => Relay.QL`query { node(id: $postID) }`,}} />
     </Route>
-    <Route path='/todo' component={Todo} queries={ViewerQueries} />
+    
     <Route onEnter={checkAuth(store)}>
       <Route component={Book}>
         <Route path='/nghe/:bookId' component={Listening} />

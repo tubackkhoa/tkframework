@@ -5,7 +5,7 @@ import dataloaderSequelize from 'dataloader/sequelize'
 
 const config     = require('config/database.json').connection
 const sequelize = new Sequelize(config.database, config.username, config.password, config)
-dataloaderSequelize(sequelize)
+// dataloaderSequelize(sequelize)
 
 const db = {}
 
@@ -16,7 +16,7 @@ fs
   )
   .forEach(file => {
     const model = sequelize.import(path.join(__dirname, file))    
-    dataloaderSequelize(model)
+    // dataloaderSequelize(model)
     db[model.name] = model
   })
 

@@ -1,7 +1,7 @@
 import graphqlHTTP from 'express-graphql'
 // import { graphqlExpress } from 'graphql-server-express'
 import {Router} from 'express'
-import schema from 'schema'
+import schema from 'graphql/schema'
 import DataLoader from 'dataloader'
 import { graphqlBatchHTTPWrapper } from 'react-relay-network-layer'
 
