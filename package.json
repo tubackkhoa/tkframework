@@ -80,7 +80,7 @@
     "sequelize-cli": "^2.4.0",
     "style-loader": "^0.13.1",
     "tap-spec": "^4.1.1",
-    "tape": "^4.6.2",
+    "tape": "^4.6.2",    
     "uglify-js": "git://github.com/mishoo/UglifyJS2#harmony",
     "url-loader": "^0.5.7",
     "webpack": "^2.1.0-",
@@ -88,6 +88,7 @@
     "webpack-dev-server": "^2.1.0-"
   },
   "dependencies": {
+    "bcrypt": "^0.8.7",
     "bcryptjs": "^2.3.0",
     "btoa": "^1.1.2",
     "cors": "^2.8.1",

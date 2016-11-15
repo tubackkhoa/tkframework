@@ -5,11 +5,12 @@ export default (sequelize, DataTypes) =>
       get: () => 'Author',      
     },
     id: { type: DataTypes.STRING, primaryKey: true, autoIncrement:true },
-    email       : DataTypes.STRING,
-    introduction: DataTypes.STRING,
-    description : DataTypes.STRING,
-    name        : DataTypes.STRING,
-    image       : DataTypes.STRING, 
-    refresh_token: DataTypes.STRING,
+    email             : DataTypes.STRING,
+    encrypted_password: DataTypes.STRING,
+    introduction      : DataTypes.STRING,
+    description       : DataTypes.STRING,
+    name              : DataTypes.STRING,
+    image             : DataTypes.STRING, 
+    refresh_token     : DataTypes.STRING,
   })
 

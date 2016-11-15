@@ -20,7 +20,7 @@ let auth = {
   },
 
   login (username, password, permanent=true) {
-    return fetchJson(`/auth?permanent=${permanent}`, {
+    return fetchJson(`/auth/login?permanent=${permanent}`, {
       method: 'POST',
       body: JSON.stringify({username, password})
     })

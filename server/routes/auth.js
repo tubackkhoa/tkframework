@@ -7,21 +7,26 @@ import passport from 'passport/local'
 
 const router  = new Router()
 
-const serialize = (req, res, next) => {  
-  if(!req.user) {
-    return next(new Error('Username or password is not correct!!!'))
-  }
-  // just return it without modify to req.user
-  next()  
+const doLogin = (req, res, next ) => {
+  passport.authenticate('local', {session:false}, (err, user, info) => {    
+    if (err) {       
+      console.error(err.stack)
+      return res.status(401).send(err.message)
+    }    
+    // not error, user is existed, bind it to request
+    req.user = user    
+    // next filter
+    next()    
+  })(req, res, next)
 }
 
 const generateAccessToken = (req, res, next) => {  
-  // we just get back user with id and email is good enough
+  // we just get back user with id and email is good enough  
   jwt.sign({
     id: req.user.id,
     email: req.user.email
   }, constants.jwtSecret, {
-    expiresIn: 60*60*24,   // just 1 minute, user can refresh token automatically at client
+    expiresIn: 60*60*24,   // just 1 day, user can refresh token automatically at client
   },(err, accessToken) => {    
     req.token = {
       accessToken,
@@ -31,7 +36,7 @@ const generateAccessToken = (req, res, next) => {
 }
 
 const generateRefreshToken = (req, res, next) => {  
-  if (req.query.permanent === 'true') {
+  if (req.query.permanent === 'true') {    
     req.token.refreshToken = req.user.id.toString() + '.' + crypto.randomBytes(40).toString('hex')
     models.authors.update({      
       refresh_token: req.token.refreshToken,
@@ -68,9 +73,7 @@ const validateRefreshToken = (req, res, next) => {
 
 
 // now we route it, from the root
-router.post('/login', passport.authenticate('local', {
-  session: false
-}), serialize, generateAccessToken, generateRefreshToken, ({user, token}, res) => {  
+router.post('/login', doLogin, generateAccessToken, generateRefreshToken, ({user, token}, res) => {  
   res.send({
     user,
     token,

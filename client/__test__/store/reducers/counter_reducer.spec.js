@@ -4,21 +4,7 @@ import { put, call } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import { incrementAsync } from 'store/reducers/counter'
 
-test('incrementAsync Saga test', (assert) => {
-
-  var opt1 = {header:{method:'post'}}
-  var opt = {key:12,header:{value:14}}
-  opt = {
-    ...opt1,
-    header:{
-      ...opt.header,
-      ...opt1.header
-    }
-  }
-
-  const permanent = true 
-
-  console.log(`${permanent}`)
+test('incrementAsync Saga test', (assert) => {  
 
   const gen = incrementAsync()
 

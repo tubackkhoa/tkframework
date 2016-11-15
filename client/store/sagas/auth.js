@@ -6,9 +6,8 @@ import { createRequestSaga } from 'store/sagas/common'
 import { setToast, noop } from 'store/actions/common'
 
 import { 
-  setAuthState, 
-  saveFacebookUser, 
-  saveGoogleUser, 
+  setAuthState,   
+  saveLoggedUser, 
   removeLoggedUser 
 } from 'store/actions/auth'
 
@@ -23,7 +22,7 @@ const requestLoginFacebookAsync = createRequestSaga({
   key: 'loginFacebook',
   cancel: 'app/logout',
   success: [   
-    (data) => saveFacebookUser(data),       
+    (data) => saveLoggedUser(data),       
     () => setAuthState(true),
     () => setToast('Logged successfully!!!'), 
     // () => forwardTo('/dashboard'),
@@ -39,7 +38,22 @@ const requestLoginGoogleAsync = createRequestSaga({
   key: 'loginGoogle',
   cancel: 'app/logout',
   success: [   
-    (data) => saveGoogleUser(data),   
+    (data) => saveLoggedUser(data),   
+    () => setAuthState(true),    
+    () => setToast('Logged successfully!!!'), 
+    // () => forwardTo('/dashboard'), // action creator may return nothing to match
+  ],
+  failure: [ 
+    () => setToast('Couldn\'t login', 'error') 
+  ],
+})
+
+const requestLoginAsync = createRequestSaga({
+  request: api.auth.login,
+  key: 'login',
+  cancel: 'app/logout',
+  success: [   
+    (data) => saveLoggedUser(data),   
     () => setAuthState(true),    
     () => setToast('Logged successfully!!!'), 
     // () => forwardTo('/dashboard'), // action creator may return nothing to match
@@ -76,6 +90,7 @@ const asyncAuthWatchers = [
     yield [      
       takeLatest('app/loginFacebook', requestLoginFacebookAsync),
       takeLatest('app/loginGoogle', requestLoginGoogleAsync),
+      takeLatest('app/login', requestLoginAsync),
     ]
   },
 

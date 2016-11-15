@@ -11,6 +11,11 @@ export const loginGoogle = (...args) => ({
   args
 })
 
+export const login = (...args) => ({
+  type: 'app/login',
+  args
+})
+
 export const logout = (...args) => ({
   type: 'app/logout',
   args
@@ -29,22 +34,14 @@ export const setAuthState = (newAuthState) => ({
 })
 
 
-export const saveFacebookUser = (data) => ({
-  type: 'app/saveFacebookUser',
+export const saveLoggedUser = (data) => ({
+  type: 'app/saveLoggedUser',
   payload: {
     user: data.user,
     token: data.token,    
   }
 })
 
-
-export const saveGoogleUser = (data) => ({
-  type: 'app/saveGoogleUser',
-  payload: {
-    user: data.user,
-    token: data.token,   
-  }
-})
 
 export const saveRefreshToken = (data) => ({
   type: 'app/saveRefreshToken',

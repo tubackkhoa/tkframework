@@ -76,8 +76,8 @@ const configureStore = (callback, failure) => {
   // why in each reducer, we should implement rehydrate to restore back the state
   // this will trigger save to local each updated event 
   persistStore(store, {
-    whitelist: ['loginReducer', 'bookReducer'],
-    keyPrefix: 'mcBook:',
+    whitelist: ['authReducer', 'bookReducer'],
+    keyPrefix: 'tk:',
     transforms: [bookTransform]
   }, ()=>{
     // log to know

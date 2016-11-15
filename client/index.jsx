@@ -6,7 +6,7 @@ import { AppContainer } from 'react-hot-loader'
 import { syncHistoryWithStore } from 'react-router-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
-import Root from './components/root'
+import Root from './ui/root'
 import configureStore from './store/config'
 import { configureRelayWithStore } from './store/relay/config'
 const rootElement = document.getElementById('root')
@@ -27,11 +27,11 @@ configureStore(store => {
 		// tracking css changes
 		require('../public/assets/main.css')
 		// tracking code changes
-		module.hot.accept('./components/root', () => {
+		module.hot.accept('./ui/root', () => {
 			// if we use es2015 => this is native so there will be cache, we have to use another instance
 			// to force rebuild, other wise just use prev Root
 			// this NextRoot is other Component to render, start tracking with inside AppContainer
-			const NextRoot = require('./components/root').default			
+			const NextRoot = require('./ui/root').default			
 			render (
 				<AppContainer>
 					<NextRoot store={store} history={history}/>
