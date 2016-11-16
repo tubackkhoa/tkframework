@@ -3,9 +3,9 @@ import { Route, IndexRoute } from 'react-router'
 
 import ViewerQueries from 'store/relay/queries/ViewerQueries'
 
-import Home from './shared/containers/home'
-import Post from './shared/containers/post'
-import App from './shared/containers/app'
+import Home from './shared/containers/Home'
+import PostIndex from './frontend/containers/Post/Index'
+import App from './shared/containers/App'
 import NotFound from './shared/containers/notFound'
 
 import Login from './backend/containers/authors/Login'
@@ -29,13 +29,11 @@ const checkAuth = (store) => {
 
 // must specify queries for relay
 export const Routes = (store) => (
-  <Route component={App}>         
-    <Route path='/' component={Home} queries={ViewerQueries}>
-      <Route path='/index/:postID' component={Post} queries={{post: () => Relay.QL`query { node(id: $postID) }`,}} />
-    </Route>
-    
+  <Route path='/' component={App}>         
+    <IndexRoute component={Home} queries={ViewerQueries} />    
+    <Route path='/posts' component={PostIndex} queries={ViewerQueries} />
     <Route path='/login' component={Login}/>
-    <Route onEnter={checkAuth(store)}>
+    <Route onEnter={checkAuth(store)} path='/cms'>
       
     </Route>
     

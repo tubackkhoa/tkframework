@@ -5,8 +5,8 @@ import {
 
 export const { 
   connectionType: postConnection, 
-  edgeType: postEdge 
+  edgeType: postEdge, 
 } = connectionDefinitions({ 
   name: 'Post', 
-  nodeType: postType 
+  nodeType: postType, 
 })

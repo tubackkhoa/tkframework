@@ -1,6 +1,6 @@
 export default function getRouteQueries(route, routerProps) {
   if (route.queries) {
-    return route.queries;
+    return route.queries
   }
 
   if (route.getQueries) {
@@ -11,5 +11,5 @@ export default function getRouteQueries(route, routerProps) {
     return route.getQueries(routerProps)
   }
 
-  return null;
+  return null
 }

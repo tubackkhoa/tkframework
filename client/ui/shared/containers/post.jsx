@@ -38,7 +38,7 @@ export default Relay.createContainer(Post, {
         id
         title
         lead_sentence
-        createdAt
+        created_at
         ${UpdatePostMutation.getFragment('post')},
       }
     `

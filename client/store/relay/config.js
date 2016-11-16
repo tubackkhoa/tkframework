@@ -1,15 +1,17 @@
 import Relay from 'react-relay'
-
+import {
+  markRequestPending,
+  markRequestSuccess, 
+  markRequestFailed,
+} from 'store/actions/common'
 
 // import DefaultNetworkLayer from 'react-relay/lib/RelayDefaultNetworkLayer'
 import injectNetworkLayer from './network/injectNetworkLayer'
 
-const SUCCESS_MODIFIER = '_SUCCESS'
-const RESPONSE_MODIFIER = '_RESPONSE'
-export const RELAY_QUERY = 'RELAY_QUERY'
-export const RELAY_MUTATION = 'RELAY_MUTATION'
-export const RELAY_MUTATION_SUCCESS = RELAY_MUTATION + SUCCESS_MODIFIER
-export const RELAY_QUERY_SUCCESS = RELAY_QUERY + SUCCESS_MODIFIER
+import { setToast, forwardTo } from 'store/actions/common'
+
+import api from 'store/api'
+import {saveRefreshToken} from 'store/actions/auth'
 
 /**
  * Get the promise from the request and
@@ -18,12 +20,25 @@ export const RELAY_QUERY_SUCCESS = RELAY_QUERY + SUCCESS_MODIFIER
  * @param  {RelayQuery|RelayMutation} request
  * @param  {String} type    action type
  */
-function registerResponseDispatch(request, type, dispatch) {
+function registerResponseDispatch(request, requestKey, dispatch, token) {
   request.getPromise().then(({response}) => {
-    dispatch({
-      type,
-      payload: response
-    })
+    console.log('[RELAY-NETWORK] Response:', response)
+    dispatch(markRequestSuccess(requestKey))
+  }).catch(err=>{
+    dispatch(markRequestFailed(err.message, requestKey))
+    // user has signed in
+    if(token){
+      // tell user to wait
+      dispatch(setToast('Refreshing token... You should reload page for sure!'))
+      // try refresh token, then reload page ?
+      api.auth.refreshAccessToken(token.refreshToken)          
+        .then(newToken => {          
+          // call action creator to update
+          dispatch(saveRefreshToken(newToken.accessToken))            
+        })
+        .catch(err => console.log('[client.js] ERROR can not refresh token', err))
+    }    
+    
   })
 }
 
@@ -35,11 +50,11 @@ function registerResponseDispatch(request, type, dispatch) {
  * @param  {String} type    action type
  * @return {Object}         FSA
  */
-function createRequestAction(request, type, dispatch) {
-  const RESPONSE_TYPE = type + RESPONSE_MODIFIER
+function createRequestAction(request, type, dispatch, token) {  
   const payload = parseRequestData(request)
-  registerResponseDispatch(request, RESPONSE_TYPE, dispatch)
-  return { type, payload }
+  const requestKey = type + '_' + (payload.ID || payload.name)
+  registerResponseDispatch(request, requestKey, dispatch, token)
+  return markRequestPending(requestKey)
 }
 
 
@@ -97,14 +112,14 @@ export function configureRelayWithStore(store) {
   }
   // inject network
   // Relay.injectNetworkLayer(new DefaultNetworkLayer(GRAPHQL_ENDPOINT))
-  injectNetworkLayer(store)
+  const {token} = injectNetworkLayer(store)
 
   Relay.Store.addNetworkSubscriber(
     query => dispatch(
-      createRequestAction(query, RELAY_QUERY, dispatch)
+      createRequestAction(query, 'relay_query', dispatch, token)
     ),
     mutation => dispatch(
-      createRequestAction(mutation, RELAY_MUTATION, dispatch)
+      createRequestAction(mutation, 'relay_mutation', dispatch, token)
     ),
   )
 }

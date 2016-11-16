@@ -9,7 +9,7 @@ class Footer extends Component {
       <div className="footer row">
         <div className="container">
           <div className="copyright ml-20">
-          MCBook @ 2016
+          TKFramework @ 2016
           </div>          
         </div>
       </div>      

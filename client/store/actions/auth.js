@@ -45,9 +45,7 @@ export const saveLoggedUser = (data) => ({
 
 export const saveRefreshToken = (data) => ({
   type: 'app/saveRefreshToken',
-  payload: {
-    token: data,
-  }
+  payload: data,
 })
 
 /**

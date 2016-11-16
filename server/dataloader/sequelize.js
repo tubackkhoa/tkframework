@@ -175,7 +175,8 @@ function shimModel(target) {
       if (options.transaction) {
         return original.apply(this, arguments)
       }
-      return loaderForModel(this, this.primaryKeyAttribute, this.primaryKeyField).load(id).then(rejectOnEmpty.bind(null, options))
+      return loaderForModel(this, this.primaryKeyAttribute, this.primaryKeyField, options)
+        .load(id).then(rejectOnEmpty.bind(null, options))
     }
   })
 }

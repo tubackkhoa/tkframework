@@ -13,7 +13,8 @@ const graphqlServer = graphqlHTTP((request) => ({
   graphiql: true,
   formatError: (error) => ({ 
     message: error.message,
-    stack: error.stack.split('\n'),
+    // just return error message, by default, console return false
+    stack: console.log(error.stack.split('\n')),
   }),
   pretty: true,
   context: {

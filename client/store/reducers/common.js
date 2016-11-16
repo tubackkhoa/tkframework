@@ -34,17 +34,3 @@ export const toast = (state = null, { type, payload }) => {
       return state
   }
 }
-
-// this is for debug store from relay, such as view store object,
-// and view which action is called
-export const relayStore = (state = {}, {type, payload}) => {
-  
-  switch(type){
-    case 'RELAY_QUERY':
-      return {...state, ...payload}
-    case 'RELAY_QUERY_RESPONSE':
-      return {...state, ...payload}
-    default:
-      return state
-  }
-} 

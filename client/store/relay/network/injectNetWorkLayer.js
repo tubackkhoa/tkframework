@@ -6,22 +6,19 @@ import {
 } from 'react-relay-network-layer'
 
 import {API_BASE} from 'store/constants/api'
-import api from 'store/api'
+// import api from 'store/api'
 import * as authSelectors from 'store/selectors/auth'
-import {saveRefreshToken} from 'store/actions/auth'
+// import {saveRefreshToken} from 'store/actions/auth'
 
 const injectNetWorkLayer = (store) => {
   const state = store.getState()
   const token = authSelectors.getToken(state)  
-  // use selector to get token, later we can use selector library for smaller state
-  Relay.injectNetworkLayer(new RelayNetworkLayer([
+
+  const relayMiddlewares = [
     urlMiddleware({
       url: (req) => API_BASE + '/graphql',
       batchUrl: (req) => API_BASE + '/graphql/batch', // <--- route for batch queries
-    }),
-    loggerMiddleware(),
-    gqErrorsMiddleware(),
-    perfMiddleware(),
+    }),    
     retryMiddleware({
       fetchTimeout: 15000,
       // or simple array [3200, 6400, 12800, 25600, 51200, 102400, 204800, 409600],
@@ -33,30 +30,47 @@ const injectNetWorkLayer = (store) => {
       statusCodes: [500, 503, 504],
     }),
     authMiddleware({
-      token: () => token ? token.accessToken : null,
+      // we will refresh token in config, to log messages in more detail
+      token: token ? token.accessToken : null,
       allowEmptyToken: true,
-      tokenRefreshPromise: (req) => {
-        console.log('[client.js] resolve token refresh', req)
-        if(!token){
-          return new Promise((resolve, reject)=>resolve(null))
-        }
-        // call refresh token action here
-        return api.auth.refreshAccessToken(token.refreshToken)          
-          .then(newToken => {
-            const accessToken = newToken.accessToken
-            // call action creator to update
-            store.dispatch(saveRefreshToken(newToken))
-            // then return accessToken
-            return accessToken
-          })
-          .catch(err => console.log('[client.js] ERROR can not refresh token', err))
-      },
+      // tokenRefreshPromise: (req) => {
+      //   console.log('[client.js] resolve token refresh', req)
+      //   if(!token){
+      //     return new Promise((resolve, reject)=>resolve(null))
+      //   }
+      //   // call refresh token action here
+      //   return api.auth.refreshAccessToken(token.refreshToken)          
+      //     .then(newToken => {
+      //       const accessToken = newToken.accessToken
+      //       // call action creator to update
+      //       store.dispatch(saveRefreshToken(newToken))
+      //       // then return accessToken
+      //       return accessToken
+      //     })
+      //     .catch(err => console.log('[client.js] ERROR can not refresh token', err))
+      // },
     }),
 
     // example of the custom inline middleware
-    next => req => next(req),
+    // next => req => next(req),
+  ]
 
-  ], { disableBatchQuery: false }))  // enable batch query for the future
+  if (process.env.NODE_ENV === 'development') {
+    relayMiddlewares.push(...[
+      loggerMiddleware(),
+      gqErrorsMiddleware(),
+      perfMiddleware(),
+    ])    
+  }
+
+  // use selector to get token, later we can use selector library for smaller state
+  Relay.injectNetworkLayer(new RelayNetworkLayer(relayMiddlewares, { 
+    disableBatchQuery: false 
+  }))  // enable batch query for the future
+
+  // return something such as token
+  return {token}
+  
 }
 
 export default injectNetWorkLayer

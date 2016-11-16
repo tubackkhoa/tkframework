@@ -1,9 +1,8 @@
 import { takeLatest, takeEvery } from 'redux-saga'
-import {browserHistory} from 'react-router'
 
 import api from 'store/api'
 import { createRequestSaga } from 'store/sagas/common'
-import { setToast, noop } from 'store/actions/common'
+import { setToast, noop, forwardTo } from 'store/actions/common'
 
 import { 
   setAuthState,   
@@ -11,11 +10,6 @@ import {
   removeLoggedUser 
 } from 'store/actions/auth'
 
-// Little helper function to abstract going to different pages
-const forwardTo = (location) => {
-  browserHistory.push(location)
-  return noop(`Go to: ${location}`)
-}
 
 const requestLoginFacebookAsync = createRequestSaga({
   request: api.auth.loginFacebook,

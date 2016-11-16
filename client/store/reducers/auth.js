@@ -22,9 +22,10 @@ const authReducer = (state = initialState, {type, payload}) => {
     case 'app/removeLoggedUser':
       return {...state, user: null, token: null}
     case 'app/saveRefreshToken':
-      return {...state, token: {...state.token, ...payload.token}}
-    // save reject token do nothing
+      // payload is access token
+      return {...state, token: {...state.token, accessToken: payload} }    
     case REHYDRATE:      
+      // save reject token do nothing
       const incoming = payload.authReducer      
       if (incoming) {
         console.log('Updated authReducer for all!!!', incoming)

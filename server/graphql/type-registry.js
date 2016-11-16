@@ -12,9 +12,8 @@ export const getNode = (globalId, context, info) => {
   const item = types[type]  
   // by default, we only get field from node as child of edges
   // __typename will not be selected
-  const { __typename, ...graphFields } = getGraphqlFields(info)  
-  const attributes = Object.keys(graphFields)  
-  return item ? item.lookupFn(id, attributes) : null     
+  const { __typename, ...graphFields } = getGraphqlFields(info)    
+  return item ? item.lookupFn(id, graphFields) : null     
 }
 
 export const getNodeType = obj => {

@@ -28,14 +28,43 @@ export const paggableConnectionArgs = {
  * with number paging model, we will not use cursor, because item can change the page it belongs to
  *
  */
-export const getPagingModelPromise = ({limit, offset}, info, model) => {
+export const getPagingModelPromise = ({limit, offset}, info, model, resolvers={}) => {
   // by default, we only get field from node as child of edges
   const {edges: {node: graphFields}} = getGraphqlFields(info)
-  const attributes = Object.keys(graphFields)
+  const resolverAttributes = Object.keys(resolvers)
+  // good enough
+  let attributes = Object.keys(graphFields)
+
+  if(resolverAttributes.length > 0)
+    attributes = attributes.filter(x => resolverAttributes.indexOf(x) < 0)  
 
   // now we select database, by default we use fieldName to get from models
   model = model || models[info.fieldName]          
-  return model.findAndCountAll({ attributes, limit, offset })        
+  return model.findAndCountAll({ attributes, limit, offset })
+  .then(result=>{    
+
+    if(resolverAttributes.length === 0)
+      return result    
+
+    let {rows, count} = result
+
+    // resolve items
+    rows = rows.map(row=>{
+      
+      resolverAttributes.forEach(attr=>
+        graphFields[attr] && // if we send tag graph fields
+          (row[attr] = resolvers[attr](row, Object.keys(graphFields[attr])))
+      )
+
+      return row  
+    })
+    
+    return {
+      rows,
+      count,
+    }
+    
+  })        
 }
 
 
@@ -45,11 +74,11 @@ export const getPagingModelPromise = ({limit, offset}, info, model) => {
  *
  */
 
-export const getScrollPagingModel = async (args, info, model) => {
+export const getScrollPagingModel = async (args, info, model, resolvers) => {
 
   // by default, we only get field from node as child of edges  
-  const pagingParams = getPagingParameters(args)       
-  const { rows, count } = await getPagingModelPromise(pagingParams, info, model)
+  const { limit, offset } = getPagingParameters(args)       
+  const { rows, count } = await getPagingModelPromise({limit, offset}, info, model, resolvers)
   return connectionFromArraySlice(
       rows,
       args, 
@@ -67,8 +96,12 @@ export const getScrollPagingModel = async (args, info, model) => {
  *
  */
 
-export const getNumberPagingModel = async ({first: limit, offset}, info, model) => {
-  const { rows, count } = await getPagingModelPromise({limit, offset}, info, model)
+export const getNumberPagingModel = async (args, info, model, resolvers) => {
+  if(args.offset === undefined)
+    return getScrollPagingModel(args, info, model, resolvers)
+  // simple paging with offset and limit
+  const { first: limit, offset } = args
+  const { rows, count } = await getPagingModelPromise({limit, offset}, info, model, resolvers)
   const startOffset = offset + 1
   const edges = rows.map((value, index) => ({    
     node: value,
@@ -78,6 +111,9 @@ export const getNumberPagingModel = async ({first: limit, offset}, info, model) 
   const lastEdge = edges[edges.length - 1]
   const hasPreviousPage = false // because we only move forward using offset
   const hasNextPage = offset + limit < count
+
+  // just for testing
+  // require('sleep').sleep(6)
 
   // just give enough information, forget about cursor
   return {

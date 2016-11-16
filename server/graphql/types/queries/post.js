@@ -1,27 +1,28 @@
 import { 
-  GraphQLObjectType, 
-  GraphQLInt, GraphQLString 
+  GraphQLList,
 } from 'graphql'
 
-import { globalIdField } from 'graphql-relay'
+import { getQueryType } from './helpers'
 
-import {  
-  attributeFields,
-} from 'graphql-sequelize'
-
-import { nodeInterface } from 'graphql/node-definitions'
+import { tagType } from './tag'
 import models from 'models'
-import { registerType } from 'graphql/type-registry'
 
-export const postType = new GraphQLObjectType({
-  name: 'Post',
-  fields: () => ({
-    ...attributeFields(models.posts),
-    id: globalIdField('Post'),
-  }),
-  interfaces: [nodeInterface],
+export const postType = getQueryType('Post', models.posts, {
+  tags: {
+    type: new GraphQLList(tagType),
+    description: 'Tags of the post',    
+  }
+}, async (id, graphFields) => {
+  const {tags: tagsGraphFields, ...postGraphFields} = graphFields
+  const post = await models.posts.findById(id, { attributes: Object.keys(postGraphFields) })
+  const tagAttributes = Object.keys(tagsGraphFields)
+
+  if(tagsGraphFields) {
+    post.tags = post.getTags(tagAttributes)
+  }
+
+  return post
 })
-
-registerType(postType, (id, attributes) => models.posts.findById(id, {attributes}))
+ 
 
 

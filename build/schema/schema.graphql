@@ -9,6 +9,40 @@ type AddPostPayload {
   clientMutationId: String
 }
 
+type Author implements Node {
+  type: String
+
+  # The ID of an object
+  id: ID!
+  email: String
+  encrypted_password: String
+  introduction: String
+  description: String
+  name: String
+  image: String
+  refresh_token: String
+  created_at: String!
+  updated_at: String!
+}
+
+# A connection to a list of items.
+type AuthorConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [AuthorEdge]
+}
+
+# An edge in a connection.
+type AuthorEdge {
+  # The item at the end of the edge
+  node: Author
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
 type Mutation {
   addPost(input: AddPostInput!): AddPostPayload
   updatePost(input: UpdatePostInput!): UpdatePostPayload
@@ -43,8 +77,13 @@ type Post implements Node {
   id: ID!
   title: String
   lead_sentence: String
-  createdAt: String!
-  updatedAt: String!
+  accepted: Boolean
+  published_at: String
+  created_at: String!
+  updated_at: String!
+
+  # Tags of the post
+  tags: [Tag]
 }
 
 # A connection to a list of items.
@@ -60,6 +99,39 @@ type PostConnection {
 type PostEdge {
   # The item at the end of the edge
   node: Post
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+type Project implements Node {
+  type: String
+
+  # The ID of an object
+  id: ID!
+  title: String
+  description: String
+  caption: String
+  image: String
+  source_url: String
+  accepted: Boolean
+  created_at: String!
+  updated_at: String!
+}
+
+# A connection to a list of items.
+type ProjectConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [ProjectEdge]
+}
+
+# An edge in a connection.
+type ProjectEdge {
+  # The item at the end of the edge
+  node: Project
 
   # A cursor for use in pagination
   cursor: String!
@@ -85,6 +157,16 @@ type RemovePostPayload {
   clientMutationId: String
 }
 
+type Tag implements Node {
+  type: String
+
+  # The ID of an object
+  id: ID!
+  name: String
+  created_at: String!
+  updated_at: String!
+}
+
 input UpdatePostInput {
   id: ID!
   title: String!
@@ -103,4 +185,16 @@ type Viewer implements Node {
 
   # A list of posts
   posts(after: String, first: Int, before: String, last: Int, offset: Int): PostConnection
+
+  # Latest posts
+  latestPosts(limit: Int): [Post]
+
+  # A list of authors
+  authors(after: String, first: Int, before: String, last: Int, offset: Int): AuthorConnection
+
+  # A list of projects
+  projects(after: String, first: Int, before: String, last: Int, offset: Int): ProjectConnection
+
+  # Latest project
+  latestProject: Project
 }

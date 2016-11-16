@@ -33,7 +33,7 @@ export const updatePost = mutationWithClientMutationId({
     }
   },
   mutateAndGetPayload: async ({id, title}, {request}) => {      
-    // authorize(request)
+    authorize(request)
     // insert then return post, we can use try catch instead of error callback
     
     // error is good enough

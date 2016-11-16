@@ -4,7 +4,7 @@ export default (sequelize, DataTypes) =>
       type: new DataTypes.VIRTUAL(DataTypes.STRING),
       get: () => 'Author',      
     },
-    id: { type: DataTypes.STRING, primaryKey: true, autoIncrement:true },
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true },
     email             : DataTypes.STRING,
     encrypted_password: DataTypes.STRING,
     introduction      : DataTypes.STRING,
@@ -12,5 +12,8 @@ export default (sequelize, DataTypes) =>
     name              : DataTypes.STRING,
     image             : DataTypes.STRING, 
     refresh_token     : DataTypes.STRING,
+  }, {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
   })
 

@@ -40,7 +40,7 @@ export const addPost = mutationWithClientMutationId({
     }, 
   },
   mutateAndGetPayload: async ({title}, {request}) => {      
-    // authorize(request)
+    authorize(request)
     // insert then return post, we can use try catch insteadz
     const post = await models.posts.create({title})
     return {post}

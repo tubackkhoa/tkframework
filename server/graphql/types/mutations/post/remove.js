@@ -29,7 +29,8 @@ export const removePost = mutationWithClientMutationId({
       resolve: ({id}) => id,
     }
   },
-  mutateAndGetPayload: ({id}, {request}) => {      
+  mutateAndGetPayload: ({id}, {request}) => {    
+    authorize(request)  
     const postId = fromGlobalId(id).id
     models.posts.destroy({
       where: {id: postId}

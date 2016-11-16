@@ -1,4 +1,5 @@
 import { v4 } from 'uuid'
+import { browserHistory } from 'react-router'
 
 import {  
   MARK_REQUEST_PENDING,
@@ -19,6 +20,12 @@ export const log = (data, type='table') => {
     type: 'app/log',
     payload: data,
   }
+}
+
+// Little helper function to abstract going to different pages
+export const forwardTo = (location) => {
+  browserHistory.push(location)
+  return noop(`Go to: ${location}`)
 }
 
 // mark request for later checking
