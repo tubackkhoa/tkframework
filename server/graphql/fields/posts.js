@@ -11,12 +11,14 @@ import {
 } from 'graphql-relay'
 
 
-import { paggableConnectionArgs, getNumberPagingModel } from 'graphql/paging/getPagingModel'
+import { pageableConnectionArgs, getNumberPagingModel } from 'graphql/paging/getPagingModel'
 import { postConnection } from 'graphql/connections/post'
 import { postType, detailPostType } from 'graphql/types/queries/post'
 import getGraphqlFields from 'graphql/utils/getGraphqlFields'
 import models from 'models'
 import { getPostDetail } from 'graphql/types/queries/helpers/post'
+
+import { taggingsPostConnect } from 'models/shared/connect'
 
 // we should prefer this way than include other models to provide only one query
 // because this will help better seperation of codes, and just one more query
@@ -27,9 +29,46 @@ const resolvePostTags = (post, tagAttributes) => post.getPostTags(tagAttributes)
 export const posts = {
   type: postConnection,
   description: 'A list of posts',
-  args: paggableConnectionArgs, 
+  args: {
+    ...pageableConnectionArgs,
+    tagId: { 
+      type: GraphQLID,
+      description: 'Filter post by tag-id', 
+    },
+  }, 
   resolve: (_, args, {request}, info) => getNumberPagingModel(args, info, models.posts, 
-    { tags:resolvePostTags }),    
+    // resolve graph field
+    { tags:resolvePostTags }, 
+    // resolve options
+    async (options, resolverAttributes) => {
+
+      // only published item
+      options.where = {
+        accepted: 1,
+      }
+
+      // update options with tag
+      if(args.tagId){
+        const tagId = fromGlobalId(args.tagId).id
+        const postIDs = await models.taggings.findAll({
+          attributes: ['subject_id'],
+          distinct: true,
+          where: {
+            tag_id: tagId,
+            subject_type: 'Post',
+          }
+        }).map(tagging => tagging.subject_id)        
+
+        // filter by tagid from posts
+        options.where.id = {
+          $in: postIDs
+        }                
+
+      }
+
+      // give back the options for filter
+      return options
+    }),    
 }
 
 export const latestPosts = {

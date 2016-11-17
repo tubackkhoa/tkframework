@@ -9,7 +9,7 @@ const taggings = sequelize.define("taggings", {
   id          : { type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true },
   tag_id      : DataTypes.INTEGER,
   subject_id  : DataTypes.INTEGER,    
-  subject_type: DataTypes.STRING, 
+  subject_type: DataTypes.ENUM('Post', 'Project'), 
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',    

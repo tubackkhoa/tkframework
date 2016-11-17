@@ -6,9 +6,14 @@ import {
   NodeQueries,
 } from 'store/relay/queries'
 
+import {
+  prepareTagParams,
+} from 'store/relay/params'
+
 import Home from './shared/containers/Home'
 import PostIndex from './frontend/containers/Post/Index'
 import PostShow from './frontend/containers/Post/Show'
+import ProjectIndex from './frontend/containers/Project/Index'
 import App from './shared/containers/App'
 import NotFound from './shared/containers/notFound'
 
@@ -35,8 +40,10 @@ const checkAuth = (store) => {
 export const Routes = (store) => (
   <Route path='/' component={App}>         
     <IndexRoute component={Home} queries={ViewerQueries} />    
-    <Route path='/posts' component={PostIndex} queries={ViewerQueries} />
+    <Route path='/posts' component={PostIndex} queries={ViewerQueries} prepareParams={prepareTagParams} />
     <Route path='/posts/:id' component={PostShow} queries={ViewerQueries} />
+    <Route path="/projects" component={ProjectIndex} queries={ViewerQueries} prepareParams={prepareTagParams}/>
+
     <Route path='/login' component={Login}/>
     <Route onEnter={checkAuth(store)} path='/cms'>
       

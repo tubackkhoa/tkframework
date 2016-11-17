@@ -65,6 +65,7 @@ export default Relay.createContainer(PostIndex, {
 
   initialVariables: {
     first: 10,      
+    tagId: null,
     order: 'published_at DESC',  
   },
 
@@ -72,7 +73,7 @@ export default Relay.createContainer(PostIndex, {
     viewer: () => Relay.QL`
       fragment on Viewer {
         id
-        posts(first: $first order: $order){
+        posts(first: $first order: $order tagId: $tagId){
           edges {
             node {
               id

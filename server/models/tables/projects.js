@@ -1,4 +1,5 @@
 import dataloaderSequelize from 'dataloader/sequelize'
+import { taggingsProjectConnect } from '../shared/connect'
 import { sequelize, DataTypes } from '../config'
 
 const projects = sequelize.define("projects", {        
@@ -16,6 +17,34 @@ const projects = sequelize.define("projects", {
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',
+
+  getterMethods: {
+    // do not use arrow function to have this as function context
+    full_image: function() {
+      return this.image ? `/uploads/project/image/${this.id}/${this.image}` : null
+    }
+  },
+
+  classMethods: {
+    associate: function() {        
+      // we should use object instead of string to prevent errors prone
+      this.belongsToMany(sequelize.models.tags, {
+        through: taggingsProjectConnect,
+        foreignKey: 'subject_id',
+      })
+
+    }
+  },
+
+  instanceMethods: {
+    // arrow function can mislead this
+    getProjectTags: function(attributes) {    
+      // with where and attributes
+      return this.getTags({          
+        attributes,
+      })
+    },    
+  }
 })
 
 dataloaderSequelize(projects)

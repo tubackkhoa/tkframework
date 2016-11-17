@@ -1,4 +1,4 @@
-import { paggableConnectionArgs, getNumberPagingModel } from 'graphql/paging/getPagingModel'
+import { pageableConnectionArgs, getNumberPagingModel } from 'graphql/paging/getPagingModel'
 import { authorConnection } from 'graphql/connections/author'
 
 // must validate this before export
@@ -6,6 +6,6 @@ import { authorConnection } from 'graphql/connections/author'
 export const authors = {
   type: authorConnection,
   description: 'A list of authors',
-  args: paggableConnectionArgs, 
+  args: pageableConnectionArgs, 
   resolve: (_, args, {request}, info) => getNumberPagingModel(args, info)    
 }

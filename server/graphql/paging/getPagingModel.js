@@ -15,7 +15,7 @@ import getGraphqlFields from 'graphql/utils/getGraphqlFields'
 import models from 'models'
 
 // we also define number paging model for simple paging with limit and offset
-export const paggableConnectionArgs = {
+export const pageableConnectionArgs = {
   ...connectionArgs,
   // for jumping by offset instead of cursor
   offset: {
@@ -31,7 +31,7 @@ export const paggableConnectionArgs = {
  * with number paging model, we will not use cursor, because item can change the page it belongs to
  *
  */
-export const getPagingModelPromise = ({limit, offset, order}, info, model, resolvers={}, optionsResolver) => {
+export const getPagingModelPromise = async ({limit, offset, order}, info, model, resolvers={}, optionsResolver) => {
   // by default, we only get field from node as child of edges
   const {edges: {node: graphFields}} = getGraphqlFields(info)
   const resolverAttributes = Object.keys(resolvers)
@@ -54,33 +54,28 @@ export const getPagingModelPromise = ({limit, offset, order}, info, model, resol
   }
 
   // add something more, no return, because we will not clone this
-  optionsResolver && optionsResolver(options, resolverAttributes)
+  if(optionsResolver) {
+    options = await optionsResolver(options, resolverAttributes)
+  }
 
-  return model.findAndCountAll(options)
-    .then(result=>{    
-
-      if(resolverAttributes.length === 0)
-        return result    
-
-      let {rows, count} = result
-
-      // resolve items
-      rows = rows.map(row=>{
-        
-        resolverAttributes.forEach(attr=>
-          graphFields[attr] && // if we send tag graph fields
-            (row[attr] = resolvers[attr](row, Object.keys(graphFields[attr])))
-        )
-
-        return row  
-      })
-      
-      return {
-        rows,
-        count,
-      }
-      
-    })        
+  // you can use await as generator callback or direct callback
+  let {rows, count} = await model.findAndCountAll(options)
+       
+  // resolve it, rows can be re-assign
+  if(resolverAttributes.length > 0){
+    // resolve items, change the rows
+    rows.forEach(row => {
+      // each row need to be modified
+      resolverAttributes.forEach(attr =>
+        graphFields[attr] && // if we send tag graph fields
+          (row[attr] = resolvers[attr](row, Object.keys(graphFields[attr])))
+      )      
+    })
+  }
+    
+  // return the final result
+  return { rows, count }      
+           
 }
 
 

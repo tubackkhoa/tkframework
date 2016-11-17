@@ -1,5 +1,5 @@
 import dataloaderSequelize from 'dataloader/sequelize'
-import { taggingsPostConnect } from '../shared/connect'
+import { taggingsPostConnect, taggingsProjectConnect } from '../shared/connect'
 import { sequelize, DataTypes } from '../config'
 
 const tags = sequelize.define("tags", {    
@@ -17,6 +17,11 @@ const tags = sequelize.define("tags", {
       // this.hasMany(sequelize.models.taggings, {foreignKey: 'subject_id'})
       this.belongsToMany(sequelize.models.posts, {
         through: taggingsPostConnect,
+        foreignKey: 'tag_id',
+      })
+
+      this.belongsToMany(sequelize.models.projects, {
+        through: taggingsProjectConnect,
         foreignKey: 'tag_id',
       })
     }

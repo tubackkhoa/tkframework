@@ -9,7 +9,12 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import Root from './ui/root'
 import configureStore from './store/config'
 import { configureRelayWithStore } from './store/relay/config'
+
 const rootElement = document.getElementById('root')
+
+// Needed for onTouchTap
+// https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin()
 
 // config for store
 configureStore(store => {
@@ -57,6 +62,4 @@ console.error = (logError => (msg, ...args) =>
     && logError.call(console, msg, ...args)	      	      	    	  
 )(console.error) 
  
-// Needed for onTouchTap
-// https://github.com/zilverline/react-tap-event-plugin
-injectTapEventPlugin()
+

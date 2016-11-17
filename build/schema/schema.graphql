@@ -10,19 +10,11 @@ type AddPostPayload {
 }
 
 type Author implements Node {
-  type: String
-
   # The ID of an object
   id: ID!
-  email: String
-  encrypted_password: String
-  introduction: String
-  description: String
   name: String
   image: String
-  refresh_token: String
-  created_at: String!
-  updated_at: String!
+  introduction: String
 }
 
 # A connection to a list of items.
@@ -188,6 +180,12 @@ type Project implements Node {
   accepted: Boolean
   created_at: String!
   updated_at: String!
+
+  # Tags of the project
+  tags: [Tag]
+
+  # Absolute src of image
+  full_image: String
 }
 
 # A connection to a list of items.
@@ -255,7 +253,17 @@ type Viewer implements Node {
   id: ID!
 
   # A list of posts
-  posts(after: String, first: Int, before: String, last: Int, offset: Int, order: String): PostConnection
+  posts(
+    after: String
+    first: Int
+    before: String
+    last: Int
+    offset: Int
+    order: String
+
+    # Filter post by tag-id
+    tagId: ID
+  ): PostConnection
 
   # Latest posts
   latestPosts(limit: Int): [Post]
@@ -267,7 +275,17 @@ type Viewer implements Node {
   authors(after: String, first: Int, before: String, last: Int, offset: Int, order: String): AuthorConnection
 
   # A list of projects
-  projects(after: String, first: Int, before: String, last: Int, offset: Int, order: String): ProjectConnection
+  projects(
+    after: String
+    first: Int
+    before: String
+    last: Int
+    offset: Int
+    order: String
+
+    # Filter project by tag-id
+    tagId: ID
+  ): ProjectConnection
 
   # Latest project
   latestProject: Project

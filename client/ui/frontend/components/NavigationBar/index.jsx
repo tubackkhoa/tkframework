@@ -29,6 +29,10 @@ import inlineStyles from 'ui/shared/styles/MaterialUI'
 
 class NavigationBar extends Component {
 
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
   render() {
     
     return (
@@ -38,6 +42,7 @@ class NavigationBar extends Component {
         style={inlineStyles.appBar.root}
         titleStyle={inlineStyles.appBar.title}        
         zDepth={0}
+        onTitleTouchTap={()=> this.context.router.push('/')}
         iconStyleRight={inlineStyles.appBar.elementRight}
         iconElementRight={
             <div>

@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react'
 import TweetEmbed from './TweetEmbed'
 
 
-const Twitter = ({ twitterId }) => (
+const Twitter = ({ twitter_id }) => (
   <div >
-    <TweetEmbed id={twitterId} />
+    <TweetEmbed id={twitter_id} />
   </div>
 )
 
