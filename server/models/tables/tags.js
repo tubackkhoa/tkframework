@@ -1,4 +1,4 @@
-import { taggingsPostConnect } from './shared/connect'
+import { taggingsPostConnect } from '../shared/connect'
 
 export default (sequelize, DataTypes) => 
 
@@ -15,7 +15,10 @@ export default (sequelize, DataTypes) =>
     classMethods: {
       associate: function() {        
         // this.hasMany(sequelize.models.taggings, {foreignKey: 'subject_id'})
-        this.belongsToMany(sequelize.models.posts, taggingsPostConnect(sequelize))
+        this.belongsToMany(sequelize.models.posts, {
+          through: taggingsPostConnect,
+          foreignKey: 'tag_id',
+        })
       }
     },
   })

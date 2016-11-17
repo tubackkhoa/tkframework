@@ -1,10 +1,14 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 
-import ViewerQueries from 'store/relay/queries/ViewerQueries'
+import { 
+  ViewerQueries, 
+  NodeQueries,
+} from 'store/relay/queries'
 
 import Home from './shared/containers/Home'
 import PostIndex from './frontend/containers/Post/Index'
+import PostShow from './frontend/containers/Post/Show'
 import App from './shared/containers/App'
 import NotFound from './shared/containers/notFound'
 
@@ -32,6 +36,7 @@ export const Routes = (store) => (
   <Route path='/' component={App}>         
     <IndexRoute component={Home} queries={ViewerQueries} />    
     <Route path='/posts' component={PostIndex} queries={ViewerQueries} />
+    <Route path='/posts/:id' component={PostShow} queries={ViewerQueries} />
     <Route path='/login' component={Login}/>
     <Route onEnter={checkAuth(store)} path='/cms'>
       

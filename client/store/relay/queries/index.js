@@ -12,6 +12,19 @@
 
 import Relay from 'react-relay'
 
-export default {
-  viewer: () => Relay.QL`query { viewer }`,  
+export const ViewerQueries = {
+  viewer: () => Relay.QL`
+    query { 
+      viewer 
+    }
+  `,  
 }
+
+export const NodeQueries = {
+  node: () => Relay.QL`
+    query { 
+      node(id: $id) 
+    }
+  `,  
+}
+

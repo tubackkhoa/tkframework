@@ -43,6 +43,71 @@ type AuthorEdge {
   cursor: String!
 }
 
+type DetailPost {
+  node: Post
+  next: Post
+  prev: Post
+}
+
+type Item implements Node {
+  type: String
+
+  # The ID of an object
+  id: ID!
+  target_type: itemstarget_typeEnumType
+  target_id: Int
+  sort_rank: Int
+  post_id: Int
+  created_at: String!
+  updated_at: String!
+
+  # Item text data
+  text: ItemText
+
+  # Item image data
+  image: ItemImage
+
+  # Item twitter data
+  twitter: ItemTwitter
+}
+
+type ItemImage implements Node {
+  type: String
+
+  # The ID of an object
+  id: ID!
+  src: String
+  caption: String
+  created_at: String!
+  updated_at: String!
+}
+
+enum itemstarget_typeEnumType {
+  ItemText
+  ItemImage
+  ItemTwitter
+}
+
+type ItemText implements Node {
+  type: String
+
+  # The ID of an object
+  id: ID!
+  description: String
+  created_at: String!
+  updated_at: String!
+}
+
+type ItemTwitter implements Node {
+  type: String
+
+  # The ID of an object
+  id: ID!
+  twitter_id: String
+  created_at: String!
+  updated_at: String!
+}
+
 type Mutation {
   addPost(input: AddPostInput!): AddPostPayload
   updatePost(input: UpdatePostInput!): UpdatePostPayload
@@ -84,6 +149,9 @@ type Post implements Node {
 
   # Tags of the post
   tags: [Tag]
+
+  # Items of the post
+  items: [Item]
 }
 
 # A connection to a list of items.
@@ -184,16 +252,19 @@ type Viewer implements Node {
   id: ID!
 
   # A list of posts
-  posts(after: String, first: Int, before: String, last: Int, offset: Int): PostConnection
+  posts(after: String, first: Int, before: String, last: Int, offset: Int, order: String): PostConnection
 
   # Latest posts
   latestPosts(limit: Int): [Post]
 
+  # Detail post
+  detailPost(id: ID!): DetailPost
+
   # A list of authors
-  authors(after: String, first: Int, before: String, last: Int, offset: Int): AuthorConnection
+  authors(after: String, first: Int, before: String, last: Int, offset: Int, order: String): AuthorConnection
 
   # A list of projects
-  projects(after: String, first: Int, before: String, last: Int, offset: Int): ProjectConnection
+  projects(after: String, first: Int, before: String, last: Int, offset: Int, order: String): ProjectConnection
 
   # Latest project
   latestProject: Project

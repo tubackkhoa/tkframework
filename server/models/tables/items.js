@@ -1,23 +1,25 @@
-import { taggingsPostConnect } from './shared/connect'
-
 export default (sequelize, DataTypes) => 
 
-  sequelize.define("tags", {    
+  sequelize.define("items", {    
     type: {
       type: new DataTypes.VIRTUAL(DataTypes.STRING),
-      get: () => 'Tag',      
+      get: () => 'Item',      
     },    
     id          : { type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true },
-    name: DataTypes.STRING, 
+    target_type: DataTypes.ENUM('ItemText','ItemImage','ItemTwitter'), 
+    target_id : DataTypes.INTEGER,
+    sort_rank : DataTypes.INTEGER,
+    post_id : DataTypes.INTEGER,
   }, {
     createdAt: 'created_at',
     updatedAt: 'updated_at',
     classMethods: {
       associate: function() {        
         // this.hasMany(sequelize.models.taggings, {foreignKey: 'subject_id'})
-        this.belongsToMany(sequelize.models.posts, taggingsPostConnect(sequelize))
+        this.belongsTo(sequelize.models.posts, {          
+          foreignKey: 'post_id',
+          as: 'post',
+        })
       }
     },
   })
-
-

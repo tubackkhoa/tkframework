@@ -1,0 +1,6 @@
+export const taggingsPostConnect = {
+  model: 'taggings',
+  scope: {
+    subject_type: 'Post',
+  },
+}

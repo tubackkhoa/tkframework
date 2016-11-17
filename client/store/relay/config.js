@@ -24,10 +24,10 @@ function registerResponseDispatch(request, requestKey, dispatch, token) {
   request.getPromise().then(({response}) => {
     console.log('[RELAY-NETWORK] Response:', response)
     dispatch(markRequestSuccess(requestKey))
-  }).catch(err=>{
-    dispatch(markRequestFailed(err.message, requestKey))
-    // user has signed in
-    if(token){
+  }).catch(response=>{
+    dispatch(markRequestFailed(response, requestKey))
+    // user has signed in but return unauthorized
+    if(response.status === 401 && token){
       // tell user to wait
       dispatch(setToast('Refreshing token... You should reload page for sure!'))
       // try refresh token, then reload page ?

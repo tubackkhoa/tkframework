@@ -19,7 +19,10 @@ export const paggableConnectionArgs = {
   ...connectionArgs,
   // for jumping by offset instead of cursor
   offset: {
-    type: GraphQLInt
+    type: GraphQLInt,
+  },
+  order: {
+    type: GraphQLString,
   },
 }
 
@@ -28,7 +31,7 @@ export const paggableConnectionArgs = {
  * with number paging model, we will not use cursor, because item can change the page it belongs to
  *
  */
-export const getPagingModelPromise = ({limit, offset}, info, model, resolvers={}) => {
+export const getPagingModelPromise = ({limit, offset, order}, info, model, resolvers={}, optionsResolver) => {
   // by default, we only get field from node as child of edges
   const {edges: {node: graphFields}} = getGraphqlFields(info)
   const resolverAttributes = Object.keys(resolvers)
@@ -40,31 +43,44 @@ export const getPagingModelPromise = ({limit, offset}, info, model, resolvers={}
 
   // now we select database, by default we use fieldName to get from models
   model = model || models[info.fieldName]          
-  return model.findAndCountAll({ attributes, limit, offset })
-  .then(result=>{    
+  let options = { 
+    attributes, 
+    limit, offset,     
+  }
 
-    if(resolverAttributes.length === 0)
-      return result    
+  // add order argument
+  if(order){
+    options.order = order.split(/\s*,\s*/).map(c=>c.split(/\s+/))
+  }
 
-    let {rows, count} = result
+  // add something more, no return, because we will not clone this
+  optionsResolver && optionsResolver(options, resolverAttributes)
 
-    // resolve items
-    rows = rows.map(row=>{
+  return model.findAndCountAll(options)
+    .then(result=>{    
+
+      if(resolverAttributes.length === 0)
+        return result    
+
+      let {rows, count} = result
+
+      // resolve items
+      rows = rows.map(row=>{
+        
+        resolverAttributes.forEach(attr=>
+          graphFields[attr] && // if we send tag graph fields
+            (row[attr] = resolvers[attr](row, Object.keys(graphFields[attr])))
+        )
+
+        return row  
+      })
       
-      resolverAttributes.forEach(attr=>
-        graphFields[attr] && // if we send tag graph fields
-          (row[attr] = resolvers[attr](row, Object.keys(graphFields[attr])))
-      )
-
-      return row  
-    })
-    
-    return {
-      rows,
-      count,
-    }
-    
-  })        
+      return {
+        rows,
+        count,
+      }
+      
+    })        
 }
 
 
@@ -74,11 +90,16 @@ export const getPagingModelPromise = ({limit, offset}, info, model, resolvers={}
  *
  */
 
-export const getScrollPagingModel = async (args, info, model, resolvers) => {
+export const getScrollPagingModel = async (args, ...left) => {
 
   // by default, we only get field from node as child of edges  
   const { limit, offset } = getPagingParameters(args)       
-  const { rows, count } = await getPagingModelPromise({limit, offset}, info, model, resolvers)
+  const { rows, count } = await getPagingModelPromise({ 
+    limit, 
+    offset, 
+    order: args.order 
+  }, ...left)
+
   return connectionFromArraySlice(
       rows,
       args, 
@@ -96,17 +117,23 @@ export const getScrollPagingModel = async (args, info, model, resolvers) => {
  *
  */
 
-export const getNumberPagingModel = async (args, info, model, resolvers) => {
+export const getNumberPagingModel = async (args, ...left) => {
   if(args.offset === undefined)
-    return getScrollPagingModel(args, info, model, resolvers)
+    return getScrollPagingModel(args, ...left)
   // simple paging with offset and limit
-  const { first: limit, offset } = args
-  const { rows, count } = await getPagingModelPromise({limit, offset}, info, model, resolvers)
+  const { first: limit, offset, order } = args
+  const { rows, count } = await getPagingModelPromise({
+    limit, 
+    offset, 
+    order
+  }, ...left)
+
   const startOffset = offset + 1
   const edges = rows.map((value, index) => ({    
     node: value,
     cursor: offsetToCursor(startOffset + index),
   }))
+
   const firstEdge = edges[0]
   const lastEdge = edges[edges.length - 1]
   const hasPreviousPage = false // because we only move forward using offset

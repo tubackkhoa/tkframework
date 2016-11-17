@@ -22,9 +22,9 @@ export const getQueryType = (name, model, fields, lookupFn) => {
     }),
     interfaces: [nodeInterface],
   })
-  registerType(queryType, lookupFn || 
-    ((id, graphFields) => model.findById(id, { attributes: Object.keys(graphFields) }))
-  )
+  registerType(queryType, lookupFn || ( 
+    (id, graphFields) => model.findById(id, {attributes: Object.keys(graphFields)}) 
+  ))
 
   return queryType
 }

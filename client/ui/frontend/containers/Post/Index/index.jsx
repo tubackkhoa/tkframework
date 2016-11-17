@@ -64,14 +64,15 @@ class PostIndex extends Component {
 export default Relay.createContainer(PostIndex, {
 
   initialVariables: {
-    first: 10,        
+    first: 10,      
+    order: 'published_at DESC',  
   },
 
   fragments: {
     viewer: () => Relay.QL`
       fragment on Viewer {
         id
-        posts(first: $first){
+        posts(first: $first order: $order){
           edges {
             node {
               id

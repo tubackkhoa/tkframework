@@ -14,7 +14,8 @@ class TextDisplay extends Component {
     super(props)
 
     if (props.description) {
-      const blocks = convertFromRaw(JSON.parse(props.description))      
+      const blocks = convertFromRaw(JSON.parse(props.description))   
+         
       this.state = { 
         editorState: EditorState.createWithContent(blocks, decorator) 
       }
