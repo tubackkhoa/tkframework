@@ -65,7 +65,7 @@ const nodeFragment = Relay.QL`
       }
       image {
         id
-        src
+        full_src
         caption
       }
       twitter {

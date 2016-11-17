@@ -80,6 +80,9 @@ type ItemImage implements Node {
   caption: String
   created_at: String!
   updated_at: String!
+
+  # Absolute src of image item
+  full_src: String
 }
 
 enum itemstarget_typeEnumType {

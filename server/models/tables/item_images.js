@@ -12,6 +12,11 @@ const item_images = sequelize.define("item_images", {
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',
+  getterMethods: {
+    full_src: function() {
+      return `/uploads/item_image/image/${this.id}/${this.src}`
+    }
+  }
 })
 
 dataloaderSequelize(item_images)

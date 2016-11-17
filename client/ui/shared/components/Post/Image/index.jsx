@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 
-const Image = ({ image, caption }) => (
+const Image = ({ full_src, caption }) => (
   <figure >
     <img       
-      src={image}
+      src={full_src}
       alt={caption}
     />
     {caption &&

@@ -31,20 +31,23 @@ export const getPostDetail = async (id, graphFields) => {
     const {text, twitter, image} = itemsGraphFields
     const [
       textAttributes, 
-      twitterAttributes, 
-      imageAttributes
-    ] = [text, twitter, image].map(fields=>Object.keys(fields))
+      twitterAttributes,             
+    ] = [text, twitter].map(fields=>Object.keys(fields))
 
     // must provide post_id for mapping or it will return empty, do not accept from user input
     post.items = await post.getOrderedItems(['id', 'post_id', 'target_id', 'target_type'])
     // mapping for detail
     post.items.forEach(item=> {
       switch(item.target_type) {
-        case 'ItemText':
+        case 'ItemText':          
           item.text = models.item_texts.findById(item.target_id, {attributes: textAttributes})
           break
         case 'ItemImage':
-          item.image = models.item_images.findById(item.target_id, {attributes: imageAttributes})
+          const { full_src, ...imageGraphFields } = image
+          if(full_src)
+            // resolve full_src, just as src, but we have to create getter method
+            imageGraphFields.src = full_src
+          item.image = models.item_images.findById(item.target_id, {attributes: Object.keys(imageGraphFields)})
           break
         default:
           item.twitter = models.item_twitters.findById(item.target_id, {attributes: twitterAttributes})
