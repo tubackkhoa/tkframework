@@ -28,13 +28,13 @@ if (OPTIMIZE) {
 	plugins.push(new Webpack.optimize.OccurrenceOrderPlugin())
 	// plugins.push(new Webpack.optimize.DedupePlugin())
 	plugins.push(new Webpack.optimize.UglifyJsPlugin({
-		// compressor: {
-		// 	warnings: false,
-		// 	unused: true,
-  //     // dead_code: true,
-  //     drop_console: true,
-  //     screw_ie8: true
-		// },
+		compressor: {
+			warnings: false,
+			unused: true,
+      // dead_code: true,
+      drop_console: true,
+      // screw_ie8: true
+		},
 
 		output: {
       comments: false

@@ -1,26 +1,29 @@
+import dataloaderSequelize from 'dataloader/sequelize'
 import { taggingsPostConnect } from '../shared/connect'
+import { sequelize, DataTypes } from '../config'
 
-export default (sequelize, DataTypes) => 
-
-  sequelize.define("tags", {    
-    type: {
-      type: new DataTypes.VIRTUAL(DataTypes.STRING),
-      get: () => 'Tag',      
-    },    
-    id          : { type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true },
-    name: DataTypes.STRING, 
-  }, {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
-    classMethods: {
-      associate: function() {        
-        // this.hasMany(sequelize.models.taggings, {foreignKey: 'subject_id'})
-        this.belongsToMany(sequelize.models.posts, {
-          through: taggingsPostConnect,
-          foreignKey: 'tag_id',
-        })
-      }
-    },
-  })
+const tags = sequelize.define("tags", {    
+  type: {
+    type: new DataTypes.VIRTUAL(DataTypes.STRING),
+    get: () => 'Tag',      
+  },    
+  id          : { type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true },
+  name: DataTypes.STRING, 
+}, {
+  createdAt: 'created_at',
+  updatedAt: 'updated_at',
+  classMethods: {
+    associate: function() {        
+      // this.hasMany(sequelize.models.taggings, {foreignKey: 'subject_id'})
+      this.belongsToMany(sequelize.models.posts, {
+        through: taggingsPostConnect,
+        foreignKey: 'tag_id',
+      })
+    }
+  },
+})
 
 
+dataloaderSequelize(tags)
+
+export default tags

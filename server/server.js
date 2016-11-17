@@ -3,20 +3,19 @@ import path       from 'path'
 import express   from 'express'
 import bodyParser from 'body-parser'
 import cors  from 'cors'
-import constants   from 'config/constants.json'
+import { jwtSecret }   from 'config/constants'
 import expressJwt from 'express-jwt'
 import passport from 'passport/local'
 
 const publicPath = path.resolve(__dirname, '../public')
 const authenticate = expressJwt({
-  secret: constants.jwtSecret,
+  secret: jwtSecret,
   credentialsRequired: false,
   userProperty: 'user',
 })
 const app = express()
 // we use this to authenticate the specific router
-app.set('port', (process.env.PORT || 3000))
-app.use(express.static(publicPath))
+app.set('port', (process.env.PORT || 3333))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(passport.initialize())
@@ -33,9 +32,12 @@ app.use('/auth', require('./routes/auth').default)
 app.use('/graphql', require('./routes/graphql').default)
 
 // by default we can serve the public as standalone app
-app.get('*', (req, res) => {
-  res.sendFile(publicPath + '/index.html')
-})
+if(process.env.NODE_ENV === 'server' || app.get('port') === 80) {
+  app.use(express.static(publicPath))
+  app.get('*', (req, res) => {
+    res.sendFile(publicPath + '/index.html')
+  })
+}
 
 app.listen(app.get('port'), () => {
   //eslint-disable-next-line no-console

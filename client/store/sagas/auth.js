@@ -50,7 +50,7 @@ const requestLoginAsync = createRequestSaga({
     (data) => saveLoggedUser(data),   
     () => setAuthState(true),    
     () => setToast('Logged successfully!!!'), 
-    // () => forwardTo('/dashboard'), // action creator may return nothing to match
+    () => forwardTo('/'), // action creator may return nothing to match
   ],
   failure: [ 
     () => setToast('Couldn\'t login', 'error') 

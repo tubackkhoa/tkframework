@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 export const cryptPassword = password => new Promise ((resolve, reject) => {
   bcrypt.genSalt(10, (err, salt) => {

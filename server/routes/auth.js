@@ -2,7 +2,7 @@ import models  from 'models'
 import {Router} from 'express'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
-import constants   from 'config/constants.json'
+import { jwtSecret }   from 'config/constants'
 import passport from 'passport/local'
 
 const router  = new Router()
@@ -25,7 +25,7 @@ const generateAccessToken = (req, res, next) => {
   jwt.sign({
     id: req.user.id,
     email: req.user.email
-  }, constants.jwtSecret, {
+  }, jwtSecret, {
     expiresIn: 60*60*24,   // just 1 day, user can refresh token automatically at client
   },(err, accessToken) => {    
     req.token = {

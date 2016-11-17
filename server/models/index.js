@@ -1,31 +1,32 @@
-import fs        from "fs"
-import path      from "path"
-import Sequelize from "sequelize"
+import { sequelize } from './config'
 import dataloaderSequelize from 'dataloader/sequelize'
 
-const config     = require('config/database.json').connection
-const sequelize = new Sequelize(config.database, config.username, config.password, config)
+import posts from './tables/posts'
+import authors from './tables/authors'
+import item_images from './tables/item_images'
+import item_texts from './tables/item_texts'
+import item_twitters from './tables/item_twitters'
+import items from './tables/items'
+import projects from './tables/projects'
+import taggings from './tables/taggings'
+import tags from './tables/tags'
 
-const db = {}
-const modelsPath = path.join(__dirname, 'tables')
-fs
-  .readdirSync(modelsPath)
-  .filter(file => /\.js$/.test(file))
-  .forEach(file => {
-    const model = sequelize.import(path.join(modelsPath, file))    
-    dataloaderSequelize(model)
-    db[model.name] = model    
-  })
+const models = {}
+// choose model to init
+const tables = [
+  posts, authors, item_images, item_texts, item_twitters, 
+  items, projects, taggings, tags
+]
+
+tables.forEach(model => models[model.name] = model)
 
 // back reference
-sequelize.models = db
+sequelize.models = models
 dataloaderSequelize(sequelize)
 
-db.sequelize = sequelize
+models.sequelize = sequelize
 
-// mapping for associate
-Object.keys(db).forEach(modelName =>   
-    db[modelName].associate && db[modelName].associate.call(db[modelName])  
-)
+// mapping for associate, after all models have been attached to models
+tables.forEach(model => model.associate && model.associate.call(model))
 
-export default db
+export default models
