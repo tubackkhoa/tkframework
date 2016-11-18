@@ -5,8 +5,8 @@ import {
 
 import { globalIdField } from 'graphql-relay'
 
-import { nodeInterface } from 'graphql/node-definitions'
-import { registerType } from 'graphql/type-registry'
+import { nodeInterface } from 'data/graphql/node-definitions'
+import { registerType } from 'data/graphql/type-registry'
 import models from 'models'
 
 

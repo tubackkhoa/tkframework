@@ -1,12 +1,11 @@
 import graphqlHTTP from 'express-graphql'
 // import { graphqlExpress } from 'graphql-server-express'
 import {Router} from 'express'
-import schema from 'graphql/schema'
-import DataLoader from 'dataloader'
+import schema from 'data/graphql/schema'
 import { graphqlBatchHTTPWrapper } from 'react-relay-network-layer'
 
 const router  = new Router()
-const prodMode = process.env.NODE_ENV === 'production'
+const prodMode = process.env.NODE_ENV !== 'server'
 
 // prepare `graphqlHTTP` express-middleware per request settings
 const graphqlServer = graphqlHTTP((request) => ({

@@ -10,10 +10,10 @@ import {
   fromGlobalId,
 } from 'graphql-relay'
 
-import { pageableConnectionArgs, getNumberPagingModel } from 'graphql/paging/getPagingModel'
-import { projectConnection } from 'graphql/connections/project'
-import { projectType } from 'graphql/types/queries/project'
-import getGraphqlFields from 'graphql/utils/getGraphqlFields'
+import { pageableConnectionArgs, getNumberPagingModel } from 'data/graphql/paging/getPagingModel'
+import { projectConnection } from 'data/graphql/connections/project'
+import { projectType } from 'data/graphql/types/queries/project'
+import getGraphqlFields from 'data/graphql/utils/getGraphqlFields'
 import models from 'models'
 
 

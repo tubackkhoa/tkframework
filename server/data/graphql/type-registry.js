@@ -1,5 +1,5 @@
 import { fromGlobalId } from 'graphql-relay'
-import getGraphqlFields from 'graphql/utils/getGraphqlFields'
+import getGraphqlFields from 'data/graphql/utils/getGraphqlFields'
 
 const types = {}
 

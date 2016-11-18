@@ -1,5 +1,5 @@
-import { pageableConnectionArgs, getNumberPagingModel } from 'graphql/paging/getPagingModel'
-import { authorConnection } from 'graphql/connections/author'
+import { pageableConnectionArgs, getNumberPagingModel } from 'data/graphql/paging/getPagingModel'
+import { authorConnection } from 'data/graphql/connections/author'
 
 // must validate this before export
 // should only use export default directly for const of {}

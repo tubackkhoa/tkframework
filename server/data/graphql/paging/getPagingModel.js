@@ -10,7 +10,7 @@ import {
 } from 'graphql-relay'
 
 import getPagingParameters from './getPagingParameters'
-import getGraphqlFields from 'graphql/utils/getGraphqlFields'
+import getGraphqlFields from 'data/graphql/utils/getGraphqlFields'
 
 import models from 'models'
 

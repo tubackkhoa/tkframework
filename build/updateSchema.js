@@ -13,9 +13,10 @@
 
 import fs from 'fs'
 import path from 'path'
-import schema from 'graphql/schema'
 import { graphql } from 'graphql'
 import { introspectionQuery, printSchema } from 'graphql/utilities'
+
+import schema from 'data/graphql/schema'
 
 import {BUILT_SCHEMA_PATH} from './constants'
 

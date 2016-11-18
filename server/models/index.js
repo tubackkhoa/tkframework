@@ -1,5 +1,5 @@
 import { sequelize } from './config'
-import dataloaderSequelize from 'dataloader/sequelize'
+import dataloaderSequelize from 'data/loader/sequelize'
 
 import posts from './tables/posts'
 import authors from './tables/authors'

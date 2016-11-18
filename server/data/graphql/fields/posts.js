@@ -11,12 +11,12 @@ import {
 } from 'graphql-relay'
 
 
-import { pageableConnectionArgs, getNumberPagingModel } from 'graphql/paging/getPagingModel'
-import { postConnection } from 'graphql/connections/post'
-import { postType, detailPostType } from 'graphql/types/queries/post'
-import getGraphqlFields from 'graphql/utils/getGraphqlFields'
+import { pageableConnectionArgs, getNumberPagingModel } from 'data/graphql/paging/getPagingModel'
+import { postConnection } from 'data/graphql/connections/post'
+import { postType, detailPostType } from 'data/graphql/types/queries/post'
+import getGraphqlFields from 'data/graphql/utils/getGraphqlFields'
 import models from 'models'
-import { getPostDetail } from 'graphql/types/queries/helpers/post'
+import { getPostDetail } from 'data/graphql/types/queries/helpers/post'
 
 import { taggingsPostConnect } from 'models/shared/connect'
 

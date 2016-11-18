@@ -17,7 +17,8 @@ import ProjectIndex from './frontend/containers/Project/Index'
 import App from './shared/containers/App'
 import NotFound from './shared/containers/notFound'
 
-import Login from './backend/containers/authors/Login'
+import Login from './backend/containers/Author/Login'
+import AuthorForm from './backend/containers/Author/Form'
 
 import * as authSelectors from 'store/selectors/auth'
 
@@ -43,10 +44,9 @@ export const Routes = (store) => (
     <Route path='/posts' component={PostIndex} queries={ViewerQueries} prepareParams={prepareTagParams} />
     <Route path='/posts/:id' component={PostShow} queries={ViewerQueries} />
     <Route path="/projects" component={ProjectIndex} queries={ViewerQueries} prepareParams={prepareTagParams}/>
-
     <Route path='/login' component={Login}/>
     <Route onEnter={checkAuth(store)} path='/cms'>
-      
+      <Route path="author/edit" component={AuthorForm} />
     </Route>
     
     <Route path='*' component={NotFound} />

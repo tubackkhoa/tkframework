@@ -1,13 +1,47 @@
+// build is when we build some static libs for client and server
+// development is for client
+// server is for node js dev phrase
+// production is for deploying bundle web app
+// node is for deploying bundle node server
+// test is for testing
 {  
-  "plugins": ["transform-decorators-legacy", "transform-runtime", "transform-class-properties"],
-	"presets": ["es2015", "stage-3", "react"],
+  "plugins": ["transform-decorators-legacy", "transform-runtime", "transform-class-properties"],	  
 	"env": {
 		"development": {
-      "passPerPreset": true,
-			"plugins": ["./build/babelRelayPlugin", "react-hot-loader/babel"]			
-		},
-    "production": {      
-      "plugins": ["./build/babelRelayPlugin"]
+			"plugins": [
+        "./build/babelRelayPlugin", 
+        "transform-decorators-legacy", 
+        "transform-runtime", 
+        "transform-class-properties", 
+        "react-hot-loader/babel"
+      ],
+      "presets": ["es2015", "stage-3", "react"]			
+		},    
+
+    "production": {
+      "plugins": [
+        "./build/babelRelayPlugin",
+        "transform-decorators-legacy", 
+        "transform-runtime", 
+        "transform-class-properties", 
+      ],
+      "presets": [["es2015", { "modules": false }], "stage-3", "react"]
+    },
+
+    "node": {
+      "presets": ["es2015", "stage-3"],
+    },
+
+    "server" : {
+      "presets": ["es2015", "stage-3"],
+    },
+
+    "build": {    
+      "presets": ["es2015", "stage-3"],
+    },
+
+    "test": {
+      "presets": ["es2015", "stage-3"],
     }
 	}
 }

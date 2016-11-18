@@ -9,12 +9,12 @@ import {
   offsetToCursor, 
 } from 'graphql-relay'
 
-import { viewerType } from 'graphql/types/queries/viewer'
-import { getViewer } from 'graphql/viewer'
-import { postEdge } from 'graphql/connections/post'
+import { viewerType } from 'data/graphql/types/queries/viewer'
+import { getViewer } from 'data/graphql/viewer'
+import { postEdge } from 'data/graphql/connections/post'
 
 import models from 'models'
-import authorize from 'graphql/authorize'
+import authorize from 'data/graphql/authorize'
 
 export const addPost = mutationWithClientMutationId({
   name: 'AddPost',

@@ -1,5 +1,5 @@
-import dataloaderSequelize from 'dataloader/sequelize'
-import { sequelize, DataTypes } from '../config'
+import dataloaderSequelize from 'data/loader/sequelize'
+import { sequelize, DataTypes } from 'models/config'
 
 const taggings = sequelize.define("taggings", {    
   type: {

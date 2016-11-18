@@ -1,4 +1,4 @@
-import { postType } from 'graphql/types/queries/post'
+import { postType } from 'data/graphql/types/queries/post'
 import { 
   connectionDefinitions,
 } from 'graphql-relay'

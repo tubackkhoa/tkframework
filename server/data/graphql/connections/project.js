@@ -1,4 +1,4 @@
-import { projectType } from 'graphql/types/queries/project'
+import { projectType } from 'data/graphql/types/queries/project'
 import { 
   connectionDefinitions,
 } from 'graphql-relay'

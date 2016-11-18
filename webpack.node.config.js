@@ -9,16 +9,35 @@ const plugins = []
 if (OPTIMIZE) {
   plugins.push(new Webpack.optimize.OccurrenceOrderPlugin(true))
   plugins.push(new Webpack.optimize.DedupePlugin())  
+  plugins.push(new Webpack.optimize.UglifyJsPlugin({
+    compress: {
+      warnings: false,
+      unused: true,
+      dead_code: true,
+      drop_console: true,
+    },
+    output: {
+      comments: false
+    },
+    // turn off mangling entirely in case of variable rename
+    sourceMap: false,
+    mangle: true
+  }))
 }
 
 const conf = {
   target: 'node',
   output: {
     path: Path.join(__dirname, 'build/node'),
-    filename: 'bundle.js',
+    filename: 'index.js',
+    libraryTarget: 'commonjs',
   },  
+  externals: [
+      // these modules will be included because of dynamic resolvers
+      /^(?:express|graphql|sequelize|bindings)/i,
+  ],
   module: {
-    loaders: [
+    rules: [
       // if we have many code then use cacheDirectory, but this time almost code is on node_modules
       // ?cacheDirectory=true
       { test: /\.js$/, loader: 'babel', exclude: /node_modules/, query:{cacheDirectory: true} },

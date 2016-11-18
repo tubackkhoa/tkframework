@@ -1,6 +1,6 @@
 import { GraphQLObjectType } from 'graphql'
-import { nodeField } from 'graphql/node-definitions'
-import { getViewer } from 'graphql/viewer'
+import { nodeField } from 'data/graphql/node-definitions'
+import { getViewer } from 'data/graphql/viewer'
 
 import { viewerType } from './viewer'
 

@@ -8,8 +8,8 @@ import {
   attributeFields,
 } from 'graphql-sequelize'
 
-import { nodeInterface } from 'graphql/node-definitions'
-import { registerType } from 'graphql/type-registry'
+import { nodeInterface } from 'data/graphql/node-definitions'
+import { registerType } from 'data/graphql/type-registry'
 
 export const getQueryType = (name, model, fields, lookupFn) => {
 

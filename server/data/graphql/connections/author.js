@@ -1,4 +1,4 @@
-import { authorType } from 'graphql/types/queries/author'
+import { authorType } from 'data/graphql/types/queries/author'
 import { 
   connectionDefinitions,
 } from 'graphql-relay'

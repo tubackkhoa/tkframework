@@ -1,6 +1,6 @@
-import dataloaderSequelize from 'dataloader/sequelize'
-import { taggingsPostConnect, taggingsProjectConnect } from '../shared/connect'
-import { sequelize, DataTypes } from '../config'
+import dataloaderSequelize from 'data/loader/sequelize'
+import { taggingsPostConnect, taggingsProjectConnect } from 'models/shared/connect'
+import { sequelize, DataTypes } from 'models/config'
 
 const tags = sequelize.define("tags", {    
   type: {

@@ -26,23 +26,22 @@ if (!FAIL_ON_ERROR) {
 
 if (OPTIMIZE) {
 	plugins.push(new Webpack.optimize.OccurrenceOrderPlugin())
-	// plugins.push(new Webpack.optimize.DedupePlugin())
 	plugins.push(new Webpack.optimize.UglifyJsPlugin({
-		compressor: {
+		compress: {
 			warnings: false,
 			unused: true,
-      // dead_code: true,
+      dead_code: true,
       drop_console: true,
-      // screw_ie8: true
+      // screw_ie8: true,
 		},
 
 		output: {
       comments: false
     },
     // turn off mangling entirely in case of variable rename
-    compress: false,
     sourceMap: false,
- 		// mangle: false
+    // with module = false, no need to set this one
+ 		// mangle: true,
 	}))
 }
 
@@ -53,7 +52,7 @@ const conf = {
 		publicPath: '/assets/'
 	},
 	module: {
-		loaders: [
+		rules: [
 			// if we have many code then use cacheDirectory, but this time almost code is on node_modules
 			// ?cacheDirectory=true
 			{ test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/, query:{cacheDirectory: true} },

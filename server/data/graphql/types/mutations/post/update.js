@@ -13,10 +13,10 @@ import {
   fromGlobalId,
 } from 'graphql-relay'
 
-import { postType } from 'graphql/types/queries/post'
+import { postType } from 'data/graphql/types/queries/post'
 
 import models from 'models'
-import authorize from 'graphql/authorize'
+import authorize from 'data/graphql/authorize'
 
 // resolve can return async function, it is Promise
 // and in async function, we can use await instead of then callback
