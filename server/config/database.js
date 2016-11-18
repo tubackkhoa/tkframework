@@ -13,7 +13,7 @@ module.exports =  {
     },
     prod: {
       username: "root",
-      password: "abc123ABC",
+      password: process.env.DB_PASS,
       database: "tkframework",
       logging: false,
       host: "localhost",
