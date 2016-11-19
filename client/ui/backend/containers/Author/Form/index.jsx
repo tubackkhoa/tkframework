@@ -1,72 +1,61 @@
 import React, { Component, PropTypes } from 'react'
 import Relay from 'react-relay'
-import { Field, reduxForm } from 'redux-form'
+import { Field, FieldArray, reduxForm } from 'redux-form'
 import RaisedButton from 'material-ui/FlatButton'
 import { connect } from 'react-redux'
 
-import { renderTextField, renderTextEditor, renderDropzoneImage } from 'ui/backend/shared/utils'
-import SocialAccount from 'ui/backend/components/Author/Form/SocialAccount'
+import { 
+  renderTextField, 
+  renderTextEditor, 
+  renderDropzoneImage, 
+  renderSocialAccounts,
+} from 'ui/backend/shared/utils'
+
 import ErrorMessage from 'ui/shared/components/ErrorMessage'
 import inlineStyles from 'ui/shared/styles/MaterialUI'
 
-import UpdateSocialAccountMutation from 'store/relay/mutations/social-account/UpdateSocialAccountMutation'
-
 import * as authSelectors from 'store/selectors/auth'
+import { updateSocialAccount } from 'store/actions/auth'
 
+// higher order function for redux form and connect to store
 const validate = (values) => {
   const errors = {}
   !values.name && (errors.name = 'Empty name')  
   return errors
 }
 
-
 const mapStateToProps = (state) => ({  
-  user : authSelectors.getUser(state),
+  initialValues: authSelectors.getUser(state),
 })
 
-@reduxForm({
-  form: 'AuthorForm',  
-  validate,  
-}, mapStateToProps)
+@connect(mapStateToProps, { updateSocialAccount })
+@reduxForm({ form: 'AuthorForm', validate })
 class AuthorForm extends Component {
 
-  constructor(props){
-    super(props)
-    // set from store
-    props.relay.setVariables({ userId: props.user.id })
+  state = {
+    errorMessage: null,  
   }
 
   _handleSubmit = props => {
     console.log(props)
+    // 
+    // this.props.relay.commitUpdate(
+    //   new UpdateAuthorMutation({title, post:this.props.post}),
+    //   {
+    //     onSuccess:(res)=>console.log(res),
+    //     // trigger redux-form validation
+    //     onFailure:(trans) => this.setState({ errorMessage:trans.getError() }), 
+    //   }
+    // )
   }
 
-  _handleUpdateSocialAccount = (sortRank, url) => {
+  handleUpdateSocialAccount(input, sortRank, url) {
+    // update to form state so we can get via handle_submit
     // this.props.updateSocialAccount(sortRank, url)
-    this.props.relay.commitUpdate(
-      new UpdateSocialAccountMutation({title, post:this.props.post}),
-      {
-        onSuccess:(res)=>console.log(res),
-        // trigger redux-form validation
-        onFailure:(trans) => this.setState({ errorMessage:trans.getError() }), 
-      }
-    )
-  }
-
-  renderSocialAccounts() {
-    // some accounts may not be saved yet, so use index as key, instead of account id.
-    return(
-      this.props.viewer.detailAccount.social_accounts.map((account, index) => {
-        return (
-          <SocialAccount
-            key={index}
-            sortRank={index}
-            accountType={account.accountType}
-            url={account.url}
-            handleUpdate={this._handleUpdateSocialAccount}
-          />
-        )
-      })
-    )
+    // clone current value, then update it, finally call onchange
+    const newValue = input.value.slice(0)
+    newValue[sortRank].url = url
+    input.onChange(newValue)
   }
 
   renderErrorMessage() {
@@ -77,10 +66,12 @@ class AuthorForm extends Component {
 
   render() { 
     const { handleSubmit, submitting } = this.props
+
     return (
       <form onSubmit={handleSubmit(this._handleSubmit)}>
         <h2 >Update About</h2>
-        <Field name="name" component={renderTextField} label="First Name"/>
+        <Field name="name" component={renderTextField} label="Name"/>
+        
         
         <div className="form-group">
           <label>Description</label>
@@ -94,10 +85,11 @@ class AuthorForm extends Component {
 
         <div className="form-group">
           <label>Image</label>
-          <Field name="image" component={renderDropzoneImage}/>
+          <Field name="avatar" component={renderDropzoneImage}/>
         </div>
+        
+        <FieldArray name="social_accounts" component={renderSocialAccounts} />
 
-        {this.renderSocialAccounts()}
         {this.renderErrorMessage()}
 
         <RaisedButton label='Update' type='submit' disabled={submitting} />
@@ -119,20 +111,16 @@ export default Relay.createContainer(AuthorForm, {
     viewer: () => Relay.QL`
       fragment on Viewer {
         id
-        detailAccount(userId:$userId) {
+        detailAuthor(userId: $userId) {
           id
-          introduction
-          description
-          social_accounts {
-            id            
-            url
-            ${UpdateSocialAccountMutation.getFragment('social_account')
-          }
+          
         } 
       }      
     `
   },
 })
+
+
 
 
 

@@ -6,7 +6,7 @@ const initialState = {
   audioTrack: {},
 }
 
-const bookReducer = (state = initialState, { type, payload }) => {
+export const bookReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case 'app/replaceAudio':
       // do nothing with state, 
@@ -41,4 +41,3 @@ const bookReducer = (state = initialState, { type, payload }) => {
 
 }
 
-export default bookReducer

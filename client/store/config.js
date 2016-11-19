@@ -67,16 +67,20 @@ const configureStore = (callback, failure) => {
   // use localforage wrapper when WEBSQL is ready on all browsers
   // we save only audioTrack from bookReducer and all from loginReducer
   const authTransform = createTransform(
+    // transform state coming form redux on its way to being serialized and stored
+    // such as {key1}=>{key1.tolower} means store into localStorage as lower case
     inboundState => inboundState,
+    // transform state coming from storage, on its way to be rehydrated into redux 
+    // such as {key1}=>{key1:key1.toupper} means get from localStorage and transform it to uppercase in store
     outboundState => outboundState,      
-    {whitelist: ['authReducer']}
+    {whitelist: ['auth']}
   )
 
   // persist Store tell redux to store only some attribute from state to local storage
   // why in each reducer, we should implement rehydrate to restore back the state
   // this will trigger save to local each updated event 
   persistStore(store, {
-    whitelist: ['authReducer'],
+    whitelist: ['auth'],
     keyPrefix: 'tk:',
     transforms: [authTransform]
   }, ()=>{

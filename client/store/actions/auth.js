@@ -54,3 +54,19 @@ export const saveRefreshToken = (data) => ({
 export const removeLoggedUser = () => ({
   type: 'app/removeLoggedUser',  
 })
+
+
+/**
+ *
+ * Extra information for user
+ *
+ */
+export const updateAuthor = (data) => ({
+  type: 'app/updateAuthor',
+  payload: data
+})
+
+export const updateSocialAccount = (sortRank, url) =>({
+  type: 'app/updateSocialAccount',
+  payload: { sortRank, url },  
+})

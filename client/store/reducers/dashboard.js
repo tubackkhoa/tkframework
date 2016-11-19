@@ -1,6 +1,6 @@
 
 // reducer only return a value to update substate via key as reducer
-const dashboardReducer = (state = [], { type, payload }) => {
+export const dashboardReducer = (state = [], { type, payload }) => {
   switch (type) {
     case 'app/replaceBooks':
       return payload
@@ -9,4 +9,3 @@ const dashboardReducer = (state = [], { type, payload }) => {
   }
 }
 
-export default dashboardReducer

@@ -113,6 +113,7 @@
     "jsonwebtoken": "^7.1.9",
     "localStorage": "^1.0.3",
     "material-ui": "^0.16.1",
+    "multer": "^1.2.0",
     "normalizr": "^2.2.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

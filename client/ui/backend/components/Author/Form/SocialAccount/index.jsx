@@ -1,18 +1,19 @@
 import React, { Component, PropTypes } from 'react'
 import TextField from 'material-ui/TextField'
 
+const accountTypeMap = ['Github', 'Facebook', 'Twitter', 'LinkedIn']
 class SocialAccount extends Component {
 
   render() {
-    const {url, accountType, sortRank, handleUpdate} = this.props
+    const {url, accountType, handleUpdate} = this.props
     return (
       <TextField
         value={url}
         name="url"
-        floatingLabelText={`${accountType} URL`}
+        floatingLabelText={`${accountTypeMap[accountType]} URL`}
         hintText="Enter URL"
         fullWidth
-        onChange={e=>handleUpdate(sortRank, e.target.value)}
+        onChange={e=>handleUpdate(e.target.value)}
       />
     )
   }

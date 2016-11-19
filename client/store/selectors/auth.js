@@ -1,10 +1,10 @@
 
 export const isLogged = state =>
-  state.authReducer.loggedIn
+  state.auth.loggedIn
 
 export const getToken = state => 
-  state.authReducer.token 
+  state.auth.token
 
 export const getUser = state => 
-  state.authReducer.user 
-
+  state.auth.user || {}
+  

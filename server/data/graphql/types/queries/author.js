@@ -22,7 +22,7 @@ export const authorType = new GraphQLObjectType({
     name        : { type: GraphQLString },
     image       : { type: GraphQLString },
     introduction: { type: GraphQLString },
-    description: { type: GraphQLString },
+    description : { type: GraphQLString },
     // you can use a mapping fields to convert from graphql fields to database fields
     social_accounts: {
       type: new GraphQLList(socialAccountType),
@@ -30,6 +30,7 @@ export const authorType = new GraphQLObjectType({
     }, 
 
   }),
+  // use node interface, we can access it via node(id:$id)
   interfaces: [nodeInterface],
 })
 

@@ -106,18 +106,21 @@ router.post('/reject', ({body:{refreshToken:refresh_token}}, res) => {
 // we just logout the passport, then redirect to home page or login page
 // we do not use session, if you use it you have to redirect in req.session.destroy(function (err) {})
 router.post('/logout', (req, res) => {
-  // logout passport to end access token immediately
-  req.logout()
+
+  if(!req.user){
+    return res.status(204).end()
+  }
+  
   // delete refresh_token as session
   models.authors.update({      
     refresh_token: '',
   },{
     where:{
-      refresh_token
+      id: req.user.id,
     }
   }).then(()=>{
-    // just redirect to home page
-    res.redirect('/')
+    // logout passport to end access token immediately
+    req.logout()
   })   
 })
 

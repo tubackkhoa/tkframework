@@ -25,7 +25,8 @@ export const fetchJson = (url, options = {}, base = API_BASE) => (
     },
   })
   .then(rejectErrors)
-  .then((res) => res.json())
+  // default return empty json
+  .then((res) => res.status === 204 ? {} : res.json())
 )
 
 export const fetchJsonWithToken = (token, url, options = {}, ...args) => (

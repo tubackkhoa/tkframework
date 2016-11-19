@@ -13,7 +13,7 @@ const initialState = {
 
 // Takes care of changing the application state
 // state is previous state, 
-const authReducer = (state = initialState, {type, payload}) => {
+export const authReducer = (state = initialState, {type, payload}) => {
   switch (type) {   
     case 'app/setAuthState':
       return {...state, loggedIn: payload}
@@ -23,10 +23,20 @@ const authReducer = (state = initialState, {type, payload}) => {
       return {...state, user: null, token: null}
     case 'app/saveRefreshToken':
       // payload is access token
-      return {...state, token: {...state.token, ...payload} }    
+      return {...state, token: {...state.token, ...payload} }   
+    case 'app/updateAuthor':
+      // do not store this, it is global id
+      const { __dataID__, id, ...author } = payload
+      return { ...state, user: {...state.user, ...author } } 
+    case 'app/updateSocialAccount':
+      // copy then update url
+      const social_accounts = state.user.social_accounts.slice(0)
+      social_accounts[payload.sortRank].url = payload.url
+    return { ...state, user: {...state.user,  social_accounts} }
+    
     case REHYDRATE:      
       // save reject token do nothing
-      const incoming = payload.authReducer      
+      const incoming = payload.auth
       if (incoming) {
         console.log('Updated authReducer for all!!!', incoming)
         // even return the whole payload, redux still does not update the left parts
@@ -40,4 +50,3 @@ const authReducer = (state = initialState, {type, payload}) => {
   }
 }
 
-export default authReducer

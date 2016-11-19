@@ -1,4 +1,4 @@
-const generalReducer = (state = [], { type, payload }) => {
+export const generalReducer = (state = [], { type, payload }) => {
   switch (type) {
     case 'app/replaceCommits':
       return payload
@@ -7,4 +7,3 @@ const generalReducer = (state = [], { type, payload }) => {
   }
 }
 
-export default generalReducer

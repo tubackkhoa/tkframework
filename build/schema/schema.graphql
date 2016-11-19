@@ -39,10 +39,24 @@ type AuthorEdge {
   cursor: String!
 }
 
+scalar Buffer
+
 type DetailPost {
   node: Post
   next: Post
   prev: Post
+}
+
+# A file uploaded via multipart/form-data
+input File {
+  # The fieldname used to POST this file.
+  fieldname: String!
+
+  # The original file name.
+  originalname: String!
+
+  # The file buffered in memory
+  buffer: Buffer!
 }
 
 type Item implements Node {
@@ -111,6 +125,7 @@ type Mutation {
   addPost(input: AddPostInput!): AddPostPayload
   updatePost(input: UpdatePostInput!): UpdatePostPayload
   removePost(input: RemovePostInput!): RemovePostPayload
+  updateAuthor(input: UpdateAuthorInput!): UpdateAuthorPayload
 }
 
 # An object with an ID
@@ -230,6 +245,11 @@ type RemovePostPayload {
   clientMutationId: String
 }
 
+input SettingInput {
+  id: Int
+  url: String!
+}
+
 type SocialAccount implements Node {
   type: String
 
@@ -250,6 +270,23 @@ type Tag implements Node {
   name: String
   created_at: String!
   updated_at: String!
+}
+
+input UpdateAuthorInput {
+  id: ID!
+  description: String!
+  introduction: String!
+  name: String!
+  avatar: File
+
+  # List social accounts input of the user
+  social_accounts: [SettingInput]
+  clientMutationId: String
+}
+
+type UpdateAuthorPayload {
+  author: Author
+  clientMutationId: String
 }
 
 input UpdatePostInput {

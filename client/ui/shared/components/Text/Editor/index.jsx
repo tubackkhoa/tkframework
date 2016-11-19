@@ -74,7 +74,7 @@ class TextEditor extends Component {
 
   _handleInputKeyDown = (e) => {
     if (e.which === 13) {
-      this.handleConfirmLink(e)
+      this._handleConfirmLink(e)
     }
   }
 
@@ -95,7 +95,7 @@ class TextEditor extends Component {
   }
 
   _handleToggleBlockType = (blockType) => {
-    this.handleChange(
+    this._handleChange(
       RichUtils.toggleBlockType(
         this.state.editorState,
         blockType
@@ -105,7 +105,7 @@ class TextEditor extends Component {
 
 
   _handleToggleInlineStyle = (inlineStyle) => {
-    this.handleChange(
+    this._handleChange(
       RichUtils.toggleInlineStyle(
         this.state.editorState,
         inlineStyle
@@ -116,7 +116,7 @@ class TextEditor extends Component {
   _handleKeyCommand = (command) => {
     const newState = RichUtils.handleKeyCommand(this.state.editorState, command)
     if (newState) {
-      this.handleChange(newState)
+      this._handleChange(newState)
       return true
     }
     return false

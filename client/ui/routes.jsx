@@ -8,6 +8,7 @@ import {
 
 import {
   prepareTagParams,
+  prepareAuthorParams
 } from 'store/relay/params'
 
 import Home from './shared/containers/Home'
@@ -41,12 +42,15 @@ const checkAuth = (store) => {
 export const Routes = (store) => (
   <Route path='/' component={App}>         
     <IndexRoute component={Home} queries={ViewerQueries} />    
-    <Route path='/posts' component={PostIndex} queries={ViewerQueries} prepareParams={prepareTagParams} />
+    <Route path='/posts' component={PostIndex} queries={ViewerQueries} 
+      prepareParams={prepareTagParams} />
     <Route path='/posts/:id' component={PostShow} queries={ViewerQueries} />
-    <Route path="/projects" component={ProjectIndex} queries={ViewerQueries} prepareParams={prepareTagParams}/>
+    <Route path="/projects" component={ProjectIndex} queries={ViewerQueries} 
+      prepareParams={prepareTagParams} />
     <Route path='/login' component={Login}/>
     <Route onEnter={checkAuth(store)} path='/cms'>
-      <Route path="author/edit" component={AuthorForm} />
+      <Route path="author/edit" component={AuthorForm} queries={ViewerQueries} 
+        prepareParams={prepareAuthorParams(store)} />
     </Route>
     
     <Route path='*' component={NotFound} />
