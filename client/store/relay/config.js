@@ -11,7 +11,7 @@ import injectNetworkLayer from './network/injectNetworkLayer'
 import { setToast, forwardTo } from 'store/actions/common'
 
 import api from 'store/api'
-import {saveRefreshToken} from 'store/actions/auth'
+import { saveRefreshToken } from 'store/actions/auth'
 
 /**
  * Get the promise from the request and
@@ -24,17 +24,18 @@ function registerResponseDispatch(request, requestKey, dispatch, token) {
   request.getPromise().then(({response}) => {
     console.log('[RELAY-NETWORK] Response:', response)
     dispatch(markRequestSuccess(requestKey))
-  }).catch(response=>{
-    dispatch(markRequestFailed(response, requestKey))
-    // user has signed in but return unauthorized
-    if(response.status === 401 && token){
+  }).catch(err => {
+    dispatch(markRequestFailed(err, requestKey))
+    // user has signed in but return unauthorized ?, just refresh for sure, only one
+    if(token){
       // tell user to wait
       dispatch(setToast('Refreshing token... You should reload page for sure!'))
       // try refresh token, then reload page ?
       api.auth.refreshAccessToken(token.refreshToken)          
-        .then(newToken => {          
+        // it can return more such as user info, expired date ?
+        .then(({ token: newToken }) => {          
           // call action creator to update
-          dispatch(saveRefreshToken(newToken.accessToken))            
+          dispatch(saveRefreshToken(newToken))            
         })
         .catch(err => console.log('[client.js] ERROR can not refresh token', err))
     }    

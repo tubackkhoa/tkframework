@@ -19,6 +19,10 @@ export const getPostDetail = async (id, graphFields) => {
     return post
 
   if(tagsGraphFields) {
+    if(!tagsGraphFields.subject_id) {
+      // by default we will use author_id from author
+      tagsGraphFields.subject_id = postGraphFields.id
+    }
     // with async it can handle promise.map by apply yield return to generator
     post.tags = await post.getPostTags(Object.keys(tagsGraphFields))
   }

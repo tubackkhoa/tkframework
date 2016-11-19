@@ -15,6 +15,10 @@ type Author implements Node {
   name: String
   image: String
   introduction: String
+  description: String
+
+  # List social accounts of the user
+  social_accounts: [SocialAccount]
 }
 
 # A connection to a list of items.
@@ -226,6 +230,18 @@ type RemovePostPayload {
   clientMutationId: String
 }
 
+type SocialAccount implements Node {
+  type: String
+
+  # The ID of an object
+  id: ID!
+  author_id: Int
+  account_type: Int
+  url: String
+  created_at: String!
+  updated_at: String!
+}
+
 type Tag implements Node {
   type: String
 
@@ -273,6 +289,9 @@ type Viewer implements Node {
 
   # A list of authors
   authors(after: String, first: Int, before: String, last: Int, offset: Int, order: String): AuthorConnection
+
+  # Detail information of the author
+  detailAuthor(userId: Int): Author
 
   # A list of projects
   projects(

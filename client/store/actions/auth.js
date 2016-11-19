@@ -42,7 +42,7 @@ export const saveLoggedUser = (data) => ({
   }
 })
 
-
+// data: {accessToken...}
 export const saveRefreshToken = (data) => ({
   type: 'app/saveRefreshToken',
   payload: data,

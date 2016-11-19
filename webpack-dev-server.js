@@ -6,7 +6,7 @@ const WebpackDevServer = require('webpack-dev-server')
 
 const WebpackConfig = require('./webpack.config')
 
-const DEV_SERVER_PORT = process.env.PORT;
+const DEV_SERVER_PORT = process.env.PORT
 
 new WebpackDevServer(Webpack(WebpackConfig), {
 	publicPath: WebpackConfig.output.publicPath,
@@ -29,31 +29,26 @@ new WebpackDevServer(Webpack(WebpackConfig), {
 	const watch = require('node-watch') 
 	const colors = require('colors')
 
-	watch('stylesheets', function(filename) {
+	watch('client/stylesheets', function(filename) {
 		if (/\.(?:scss|sass)$/.test(filename)) {	  		  	
 	  	// just output to console
 	    exec('npm run sass --silent', function(error, stdout, stderr) {	    	
 			  if (error) {
-			    console.error(colors.red(error));
-			    return;
+			    console.error(colors.red(error))
+			    return
 			  } else {
-			  	console.log(colors.green('Compiled: ' + filename));
+			  	console.log(colors.green('Compiled: ' + filename))
 			  }
 			})
 	  }
 	})
 
-	watch('server/graphql', function(filename) {
+	watch('server/data/graphql', function(filename) {
 		if (/\.(?:js)$/.test(filename)) {	  		  	
-	  	// just output to console
-	    exec('npm run update-schema', function(error, stdout, stderr) {	    	
-			  if (error) {
-			    console.error(colors.red(error));
-			    return;
-			  } else {
-			  	console.log(colors.green('Update schema for : ' + filename));
-			  }
-			})
+			console.log(colors.yellow('Updating schema for : ' + filename))
+	  	// just output to console, after this file is change, it will automatically restart nodemon
+	  	// so we will not receive any infomation on callback of this method, because it will be terminated
+	    exec('npm run update-schema')
 	  }
 	})
 

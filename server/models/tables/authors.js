@@ -17,6 +17,32 @@ const authors = sequelize.define('authors', {
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',
+
+  classMethods: {
+    associate: function() {              
+
+      this.hasMany(sequelize.models.social_accounts, {
+        foreignKey: 'author_id',        
+      })
+    }
+  },
+
+  instanceMethods: {
+    // arrow function can mislead this
+    getSocialAccounts: function(attributes) {    
+
+      // sample of fallback, when you not pass author_id to map ?
+      // models.social_accounts.findAll ()
+      // but you should pass author_id by default to author.id
+
+      // with where and attributes
+      return this.getSocial_accounts({          
+        attributes,
+        order: [['account_type', 'ASC']],
+      })
+    },
+
+  }
 })
 
 dataloaderSequelize(authors)

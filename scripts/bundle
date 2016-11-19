@@ -1,1 +1,1 @@
-node-sass stylesheets/main.scss --output-style compressed public/assets/main.css && npm run update-schema && cross-env NODE_ENV=production webpack
+node-sass client/stylesheets/main.scss --output-style compressed public/assets/main.css && npm run update-schema && cross-env NODE_ENV=production webpack

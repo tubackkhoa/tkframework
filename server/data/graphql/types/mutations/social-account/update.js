@@ -13,34 +13,35 @@ import {
   fromGlobalId,
 } from 'graphql-relay'
 
-import { postType } from 'data/graphql/types/queries/post'
+import { socialAccountType } from 'data/graphql/types/queries/social-account'
 
 import models from 'models'
 import authorize from 'data/graphql/authorize'
 
 // resolve can return async function, it is Promise
 // and in async function, we can use await instead of then callback
-export const updatePost = mutationWithClientMutationId({
-  name: 'UpdatePost',
+export const updateSocialAccount = mutationWithClientMutationId({
+  name: 'UpdateSocialAccount', // PayLoad will be append at the end of name
   inputFields: {   
     id: { type: new GraphQLNonNull(GraphQLID) },
-    title: { type: new GraphQLNonNull(GraphQLString) },
+    url: { type: new GraphQLNonNull(GraphQLString) },
   },
   outputFields: {
-    post: {
-      type: postType,
-      resolve: post => post,
+    social_account: {
+      type: socialAccountType,
+      resolve: socialAccount => socialAccount,
     }
   },
-  mutateAndGetPayload: async ({id, title}, {request}) => {      
+  mutateAndGetPayload: async ({id, url}, {request}) => {      
     authorize(request)
     // insert then return post, we can use try catch instead of error callback
     
     // error is good enough
-    const postId = fromGlobalId(id).id    
-    models.posts.update({title},{
+    const socialAccountId = fromGlobalId(id).id
+    models.posts.update({url}, {
       where: {id: postId}
-    })    
-    return {id, title}
+    })
+    // return the update to tell client it is the same
+    return {id, url}
   },
 })

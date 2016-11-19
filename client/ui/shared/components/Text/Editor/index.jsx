@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 import {
   Editor,
   EditorState,
@@ -6,80 +6,59 @@ import {
   convertFromRaw,
   convertToRaw,
   Entity,
-} from 'draft-js';
+} from 'draft-js'
 
-import { getBlockStyle } from '../shared/utils';
-import { decorator } from '../shared/Decorator';
-import { BlockStyleControls } from '../shared/BlockStyleControl';
-import { InlineStyleControls } from '../shared/InlineStyleControl';
-import ContentAddCircle from 'material-ui/svg-icons/content/add-circle';
-import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
-import Divider from 'material-ui/Divider';
-import inlineStyles from 'ui/shared/styles/MaterialUI';
+import { getBlockStyle } from '../shared/utils'
+import { decorator } from '../shared/Decorator'
+import { BlockStyleControls } from '../shared/BlockStyleControl'
+import { InlineStyleControls } from '../shared/InlineStyleControl'
+import ContentAddCircle from 'material-ui/svg-icons/content/add-circle'
+import TextField from 'material-ui/TextField'
+import IconButton from 'material-ui/IconButton'
+import Divider from 'material-ui/Divider'
+import inlineStyles from 'ui/shared/styles/MaterialUI'
 const styles = {}
 
 
 class TextEditor extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
 
-    if (props.value) {
-      const blocks = convertFromRaw(JSON.parse(props.value));
-      this.state = {
-        editorState: EditorState.createWithContent(blocks, decorator),
-        inputtable: false,
-        urlValue: '',
-      };
-    } else {
-      this.state = {
-        editorState: EditorState.createEmpty(decorator),
-        inputtable: false,
-        urlValue: '',
-      };
-    }
-
-    this.handleFocus = () => this.refs.editor.focus();
-    this.handleToggleInlineStyle = this.handleToggleInlineStyle.bind(this);
-    this.handleToggleBlockType = this.handleToggleBlockType.bind(this);
-    this.handleChange = (editorState) => this.setState({ editorState });
-    this.handleChangeURL = (e) => this.setState({ urlValue: e.target.value });
-    this.handleKeyCommand = this.handleKeyCommand.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
-    this.handlePromptForLink = this.handlePromptForLink.bind(this);
-    this.handleConfirmLink = this.handleConfirmLink.bind(this);
-    this.handleInputKeyDown = this.handleInputKeyDown.bind(this);
-    this.handleRemoveLink = this.handleRemoveLink.bind(this);
+    const blocks = convertFromRaw(JSON.parse(props.value))
+    this.state = {
+      editorState: props.value 
+        ? EditorState.createWithContent(convertFromRaw(JSON.parse(props.value)), decorator)
+        : EditorState.createEmpty(decorator),
+      inputtable: false,
+      urlValue: '',
+    }    
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.value && nextProps.value) {
-      const blocks = convertFromRaw(JSON.parse(nextProps.value));
-      this.setState({ editorState: EditorState.createWithContent(blocks, decorator) });
-    } else if (!nextProps.value) {
-      this.state = { editorState: EditorState.createEmpty(decorator) };
-    }
-  }
+  _handleFocus = () => this.refs.editor.focus()
 
-  handlePromptForLink(e) {
-    e.preventDefault();
-    const { editorState } = this.state;
-    const selection = editorState.getSelection();
+  _handleChange = (editorState) => this.setState({ editorState })
+
+  _handleChangeURL = (e) => this.setState({ urlValue: e.target.value })  
+
+  _handlePromptForLink = (e) => {
+    e.preventDefault()
+    const { editorState } = this.state
+    const selection = editorState.getSelection()
     if (!selection.isCollapsed()) {
       this.setState({
         inputtable: true,
         urlValue: '',
       }, () => {
-        setTimeout(() => this.refs.url.focus(), 0);
-      });
+        setTimeout(() => this.refs.url.focus(), 0)
+      })
     }
   }
 
-  handleConfirmLink(e) {
-    e.preventDefault();
-    const { editorState, urlValue } = this.state;
-    const entityKey = Entity.create('LINK', 'MUTABLE', { url: urlValue });
+  _handleConfirmLink = (e) => {
+    e.preventDefault()
+    const { editorState, urlValue } = this.state
+    const entityKey = Entity.create('LINK', 'MUTABLE', { url: urlValue })
     this.setState({
       editorState: RichUtils.toggleLink(
         editorState,
@@ -89,118 +68,122 @@ class TextEditor extends Component {
       inputtable: false,
       urlValue: '',
     }, () => {
-      setTimeout(() => this.refs.editor.focus(), 0);
-    });
+      setTimeout(() => this.refs.editor.focus(), 0)
+    })
   }
 
-  handleInputKeyDown(e) {
+  _handleInputKeyDown = (e) => {
     if (e.which === 13) {
-      this.handleConfirmLink(e);
+      this.handleConfirmLink(e)
     }
   }
 
-  handleRemoveLink(e) {
-    e.preventDefault();
-    const { editorState } = this.state;
-    const selection = editorState.getSelection();
+  _handleRemoveLink = (e) => {
+    e.preventDefault()
+    const { editorState } = this.state
+    const selection = editorState.getSelection()
     if (!selection.isCollapsed()) {
       this.setState({
         editorState: RichUtils.toggleLink(editorState, selection, null),
-      });
+      })
     }
   }
 
-  handleUpdate() {
-    const description = JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()));
-    this.props.handleUpdate(description);
+  _handleUpdate = () => {
+    const description = JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))
+    this.props.handleUpdate(description)
   }
 
-  handleToggleBlockType(blockType) {
+  _handleToggleBlockType = (blockType) => {
     this.handleChange(
       RichUtils.toggleBlockType(
         this.state.editorState,
         blockType
       )
-    );
+    )
   }
 
 
-  handleToggleInlineStyle(inlineStyle) {
+  _handleToggleInlineStyle = (inlineStyle) => {
     this.handleChange(
       RichUtils.toggleInlineStyle(
         this.state.editorState,
         inlineStyle
       )
-    );
+    )
   }
 
-  handleKeyCommand(command) {
-    const newState = RichUtils.handleKeyCommand(this.state.editorState, command);
+  _handleKeyCommand = (command) => {
+    const newState = RichUtils.handleKeyCommand(this.state.editorState, command)
     if (newState) {
-      this.handleChange(newState);
-      return true;
+      this.handleChange(newState)
+      return true
     }
-    return false;
+    return false
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.value && nextProps.value) {
+      const blocks = convertFromRaw(JSON.parse(nextProps.value))
+      this.setState({ editorState: EditorState.createWithContent(blocks, decorator) })
+    } else if (!nextProps.value) {
+      this.state = { editorState: EditorState.createEmpty(decorator) }
+    }
   }
 
   renderURLField() {
     if (this.state.inputtable) {
       return (
-        <div className={styles.urlInputBox}>
+        <div >
           <TextField
-            onChange={this.handleChangeURL}
+            onChange={this._handleChangeURL}
             ref="url"
             hintText="Enter Link URL"
             style={inlineStyles.urlInput}
             value={this.state.urlValue}
-            onKeyDown={this.handleInputKeyDown}
+            onKeyDown={this._handleInputKeyDown}
           />
-          <IconButton onMouseDown={this.handleConfirmLink}>
+          <IconButton onMouseDown={this._handleConfirmLink}>
             <ContentAddCircle />
           </IconButton>
         </div>
-      );
+      )
     }
   }
 
   render() {
-    const { editorState } = this.state;
+    const { editorState } = this.state
 
     return (
-      <div className={styles.root} onBlur={this.handleUpdate} >
-        <div className={styles.controls}>
+      <div  onBlur={this._handleUpdate} >
+        <div >
           <BlockStyleControls
             editorState={editorState}
-            onToggle={this.handleToggleBlockType}
+            onToggle={this._handleToggleBlockType}
           />
           <InlineStyleControls
             editorState={editorState}
-            onToggle={this.handleToggleInlineStyle}
-            onRemoveLink={this.handleRemoveLink}
-            onPromptForLink={this.handlePromptForLink}
+            onToggle={this._handleToggleInlineStyle}
+            onRemoveLink={this._handleRemoveLink}
+            onPromptForLink={this._handlePromptForLink}
           />
           {this.renderURLField()}
           <Divider />
         </div>
-        <div className={styles.editor} onClick={this.handleFocus}>
+        <div  onClick={this._handleFocus}>
           <Editor
-            onChange={this.handleChange}
+            onChange={this._handleChange}
             blockStyleFn={getBlockStyle}
             editorState={editorState}
             spellCheck
             placeholder="Enter Text"
             ref="editor"
-            handleKeyCommand={this.handleKeyCommand}
+            handleKeyCommand={this._handleKeyCommand}
           />
         </div>
       </div>
-    );
+    )
   }
-}
-
-TextEditor.propTypes = {
-  value: PropTypes.string,
-  handleUpdate: PropTypes.func.isRequired,
 }
 
 export default TextEditor

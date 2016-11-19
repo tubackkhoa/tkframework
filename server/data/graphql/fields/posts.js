@@ -15,10 +15,12 @@ import { pageableConnectionArgs, getNumberPagingModel } from 'data/graphql/pagin
 import { postConnection } from 'data/graphql/connections/post'
 import { postType, detailPostType } from 'data/graphql/types/queries/post'
 import getGraphqlFields from 'data/graphql/utils/getGraphqlFields'
-import models from 'models'
+
 import { getPostDetail } from 'data/graphql/types/queries/helpers/post'
 
 import { taggingsPostConnect } from 'models/shared/connect'
+
+import models from 'models'
 
 // we should prefer this way than include other models to provide only one query
 // because this will help better seperation of codes, and just one more query

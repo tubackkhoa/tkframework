@@ -21,6 +21,10 @@ export const getProjectDetail = async (id, graphFields) => {
 
   // update tags for project  
   if(project && tagsGraphFields) {
+    if(!tagsGraphFields.subject_id) {
+      // by default we will use author_id from author
+      tagsGraphFields.subject_id = projectGraphFields.id
+    }
     // with async it can handle promise.map by apply yield return to generator
     project.tags = await project.getprojectTags(Object.keys(tagsGraphFields))
   }

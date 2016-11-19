@@ -23,7 +23,7 @@ const authReducer = (state = initialState, {type, payload}) => {
       return {...state, user: null, token: null}
     case 'app/saveRefreshToken':
       // payload is access token
-      return {...state, token: {...state.token, accessToken: payload} }    
+      return {...state, token: {...state.token, ...payload} }    
     case REHYDRATE:      
       // save reject token do nothing
       const incoming = payload.authReducer      

@@ -31,7 +31,7 @@ const injectNetWorkLayer = (store) => {
     }),
     authMiddleware({
       // we will refresh token in config, to log messages in more detail
-      token: token ? token.accessToken : null,
+      token: () => token ? token.accessToken : null,
       allowEmptyToken: true,
       // tokenRefreshPromise: (req) => {
       //   console.log('[client.js] resolve token refresh', req)
