@@ -4,3 +4,4 @@ public/assets
 .DS_Store
 .idea/*
 .idea/workspace.xml
+*.log*
