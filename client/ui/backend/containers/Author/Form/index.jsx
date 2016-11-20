@@ -15,7 +15,10 @@ import ErrorMessage from 'ui/shared/components/ErrorMessage'
 import inlineStyles from 'ui/shared/styles/MaterialUI'
 
 import * as authSelectors from 'store/selectors/auth'
-import { updateSocialAccount } from 'store/actions/auth'
+import { updateAuthor } from 'store/actions/auth'
+import { setToast } from 'store/actions/common'
+
+import UpdateAuthorMutation from 'store/relay/mutations/author/UpdateAuthorMutation'
 
 // higher order function for redux form and connect to store
 const validate = (values) => {
@@ -28,31 +31,37 @@ const mapStateToProps = (state) => ({
   initialValues: authSelectors.getUser(state),
 })
 
-@connect(mapStateToProps, { updateSocialAccount })
+@connect(mapStateToProps, { updateAuthor, setToast })
 @reduxForm({ form: 'AuthorForm', validate })
 class AuthorForm extends Component {
+
+  static contextTypes = {
+    router: PropTypes.object.isRequired,
+  }
 
   state = {
     errorMessage: null,  
   }
 
-  _handleSubmit = props => {
-    console.log(props)
-    // 
-    // this.props.relay.commitUpdate(
-    //   new UpdateAuthorMutation({title, post:this.props.post}),
-    //   {
-    //     onSuccess:(res)=>console.log(res),
-    //     // trigger redux-form validation
-    //     onFailure:(trans) => this.setState({ errorMessage:trans.getError() }), 
-    //   }
-    // )
+  _handleSubmit = props => {    
+    const {avatar, ...data} = props
+    this.props.relay.commitUpdate(
+      new UpdateAuthorMutation({avatar, data, author:this.props.viewer.detailAuthor}),
+      {
+        onSuccess:({updateAuthor:{author}})=>{
+          const newAvatar = author.image ? `/uploads/author/image/${data.id}/${author.image}` : avatar
+          this.props.updateAuthor({...data, avatar: newAvatar})          
+          this.props.setToast('Update author successfully!!!')
+          this.context.router.push('/')
+        },
+        // trigger redux-form validation
+        onFailure:(trans) => this.setState({ errorMessage:trans.getError() }), 
+      }
+    )
   }
 
   handleUpdateSocialAccount(input, sortRank, url) {
     // update to form state so we can get via handle_submit
-    // this.props.updateSocialAccount(sortRank, url)
-    // clone current value, then update it, finally call onchange
     const newValue = input.value.slice(0)
     newValue[sortRank].url = url
     input.onChange(newValue)
@@ -113,7 +122,8 @@ export default Relay.createContainer(AuthorForm, {
         id
         detailAuthor(userId: $userId) {
           id
-          
+          image
+          ${UpdateAuthorMutation.getFragment('author')}
         } 
       }      
     `

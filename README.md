@@ -33,3 +33,4 @@ Usage
 - Create minified bundle: *npm run bundle*
 - Serve ./public with your production server of choice
 - Run sshpass -p "password" npm run deploy to deploy on server
+- Run node-inspector & npm run server if node does not support --inspect

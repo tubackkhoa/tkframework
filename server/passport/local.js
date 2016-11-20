@@ -21,7 +21,14 @@ passport.use(new LocalStrategy(async (email, password, done) => {
       if(checkPassword) {
         // update full image for user
         user.avatar = `/uploads/author/image/${user.id}/${image}`
-        user.social_accounts = await row.getSocialAccounts(['author_id', 'id', 'account_type', 'url'])
+
+        // filter result before returning to client
+        const social_accounts = await row.getSocialAccounts(['id', 'author_id', 'account_type', 'url'])
+        user.social_accounts = social_accounts.map(social_account => {
+          const {type, ...data} = social_account.dataValues
+          return data
+        })
+
         return done(null, user)        
       }
     }  

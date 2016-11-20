@@ -26,7 +26,7 @@
     "SERVER_PORT": 3333,
     "GRAPHQL": "http://localhost:3333/graphql",
     "NODE_DEPLOY_PATH": "root@luthornguyen.com:/home/nodejs/tkframework",
-    "DEPLOY_PATH": "root@luthornguyen.com:/opt/lampp/htdocs/tkframework"
+    "DEPLOY_PATH": "root@luthornguyen.com:/home/nodejs/tkframework"
   },
   "scripts": {
     "test-client": "scripts/test-client",
@@ -35,6 +35,7 @@
     "update-schema": "cross-env NODE_ENV=build NODE_PATH=server babel-node ./build/updateSchema.js",
     "sass": "scripts/sass",
     "server": "scripts/server",
+    "server-debug": "scripts/server-debug",
     "dev": "scripts/dev",
     "start": "run-p sass dev",
     "bundle": "scripts/bundle",
@@ -55,6 +56,7 @@
     "babel-polyfill": "^6.16.0",
     "babel-preset-babili": "0.0.8",
     "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2017": "^6.16.0",
     "babel-preset-es2017-node7": "^0.4.1",
     "babel-preset-node7": "^1.2.0",
     "babel-preset-react": "^6.16.0",

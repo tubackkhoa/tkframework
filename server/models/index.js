@@ -1,4 +1,4 @@
-import { sequelize } from './config'
+import { sequelize, DataTypes } from './config'
 import dataloaderSequelize from 'data/loader/sequelize'
 
 import posts from './tables/posts'
@@ -12,7 +12,7 @@ import taggings from './tables/taggings'
 import tags from './tables/tags'
 import social_accounts from './tables/social-accounts'
 
-const models = {}
+const models = { sequelize, DataTypes }
 // choose model to init
 const tables = [
   posts, authors, item_images, item_texts, item_twitters, 
@@ -24,8 +24,6 @@ tables.forEach(model => models[model.name] = model)
 // back reference
 sequelize.models = models
 dataloaderSequelize(sequelize)
-
-models.sequelize = sequelize
 
 // mapping for associate, after all models have been attached to models
 tables.forEach(model => model.associate && model.associate.call(model))

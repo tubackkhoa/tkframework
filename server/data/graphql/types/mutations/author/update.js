@@ -13,12 +13,18 @@ import {
   fromGlobalId,
 } from 'graphql-relay'
 
+import { v4 } from 'uuid'
+
 import { socialAccountInputType } from 'data/graphql/types/inputs/social-account'
 import { fileInputType } from 'data/graphql/types/inputs/file'
 import { authorType } from 'data/graphql/types/queries/author'
 
 import models from 'models'
 import authorize from 'data/graphql/authorize'
+
+import fs from 'fs'
+import path from 'path'
+import { filePath } from 'config/constants'
 
 // resolve can return async function, it is Promise
 // and in async function, we can use await instead of then callback
@@ -29,6 +35,7 @@ export const updateAuthor = mutationWithClientMutationId({
     description: { type: new GraphQLNonNull(GraphQLString) },
     introduction: { type: new GraphQLNonNull(GraphQLString) },
     name: { type: new GraphQLNonNull(GraphQLString) },
+    email: { type: new GraphQLNonNull(GraphQLString) },
     avatar: { type: fileInputType }, // update if there is file uploaded
     // also update the social_account related to it, maybe via ORM 
     social_accounts: {
@@ -43,15 +50,50 @@ export const updateAuthor = mutationWithClientMutationId({
     }
   },
   mutateAndGetPayload: async ({id, description, introduction, name, avatar, social_accounts}, {request}) => {      
-    authorize(request)
-    // insert then return post, we can use try catch instead of error callback
     
-    // error is good enough
-    // const socialAccountId = fromGlobalId(id).id
-    // models.posts.update({url}, {
-    //   where: {id: postId}
-    // })
+    // authorize this request first
+    authorize(request)
+    
+    // insert then return post, we can use try catch instead of error callback
+    const authorId = fromGlobalId(id).id    
+
+    const author = await models.authors.findById(authorId, {
+      attributes: ['id', 'image'],      
+    })
+
+    const authorAttributes = {description, introduction, name}
+    if(avatar) {
+      // first, delete image of author, then upload image, 
+      //fs.delete(author.image)
+      // should use saveSync, because we have to wait here, sync is always faster if      
+      const imagePath = path.join(filePath, 'author/image', authorId)
+      // delete at background
+      fs.unlink(path.join(imagePath, author.image), err => 
+        console.log(err || `Removed file ${author.image}`)
+      )
+      
+      // update new image, use v4 to share code with client
+      const filename = v4() + path.extname(avatar.originalname)     
+      fs.writeFileSync(path.join(imagePath, filename), avatar.buffer)
+      authorAttributes.image = filename
+    }    
+
+    // we have to wait, try catch here or let it throw?
+    models.sequelize.transaction( trans => {
+      // roll back code ?    
+      // this would default to trans, when rollback
+      return Promise.all([
+        author.updateAttributes(authorAttributes),
+        ...social_accounts.map(social_account => {
+          const {id, author_id, ...data} = social_account
+          return models.social_accounts.update(data, {
+            where: {id}
+          })
+        })
+      ])
+    })
+
     // return the update to tell client it is the same
-    return {id}
+    return authorAttributes
   },
 })

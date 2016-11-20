@@ -10,6 +10,20 @@ class DropzoneImage extends Component {
     this.state = { errorMessage: '' }    
   }
 
+  static readBase64(file, success, failure){
+    const reader = new FileReader()
+
+    reader.onload = (upload) => {
+      success(upload.target.result)      
+    }
+
+    reader.onerror = () => {
+      failure && failure()
+    }
+
+    reader.readAsDataURL(file)  
+  }
+
   _handleDrop = (files) => {
     const file = files[0]
 
@@ -17,23 +31,33 @@ class DropzoneImage extends Component {
       return this.setState({ errorMessage: 'Cannot upload image file' })
     }
 
-    const reader = new FileReader()
+    if(this.props.base64) {
+      this.constructor.readBase64(file, result => {
+        this.props.handleUpdate(result)
+        this.setState({ errorMessage: '' })
+      }, () => {
+        this.setState({ errorMessage: 'Cannot upload image file' })
+      })
 
-    reader.onload = (upload) => {
-      this.props.handleUpdate(upload.target.result)
-      this.setState({ errorMessage: '' })
+    } else {
+      if(file.preview) {
+        // upload as File object
+        this.props.handleUpdate(file)  
+      } else {
+        // wait for preview
+        this.constructor.readBase64(file, result => {
+          file.preview = result
+          this.props.handleUpdate(file)
+        })
+      }      
     }
-
-    reader.onerror = () => {
-      this.setState({ errorMessage: 'Cannot upload image file' })
-    }
-
-    reader.readAsDataURL(file)
+    
   }
   
 
   render() {
     const {props:{value, name}, state: {errorMessage}} = this
+    
     return (
       <div >
         <Dropzone
@@ -43,8 +67,8 @@ class DropzoneImage extends Component {
           multipe={false}
           onDrop={this._handleDrop}
         >
-          {value 
-            ? <img src={value} width="100" alt=""/>
+          {value // value can be File so we have to check for preview first
+            ? <img src={value.preview || value} width="100" alt=""/>
             : <span >Drop file here or click to upload.</span>
           }          
           {errorMessage &&

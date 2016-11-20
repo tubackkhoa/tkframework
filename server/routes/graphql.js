@@ -10,22 +10,29 @@ const prodMode = process.env.NODE_ENV !== 'server'
 
 // only allow upload one by one ?
 const multerMiddleware = multer({
-  storage: multer.memoryStorage()
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 1024 * 1024 }, // 1m
 }).fields([
   {name: 'avatar', maxCount: 1},
 ])
 
 const uploadMiddleWare = (req, res, next) => {
   multerMiddleware(req, res, () => {
-    if (!req.files || req.files.length === 0) {
+
+    const names = req.files ? Object.keys(req.files) : null
+    if (!names || names.length === 0) {
       return next()      
     }
+
     // Parse variables so we can add to them. (express-graphql won't parse them again once populated)
-    // if not use json
-    // req.body.variables = JSON.parse(req.body.variables)
-    req.files.forEach(file => 
-      req.body.variables.input[file.fieldname] = file
-    )
+    // json paser will run later
+    req.body.variables = JSON.parse(req.body.variables)
+    names.forEach(name => { 
+      // add files to graphql input. we only support single images here      
+      const file = req.files[name][0]
+      req.body.variables.input_0[file.fieldname] = file      
+    })
+    // go next
     next()
   })
 }

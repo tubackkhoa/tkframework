@@ -1,26 +1,34 @@
 
 import Relay from 'react-relay'
 
-export default class UpdateSocialAccountMutation extends Relay.Mutation {
+export default class UpdateAuthorMutation extends Relay.Mutation {
 
   // only get id 
   static fragments = {
-    social_account: () => Relay.QL`
-      fragment on SocialAccount {
+    author: () => Relay.QL`
+      fragment on Author {
         id
       }
     `,    
   }
 
   getMutation() {
-    return Relay.QL`mutation{updateSocialAccount}`
+    return Relay.QL`mutation{updateAuthor}`
+  }
+
+  getFiles() {
+    return {
+      avatar: this.props.avatar,
+    }
   }
 
   getFatQuery() {
+    // no need to get all information, we just spread our props.data
     return Relay.QL`
-      fragment on UpdateSocialAccountPayload @relay(pattern: true) {
-        social_account {
-          url
+      fragment on UpdateAuthorPayload @relay(pattern: true) {
+        author {
+          id
+          image
         }        
       }
     `
@@ -38,23 +46,25 @@ export default class UpdateSocialAccountMutation extends Relay.Mutation {
     return [{
       type: 'FIELDS_CHANGE',
       fieldIDs: {
-        social_account: this.props.social_account.id,        
+        author: this.props.author.id,        
       },
     }]
   }
 
   getVariables() {
     return {
-      url: this.props.url,
-      id: this.props.social_account.id,
+      ...this.props.data,
+      id: this.props.author.id,
     }
   }
 
-  getOptimisticResponse() {     
+  getOptimisticResponse() {    
+    const { social_accounts, ...author } = this.props.data
+    // do something for author?, but no need to return social_accounts
     return {
-      social_account: {
-        url: this.props.url,
-        id: this.props.social_account.id,
+      author: {
+        ...author,
+        id: this.props.author.id,
       },
     }
   }

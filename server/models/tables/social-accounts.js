@@ -11,8 +11,7 @@ const social_accounts = sequelize.define("social_accounts", {
   account_type : DataTypes.INTEGER,
   url : DataTypes.STRING,
 }, {
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
+  timestamps: false,
   classMethods: {
     associate: function() {        
       // this.hasMany(sequelize.models.taggings, {foreignKey: 'subject_id'})
