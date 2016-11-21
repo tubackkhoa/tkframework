@@ -21,7 +21,8 @@ if (OPTIMIZE) {
     },
     // turn off mangling entirely in case of variable rename
     sourceMap: false,
-    mangle: true
+    // mangle can make node stop working because of some global variables
+    // mangle: true
   }))
 }
 
@@ -34,7 +35,7 @@ const conf = {
   },  
   externals: [
       // these modules will be included because of dynamic resolvers
-      /^(?:express|graphql|sequelize|bindings)/i,
+      /^(?:express|graphql|sequelize|bindings|multer)/i,
   ],
   module: {
     rules: [

@@ -26,7 +26,7 @@
     "SERVER_PORT": 3333,
     "GRAPHQL": "http://localhost:3333/graphql",
     "NODE_DEPLOY_PATH": "root@luthornguyen.com:/home/nodejs/tkframework",
-    "DEPLOY_PATH": "root@luthornguyen.com:/home/nodejs/tkframework"
+    "DEPLOY_PATH": "root@luthornguyen.com:/home/nodejs/tkframework/node"
   },
   "scripts": {
     "test-client": "scripts/test-client",
@@ -79,6 +79,7 @@
     "node-watch": "^0.4.1",
     "nodemon": "^1.11.0",
     "npm-run-all": "^3.1.1",
+    "react-addons-perf": "^15.4.0",
     "react-hot-loader": "^3.0.0-",
     "redux-mock-store": "^1.2.1",
     "sequelize": "^3.24.8",
@@ -132,6 +133,7 @@
     "react-router": "^2.8.1",
     "react-router-redux": "^4.0.6",
     "react-router-relay": "^0.13.5",
+    "react-tag-input": "^4.4.0",
     "react-tap-event-plugin": "^2.0.1",
     "react-virtualized": "^8.4.1",
     "redux": "^3.6.0",

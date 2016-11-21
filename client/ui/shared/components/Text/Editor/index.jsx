@@ -24,8 +24,7 @@ class TextEditor extends Component {
 
   constructor(props) {
     super(props)
-
-    const blocks = convertFromRaw(JSON.parse(props.value))
+    // render via state
     this.state = {
       editorState: props.value 
         ? EditorState.createWithContent(convertFromRaw(JSON.parse(props.value)), decorator)
@@ -170,7 +169,7 @@ class TextEditor extends Component {
           {this.renderURLField()}
           <Divider />
         </div>
-        <div  onClick={this._handleFocus}>
+        <div onClick={this._handleFocus}>
           <Editor
             onChange={this._handleChange}
             blockStyleFn={getBlockStyle}

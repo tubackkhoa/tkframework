@@ -58,7 +58,6 @@ class PostIndex extends Component {
   render() {
 
     const {viewer:{posts:{edges, pageInfo, totalCount}}, relay} = this.props
-    console.log(edges)
     const newButton = (
       <Link to="/cms/posts/new">
         <FloatingActionButton style={inlineStyles.floatButton} disableTouchRipple={true}>

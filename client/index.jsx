@@ -46,21 +46,27 @@ configureStore(store => {
 	} 
 
 	// use react perf from chrome extension instead
-	// if (process.env.NODE_ENV === 'development') {
-	// 	// when in development, this code will be run, 
- //  	// check module.hot is also compiled time checking, it is not from this javascript but node env
- //  	window.Perf = require('react-addons-perf')	
-	// }
+	if (process.env.NODE_ENV === 'development') {
+		// when in development, this code will be run, 
+  	// check module.hot is also compiled time checking, it is not from this javascript but node env
+  	window.Perf = require('react-addons-perf')	
+	}
 
 }, err => {
 	render(<h1 style={{color:'red'}}>{err}</h1>, rootElement)
 })
 
 // hot fix for better output	
-console.error = (logError => (msg, ...args) => 
-    msg.indexOf('You cannot change <Router routes>;') === -1 
-    // not React route changed
-    && logError.call(console, msg, ...args)	      	      	    	  
-)(console.error) 
+console.error = (logError => (msg, ...args) => {
+	// not React route changed
+  if(msg.indexOf('You cannot change <Router routes>;') === -1){
+  	if(msg.indexOf('Warning: Unknown prop') === 0){
+  		console.warn(msg)
+  	} else {
+  		logError.call(console, msg, ...args)	      	      	    	  
+  	}
+  } 
+      
+})(console.error) 
  
 

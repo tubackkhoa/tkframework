@@ -22,6 +22,8 @@ import NotFound from './shared/containers/notFound'
 import Login from './backend/containers/Author/Login'
 import AuthorForm from './backend/containers/Author/Form'
 import PostIndexBackend from './backend/containers/Post/Index'
+import PostFormCreate from './backend/containers/Post/Form/create'
+import PostFormEdit from './backend/containers/Post/Form/edit'
 
 import * as authSelectors from 'store/selectors/auth'
 
@@ -56,9 +58,11 @@ export const Routes = (store) => (
         prepareParams={prepareAuthorParams(store)} />
 
       <Route path="/cms/posts" component={PostIndexBackend} queries={ViewerQueries} />
-      {
-      // <Route path="/cms/posts/new" component={ProgressBar(Alert(Authentication(PostForm)))} />
-      // <Route path="/cms/posts/:id/edit" component={ProgressBar(Alert(Authentication(PostForm)))} />
+      <Route path="/cms/posts/new" component={PostFormCreate} />
+      <Route path="/cms/posts/:id/edit" component={PostFormEdit} queries={NodeQueries} />
+      
+{      
+      
 
       // <Route path="/cms/projects" component={ProgressBar(Alert(Authentication(ProjectIndex)))} />
       // <Route path="/cms/projects/new" component={ProgressBar(Alert(Authentication(ProjectForm)))} />
