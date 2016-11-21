@@ -11,7 +11,7 @@ const posts = sequelize.define("posts", {
   title        : DataTypes.STRING,    
   lead_sentence: DataTypes.STRING, 
   accepted     : DataTypes.BOOLEAN, 
-  published_at  : DataTypes.DATE
+  published_at  : DataTypes.DATE,
 }, {
   createdAt: 'created_at',
   updatedAt: 'updated_at',    

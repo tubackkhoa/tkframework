@@ -52,7 +52,7 @@ export default class AddPostMutation extends Relay.Mutation {
       parentName: 'viewer',
       parentID: this.props.viewer.id,
       connectionName: 'posts',
-      edgeName: 'postEdge',
+      edgeName: 'postEdge', // => to add
       // post{status} => status(unpublish) : 'ignore'
       rangeBehaviors: ({status}) => {
         if (status === 'completed') {

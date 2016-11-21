@@ -18,8 +18,10 @@ import ProjectIndex from './frontend/containers/Project/Index'
 import App from './shared/containers/App'
 import NotFound from './shared/containers/notFound'
 
+// backend
 import Login from './backend/containers/Author/Login'
 import AuthorForm from './backend/containers/Author/Form'
+import PostIndexBackend from './backend/containers/Post/Index'
 
 import * as authSelectors from 'store/selectors/auth'
 
@@ -48,9 +50,20 @@ export const Routes = (store) => (
     <Route path="/projects" component={ProjectIndex} queries={ViewerQueries} 
       prepareParams={prepareTagParams} />
     <Route path='/login' component={Login}/>
+
     <Route onEnter={checkAuth(store)} path='/cms'>
       <Route path="author/edit" component={AuthorForm} queries={ViewerQueries} 
         prepareParams={prepareAuthorParams(store)} />
+
+      <Route path="/cms/posts" component={PostIndexBackend} queries={ViewerQueries} />
+      {
+      // <Route path="/cms/posts/new" component={ProgressBar(Alert(Authentication(PostForm)))} />
+      // <Route path="/cms/posts/:id/edit" component={ProgressBar(Alert(Authentication(PostForm)))} />
+
+      // <Route path="/cms/projects" component={ProgressBar(Alert(Authentication(ProjectIndex)))} />
+      // <Route path="/cms/projects/new" component={ProgressBar(Alert(Authentication(ProjectForm)))} />
+      // <Route path="/cms/projects/:id/edit" component={ProgressBar(Alert(Authentication(ProjectForm)))} />
+    }
     </Route>
     
     <Route path='*' component={NotFound} />

@@ -95,14 +95,20 @@ export const getScrollPagingModel = async (args, ...left) => {
     order: args.order 
   }, ...left)
 
-  return connectionFromArraySlice(
+  const connectionResult = connectionFromArraySlice(
       rows,
       args, 
       {
           sliceStart: offset,
           arrayLength: count,
       }
-  )                      
+  )  
+
+  // adding totalCount to connectionResult
+  return {    
+    ...connectionResult,
+    totalCount: count,
+  }                    
   
 }
 
@@ -139,6 +145,7 @@ export const getNumberPagingModel = async (args, ...left) => {
 
   // just give enough information, forget about cursor
   return {
+    totalCount: count,
     edges,
     pageInfo: {
       startCursor: firstEdge ? firstEdge.cursor : null,

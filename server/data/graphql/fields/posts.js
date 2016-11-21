@@ -4,6 +4,7 @@ import {
   GraphQLID,
   GraphQLNonNull,
   GraphQLString,
+  GraphQLBoolean,
 } from 'graphql'
 
 import {
@@ -37,17 +38,25 @@ export const posts = {
       type: GraphQLID,
       description: 'Filter post by tag-id', 
     },
+    accepted: {
+      type: GraphQLBoolean,
+      description: 'Filter post by publish, should authorize'
+    }
   }, 
   resolve: (_, args, {request}, info) => getNumberPagingModel(args, info, models.posts, 
     // resolve graph field
     { tags:resolvePostTags }, 
     // resolve options
     async (options, resolverAttributes) => {
-
-      // only published item
-      options.where = {
-        accepted: 1,
-      }
+      
+      // only published item for unauthorized users
+      // for edit post, also check request.user.id to modify post
+      options.where = {}
+      if(request.user){
+        if(args.accepted)
+          options.where.accepted = args.accepted
+      } else 
+        options.where.accepted
 
       // update options with tag
       if(args.tagId){

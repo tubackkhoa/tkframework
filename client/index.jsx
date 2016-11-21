@@ -45,11 +45,12 @@ configureStore(store => {
 		})					
 	} 
 
-	if (process.env.NODE_ENV === 'development') {
-		// when in development, this code will be run, 
-  	// check module.hot is also compiled time checking, it is not from this javascript but node env
-  	window.Perf = require('react-addons-perf')	
-	}
+	// use react perf from chrome extension instead
+	// if (process.env.NODE_ENV === 'development') {
+	// 	// when in development, this code will be run, 
+ //  	// check module.hot is also compiled time checking, it is not from this javascript but node env
+ //  	window.Perf = require('react-addons-perf')	
+	// }
 
 }, err => {
 	render(<h1 style={{color:'red'}}>{err}</h1>, rootElement)

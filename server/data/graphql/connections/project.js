@@ -1,3 +1,7 @@
+import {
+  GraphQLInt,
+} from 'graphql'
+
 import { projectType } from 'data/graphql/types/queries/project'
 import { 
   connectionDefinitions,
@@ -9,4 +13,7 @@ export const {
 } = connectionDefinitions({ 
   name: 'Project', 
   nodeType: projectType, 
+  connectionFields: {
+    totalCount: { type: GraphQLInt } // total number of items
+  }
 })

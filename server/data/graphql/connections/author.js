@@ -1,3 +1,7 @@
+import {
+  GraphQLInt,
+} from 'graphql'
+
 import { authorType } from 'data/graphql/types/queries/author'
 import { 
   connectionDefinitions,
@@ -9,4 +13,7 @@ export const {
 } = connectionDefinitions({ 
   name: 'Author', 
   nodeType: authorType, 
+  connectionFields: {
+    totalCount: { type: GraphQLInt } // total number of items
+  }
 })

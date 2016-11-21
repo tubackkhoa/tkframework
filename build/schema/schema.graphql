@@ -28,6 +28,7 @@ type AuthorConnection {
 
   # A list of edges.
   edges: [AuthorEdge]
+  totalCount: Int
 }
 
 # An edge in a connection.
@@ -134,6 +135,7 @@ type Mutation {
   addPost(input: AddPostInput!): AddPostPayload
   updatePost(input: UpdatePostInput!): UpdatePostPayload
   removePost(input: RemovePostInput!): RemovePostPayload
+  toggleAcceptancePost(input: ToggleAcceptancePostInput!): ToggleAcceptancePostPayload
   updateAuthor(input: UpdateAuthorInput!): UpdateAuthorPayload
 }
 
@@ -184,6 +186,7 @@ type PostConnection {
 
   # A list of edges.
   edges: [PostEdge]
+  totalCount: Int
 }
 
 # An edge in a connection.
@@ -223,6 +226,7 @@ type ProjectConnection {
 
   # A list of edges.
   edges: [ProjectEdge]
+  totalCount: Int
 }
 
 # An edge in a connection.
@@ -281,6 +285,16 @@ type Tag implements Node {
   updated_at: String!
 }
 
+input ToggleAcceptancePostInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type ToggleAcceptancePostPayload {
+  viewer: Viewer
+  clientMutationId: String
+}
+
 input UpdateAuthorInput {
   id: ID!
   description: String!
@@ -326,6 +340,9 @@ type Viewer implements Node {
 
     # Filter post by tag-id
     tagId: ID
+
+    # Filter post by publish, should authorize
+    accepted: Boolean
   ): PostConnection
 
   # Latest posts
