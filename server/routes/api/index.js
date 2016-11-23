@@ -5,10 +5,10 @@ import {
 } from 'graphql-relay'
 
 import authorize from 'data/graphql/authorize'
-
 import models from 'models'
 
 import servicePoint from './service-point'
+import sellPost from './sellpost'
 
 const router  = new Router()
 
@@ -51,7 +51,7 @@ router.post('/post/create', async (req, res) => {
 router.use('/service', servicePoint)
 
 // tire post
-
+router.use('/sellpost', sellPost)
 
 
 

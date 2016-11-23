@@ -16,7 +16,7 @@ const authenticate = expressJwt({
 const app = express()
 // we use this to authenticate the specific router
 app.set('port', (process.env.PORT || 3333))
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '5mb'}))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(passport.initialize())
 app.use(authenticate)

@@ -34,9 +34,11 @@ export const renderTextEditor = ({ input }) => (
   />  
 )
 
-export const renderDropzoneImage = ({ input }) => (
+// also accept extra params to extend to it ?
+export const renderDropzoneImage = ({ input, base64=false }) => (
   <DropzoneImage
     {...input}
+    base64={base64}
     handleUpdate={file => input.onChange(file)}
   />
 )

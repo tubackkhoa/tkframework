@@ -25,6 +25,9 @@ import PostIndexBackend from './backend/containers/Post/Index'
 import PostFormCreate from './backend/containers/Post/Form/create'
 import PostFormEdit from './backend/containers/Post/Form/edit'
 
+import SellPostIndexBackend from './backend/containers/SellPost/Index'
+import SellPostFormEdit from './backend/containers/SellPost/Form/edit'
+
 import * as authSelectors from 'store/selectors/auth'
 
 // login for check login, may be put in other file
@@ -60,6 +63,10 @@ export const Routes = (store) => (
       <Route path="/cms/posts" component={PostIndexBackend} queries={ViewerQueries} />
       <Route path="/cms/posts/new" component={PostFormCreate} />
       <Route path="/cms/posts/:id/edit" component={PostFormEdit} queries={NodeQueries} />
+
+      <Route path="/cms/sellposts" component={SellPostIndexBackend} />
+      <Route path="/cms/sellposts/new" component={SellPostFormEdit} />
+      <Route path="/cms/sellposts/:id/edit" component={SellPostFormEdit} />
       
     </Route>
     

@@ -58,7 +58,7 @@ class Item extends Component {
               <AvAirplay />
             </IconButton>
           </Link>
-          <Link to={`/cms/posts/${this.props.id}/edit`}>
+          <Link to={`/cms/posts/${id}/edit`}>
             <IconButton disableTouchRipple >
               <EditorModeEdit />
             </IconButton>

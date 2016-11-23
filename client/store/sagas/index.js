@@ -4,6 +4,8 @@ import asyncAuthWatchers from 'store/sagas/auth'
 import asyncTagFetchWatchers from 'store/sagas/tag'
 import asyncPostFetchWatchers from 'store/sagas/post'
 
+import asyncSellPostFetchWatchers from 'store/sagas/sellpost'
+
 // saga must be a function like generator of other functions
 const rootSaga = function* () {
   yield [   
@@ -13,6 +15,9 @@ const rootSaga = function* () {
     ...asyncAuthWatchers.map(watcher => fork(watcher)),    
     ...asyncTagFetchWatchers.map(watcher => fork(watcher)),
     ...asyncPostFetchWatchers.map(watcher => fork(watcher)),
+
+    // make watcher for better groups of functions
+    ...asyncSellPostFetchWatchers.map(watcher => fork(watcher)),
   ]
 }
 

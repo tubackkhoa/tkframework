@@ -17,7 +17,7 @@ const requestCreatePostAsync = createRequestSaga({
 })
 
 // root saga reducer
-const asyncPostFetchWatchers = [
+export default [
 
   // watcher for schedule, define term here
   function* asyncPostFetchWatcher() {
@@ -27,5 +27,3 @@ const asyncPostFetchWatchers = [
     ]
   }
 ]
-
-export default asyncPostFetchWatchers
