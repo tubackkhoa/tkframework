@@ -17,7 +17,6 @@ import TextField from 'material-ui/TextField'
 import IconButton from 'material-ui/IconButton'
 import Divider from 'material-ui/Divider'
 import inlineStyles from 'ui/shared/styles/MaterialUI'
-const styles = {}
 
 
 class TextEditor extends Component {
@@ -154,8 +153,8 @@ class TextEditor extends Component {
     const { editorState } = this.state
 
     return (
-      <div  onBlur={this._handleUpdate} >
-        <div >
+      <div className="text-editor" onBlur={this._handleUpdate} >
+        <div className='toolbar'>
           <BlockStyleControls
             editorState={editorState}
             onToggle={this._handleToggleBlockType}
@@ -169,7 +168,7 @@ class TextEditor extends Component {
           {this.renderURLField()}
           <Divider />
         </div>
-        <div onClick={this._handleFocus}>
+        <div className='body' onClick={this._handleFocus}>
           <Editor
             onChange={this._handleChange}
             blockStyleFn={getBlockStyle}

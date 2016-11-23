@@ -4,10 +4,15 @@ const widgetJS = '//platform.twitter.com/widgets.js'
 
 class TweetEmbed extends Component {
 
-  componentDidMount() {
-    const renderTweet = () => {
+  // use this method will help to render when props changed
+  // if we do not want it to change then use this method for componentDidMount
+
+  setTwitterWidget(id) {
+    // offsetHeight is outer, scrollHeight is inner
+    this.div.innerHTML = ''
+    const renderTweet = () => {      
       window.twttr.widgets.createTweetEmbed(
-        this.props.id,
+        id,
         this.div,
         { align: 'center', cards: 'hidden', conversation: 'none' }
       )
@@ -20,6 +25,14 @@ class TweetEmbed extends Component {
     }
   }
 
+  componentDidMount(){
+    this.setTwitterWidget(this.props.id)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setTwitterWidget(nextProps.id)
+  }
+
   appendScript(src, callback) {
     const script = document.createElement('script')
     script.setAttribute('src', src)
@@ -28,7 +41,7 @@ class TweetEmbed extends Component {
   }
 
   render() {
-    return <div ref={ref => this.div = ref} />
+    return <div className='twitter-widget' ref={ref => this.div = ref} />
   }
 }
 

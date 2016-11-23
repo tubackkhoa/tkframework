@@ -19,7 +19,7 @@ const authors = sequelize.define('authors', {
   updatedAt: 'updated_at',
 
   classMethods: {
-    associate: function() {              
+    associate() {              
 
       this.hasMany(sequelize.models.social_accounts, {
         foreignKey: 'author_id',        
@@ -29,7 +29,7 @@ const authors = sequelize.define('authors', {
 
   instanceMethods: {
     // arrow function can mislead this
-    getSocialAccounts: function(attributes) {    
+    getSocialAccounts(attributes) {    
 
       // sample of fallback, when you not pass author_id to map ?
       // models.social_accounts.findAll ()

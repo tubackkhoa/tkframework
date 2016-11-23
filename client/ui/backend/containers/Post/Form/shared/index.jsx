@@ -3,7 +3,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Field, FieldArray, reduxForm } from 'redux-form'
 
-import RaisedButton from 'material-ui/FlatButton'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ContentSave from 'material-ui/svg-icons/content/save'
+
 import inlineStyles from 'ui/shared/styles/MaterialUI'
 
 import * as tagSelectors from 'store/selectors/tag'
@@ -20,6 +22,8 @@ function validate(values) {
   const errors = {}
   if (!values.title) {
     errors.title = 'Enter title'
+  } else if(!values.published_at){
+    errors.published_at = 'Set PublishedAt!!!'
   }
 
   return errors
@@ -36,11 +40,15 @@ class PostForm extends Component {
   _handleSubmit = (props) => {    
     this.props.savePost && this.props.savePost(props)
   }
+
+  componentDidMount(){
+    this.props.ready && this.props.ready(this)
+  }
   
   render() {    
     const { handleSubmit, submitting, isNew, tagSuggestions } = this.props
-    const submitLabel = isNew ? 'Create' : 'Update'
 
+    const submitLabel = isNew ? 'Create' : 'Update'    
     return (
       <form onSubmit={handleSubmit(this._handleSubmit)} >
         <h2>{submitLabel} Post</h2>
@@ -51,10 +59,13 @@ class PostForm extends Component {
           <Field name="published_at" label="PublishedAt" component={renderDatePicker} />          
         </div>
         <Field name="tags" suggestions={tagSuggestions} component={renderTagField} />        
-        <FieldArray name="items" component={renderPostFormItems} />        
-                
-        <RaisedButton label={submitLabel} type="submit"
-                disabled={submitting} />
+        <FieldArray name="items" isNew={isNew} component={renderPostFormItems} />                               
+
+        <FloatingActionButton label={submitLabel} type="submit"
+          style={inlineStyles.floatButton} disabled={submitting} disableTouchRipple={true}>
+          <ContentSave />
+        </FloatingActionButton>
+
       </form>
     )
   }

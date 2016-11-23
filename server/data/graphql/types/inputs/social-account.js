@@ -6,7 +6,7 @@ import {
 } from 'graphql'
 
 export const socialAccountInputType = new GraphQLInputObjectType({
-  name: 'SettingInput',
+  name: 'SocialAccountInput',
   fields: {
     id: { type: GraphQLInt },
     url: { type: new GraphQLNonNull(GraphQLString) },

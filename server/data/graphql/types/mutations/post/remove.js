@@ -35,6 +35,22 @@ export const removePost = mutationWithClientMutationId({
     models.posts.destroy({
       where: {id: postId}
     })
+
+    // also destroy items, taggings, and all item types belong to this items
+    // for item type is item_image, also remove image folder
+    models.taggings.destroy({
+      where: {
+        subject_id:postId,
+        subject_type:'Post',
+      }
+    })
+
+    // now destroy all items
+    models.items.findAll({
+      where: {post_id: postId},
+      attributes: ['id','target_id','target_type'],
+    }).then(deleteItems=> models.items.destroyItems(deleteItems))
+
     return {id}
  }
 })

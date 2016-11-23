@@ -28,7 +28,7 @@ class Text extends Component {
   }
 
   _handleUpdateItem = (props) => {
-    // this.props.handleUpdateItem({ description: props.description })
+    this.props.handleUpdateItem({ description: props.description })
   }
 
 
@@ -41,9 +41,8 @@ class Text extends Component {
   render() {
     const { handleSubmit, submitting, cancelButton, deleteButton } = this.props
     return (
-      <div>
+      <div className='text-item'>                
         <label>Text</label>
-
         <Field name="description" component={renderTextEditor}/>
 
         {this.renderErrorMessage()}

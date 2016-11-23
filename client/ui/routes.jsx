@@ -61,13 +61,6 @@ export const Routes = (store) => (
       <Route path="/cms/posts/new" component={PostFormCreate} />
       <Route path="/cms/posts/:id/edit" component={PostFormEdit} queries={NodeQueries} />
       
-{      
-      
-
-      // <Route path="/cms/projects" component={ProgressBar(Alert(Authentication(ProjectIndex)))} />
-      // <Route path="/cms/projects/new" component={ProgressBar(Alert(Authentication(ProjectForm)))} />
-      // <Route path="/cms/projects/:id/edit" component={ProgressBar(Alert(Authentication(ProjectForm)))} />
-    }
     </Route>
     
     <Route path='*' component={NotFound} />

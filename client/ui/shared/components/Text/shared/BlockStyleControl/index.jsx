@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import StyleButton from '../StyleButton/index';
-const styles = {};
 
 export const BLOCK_TYPES = [
   { label: 'H2', style: 'header-two' },
@@ -21,7 +20,7 @@ export const BlockStyleControls = (props) => {
     .getType();
 
   return (
-    <div className={styles.root}>
+    <div className='block block-style'>
       {BLOCK_TYPES.map((type) =>
         <StyleButton
           key={type.label}

@@ -1,11 +1,6 @@
 
 import React, { Component, PropTypes } from 'react'
-import TARGET_TYPES from 'ui/shared/constants/targetTypes'
 import Tooltip from './Tooltip'
-import Image from 'ui/shared/components/Post/Image'
-import Twitter from 'ui/shared/components/Post/Twitter'
-import Text from 'ui/shared/components/Post/Text'
-
 import ShowItem from 'ui/frontend/components/Post/Show/Item'
 
 class Preview extends Component {
@@ -22,7 +17,7 @@ class Preview extends Component {
     this.props.handleUpdateItem(this.props.sortRank, { ...this.props.item, editing: true })
   }
 
-  render() {
+  render() {    
     const {sortRank, totalCount, item, handleDeleteItem, handleMoveItem} = this.props
     return (
       <div>

@@ -8,7 +8,15 @@ class TagField extends Component {
   }
 
   _handleAddTag = (text) => {
-    this.props.handleAddTag({ text })
+    this.props.handleAddTag(text)
+  }
+
+  _handleFilterSuggestions = (text, suggestions) => {    
+    const lowerCaseQuery = (text||'').toLowerCase()    
+    const tagTexts = this.props.tags.map(tag=>tag.text)
+    return suggestions.filter((suggestion) => 
+      tagTexts.indexOf(suggestion) === -1 && suggestion.toLowerCase().includes(lowerCaseQuery)
+    )
   }
 
   render() {    
@@ -21,6 +29,8 @@ class TagField extends Component {
           suggestions={suggestions}
           handleDelete={this._handleDeleteTag}
           handleAddition={this._handleAddTag}
+          handleFilterSuggestions={this._handleFilterSuggestions}
+          handleDrag={this._handleDrag}
           autofocus={false}
           autocomplete={1}
           minQueryLength={1}

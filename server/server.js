@@ -27,7 +27,8 @@ app.use(cors())
 
 // we use normal authentication for universal access
 app.use('/auth', require('./routes/auth').default)
-
+// api for client
+app.use('/api', require('./routes/api').default)
 // GraphQL
 app.use('/graphql', require('./routes/graphql').default)
 

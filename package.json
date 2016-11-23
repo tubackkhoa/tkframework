@@ -108,6 +108,7 @@
     "es6-promise": "^4.0.5",
     "express-graphql": "^0.5.4",
     "express-jwt": "^5.1.0",
+    "fs-extra": "^1.0.0",
     "graphql": "^0.7.2",
     "graphql-relay": "^0.4.3",
     "graphql-sequelize": "^4.0.2",

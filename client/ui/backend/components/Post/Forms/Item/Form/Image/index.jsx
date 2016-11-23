@@ -29,8 +29,11 @@ class Image extends Component {
     errorMessage: null,  
   }
 
-  _handleUpdateItem(props) {
-    this.props.handleUpdateItem({ image: props.image, caption: props.caption })
+  _handleUpdateItem = (props) => {
+    // this will trigger update for the whole form
+    this.props.handleUpdateItem({ full_src: props.full_src, caption: props.caption })    
+    // but we will save this one
+    // and not save the whole post 
   }
 
   renderErrorMessage() {
@@ -43,9 +46,9 @@ class Image extends Component {
     const { handleSubmit, submitting, cancelButton, deleteButton } = this.props
 
     return (
-      <div >
+      <div className='image-item'>
         <label >Image</label>
-        <Field name="image" component={renderDropzoneImage}/>        
+        <Field name="full_src" component={renderDropzoneImage}/>        
 
         <Field label="Enter the caption" name="caption" component={renderTextField}/>
         {this.renderErrorMessage()}

@@ -7,11 +7,16 @@ import AvAirplay from 'material-ui/svg-icons/av/airplay'
 import ActionVisibility from 'material-ui/svg-icons/action/visibility'
 import ActionVisibilityOff from 'material-ui/svg-icons/action/visibility-off'
 import ActionDone from 'material-ui/svg-icons/action/done'
+import ActionDelete from 'material-ui/svg-icons/action/delete'
 import ContentFlag from 'material-ui/svg-icons/content/flag'
 import NotificationPriorityHigh from 'material-ui/svg-icons/notification/priority-high'
 import inlineStyles from 'ui/shared/styles/MaterialUI'
 
 class Item extends Component {
+
+  _handleRemove = () => {
+    this.props.handleRemove(this.props.id)
+  }
 
   _handleToggle = () => {
     this.props.handleToggle(this.props.sortRank, this.props.id)
@@ -67,6 +72,13 @@ class Item extends Component {
               ? <ActionVisibility name="visible-icon" />
               : <ActionVisibilityOff name="in-visible-icon" />              
             }
+          </IconButton>
+          <IconButton
+            name="delete-button"
+            onClick={this._handleRemove}
+            disableTouchRipple
+          >
+            <ActionDelete/>
           </IconButton>
         </TableRowColumn>
       </TableRow>

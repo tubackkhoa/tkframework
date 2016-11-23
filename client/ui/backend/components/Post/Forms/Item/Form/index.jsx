@@ -12,10 +12,25 @@ import inlineStyles from 'ui/shared/styles/MaterialUI'
 class Form extends Component {
 
   // update with some change
-  _handleUpdateItem = (updatedProps) => {
+  _handleUpdateItem = (type, props) => {
+    const updatedProps = {...this.props.item, isNew: false, editing: false}
+
+    // assign values
+    switch(type){
+      case TARGET_TYPES.IMAGE:
+        Object.assign(updatedProps.image, props)
+        break
+      case TARGET_TYPES.TEXT:
+        Object.assign(updatedProps.text, props)
+        break
+      default:
+        Object.assign(updatedProps.twitter, props)
+        break
+    }
+
     this.props.handleUpdateItem(
       this.props.sortRank,
-      { ...this.props.item, ...updatedProps, isNew: false, editing: false }
+      updatedProps
     )
   }
 
@@ -60,7 +75,6 @@ class Form extends Component {
   }
 
   render() {
-
     const {item, sortRank} = this.props
     switch (item.target_type) {
       case TARGET_TYPES.IMAGE:
@@ -68,10 +82,10 @@ class Form extends Component {
           <Image
             formKey={sortRank}
             initialValues={{
-              image: item.image.full_src,
+              full_src: item.image.full_src,
               caption: item.image.caption,
             }}
-            handleUpdateItem={this._handleUpdateItem}
+            handleUpdateItem={props => this._handleUpdateItem(TARGET_TYPES.IMAGE, props)}
             deleteButton={this.renderDeleteButton()}
             cancelButton={this.renderCancelButton()}
           />
@@ -84,7 +98,7 @@ class Form extends Component {
               twitter_id: item.twitter.twitter_id
             }}
             sortRank={sortRank}
-            handleUpdateItem={this._handleUpdateItem}
+            handleUpdateItem={props => this._handleUpdateItem(TARGET_TYPES.TWITTER, props)}
             deleteButton={this.renderDeleteButton()}
             cancelButton={this.renderCancelButton()}
           />
@@ -95,7 +109,7 @@ class Form extends Component {
             initialValues={{
               description: item.text.description
             }}
-            handleUpdateItem={this._handleUpdateItem}
+            handleUpdateItem={props => this._handleUpdateItem(TARGET_TYPES.TEXT, props)}
             deleteButton={this.renderDeleteButton()}
             cancelButton={this.renderCancelButton()}
           />

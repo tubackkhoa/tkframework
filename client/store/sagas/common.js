@@ -21,7 +21,9 @@ export const createRequestSaga = ({request, key, start, stop, success, failure, 
   // while redux-saga will give it an action instead, good for testing
   // we may not needs this if we use redux-saga, of course we can use both
   return function* (action) {    
-    const requestKey = (typeof key === 'function') ? key(...action.args) : key
+    // default is empty
+    const args = action.args || []
+    const requestKey = (typeof key === 'function') ? key(...args) : key
     // for key, we render unique key using action.args
     // but for actionCreator when callback, we should pass the whole action
     // so on event such as success, we can use action.type or action.args to 
@@ -41,7 +43,7 @@ export const createRequestSaga = ({request, key, start, stop, success, failure, 
       // we do not wait forever for whatever request !!!
       // timeout is 0 mean default timeout, so default is 0 in case user input 0 
       let raceOptions = {
-        data: call(request, ...action.args),
+        data: call(request, ...args),
         isTimeout: call(delay, timeout || API_TIMEOUT)
       }
 

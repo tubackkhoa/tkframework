@@ -21,6 +21,7 @@ import inlineStyles from 'ui/shared/styles/MaterialUI'
 
 import { setToast } from 'store/actions/common'
 
+import RemovePostMutation from 'store/relay/mutations/post/RemovePostMutation'
 import ToggleAcceptanceMuatation from 'store/relay/mutations/post/ToggleAcceptanceMuatation'
 
 @connect(null, { setToast })
@@ -41,7 +42,7 @@ class PostIndex extends Component {
       {
         onSuccess:() => this.props.setToast('Update post successfully!!!'),
         // trigger redux-form validation
-        onFailure:(trans) => this.props.setToast(trans.getError()), 
+        onFailure:(trans) => console.log(trans.getError()), 
       }
     )
   }
@@ -53,6 +54,16 @@ class PostIndex extends Component {
     relay.setVariables({
         offset,
     })
+  }
+
+  _handleRemove = (id) => {
+    this.props.relay.commitUpdate(
+      new RemovePostMutation({id, viewer:this.props.viewer}),
+      {
+        onSuccess:(res)=> this.props.setToast('Delete post successfully!!!'),
+        onFailure:(trans) => console.log(trans.getError()), // trigger redux-form validation
+      }
+    )   
   }
 
   render() {
@@ -103,6 +114,7 @@ class PostIndex extends Component {
                 {...node}
                 key={node.id}
                 sortRank={index}
+                handleRemove={this._handleRemove}
                 handleToggle={this._handleToggle}
               />
             ))}
@@ -132,7 +144,7 @@ export default Relay.createContainer(PostIndex, {
   initialVariables: {
     first: 10,      
     offset: 0,
-    order: 'published_at DESC',  
+    order: 'updated_at DESC',  
   },
 
   fragments: {
@@ -140,6 +152,7 @@ export default Relay.createContainer(PostIndex, {
       fragment on Viewer {
         id
         ${ToggleAcceptanceMuatation.getFragment('viewer')}
+        ${RemovePostMutation.getFragment('viewer')} 
         posts(first: $first order: $order offset: $offset){
           totalCount,          
           edges {

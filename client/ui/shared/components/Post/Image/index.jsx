@@ -1,11 +1,14 @@
 import React, { PropTypes } from 'react'
+import ActionProblem from 'material-ui/svg-icons/action/report-problem'
 
 const Image = ({ full_src, caption }) => (
   <figure >
-    <img       
-      src={full_src}
-      alt={caption}
-    />
+    {full_src 
+      ? <img       
+        src={full_src.preview || full_src}
+        alt={caption} />
+      : <span><ActionProblem/> No image</span>
+    }
     {caption &&
       <figcaption >{caption}</figcaption>
     }

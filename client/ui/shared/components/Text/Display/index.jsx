@@ -12,10 +12,12 @@ import { getBlockStyle } from '../shared/utils'
 class TextDisplay extends Component {
   constructor(props) {
     super(props)
+    this.setDescription(props.description)
+  }
 
-    if (props.description) {
-      const blocks = convertFromRaw(JSON.parse(props.description))   
-         
+  setDescription(description) {
+    if (description) {
+      const blocks = convertFromRaw(JSON.parse(description))            
       this.state = { 
         editorState: EditorState.createWithContent(blocks, decorator) 
       }
@@ -26,14 +28,14 @@ class TextDisplay extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.description && nextProps.description) {
-      const blocks = convertFromRaw(JSON.parse(nextProps.description))
-      this.setState({ editorState: EditorState.createWithContent(blocks, decorator) })
+  componentWillReceiveProps(nextProps) {    
+    if (this.props.description !== nextProps.description) {      
+      this.setDescription(nextProps.description)
     }
   }
 
   render() {
+    
     return (
       <div>
         <Editor

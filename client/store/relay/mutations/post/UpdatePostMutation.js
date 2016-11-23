@@ -7,7 +7,7 @@ export default class UpdatePostMutation extends Relay.Mutation {
   static fragments = {
     post: () => Relay.QL`
       fragment on Post {
-        id
+        id        
       }
     `,    
   }
@@ -16,11 +16,32 @@ export default class UpdatePostMutation extends Relay.Mutation {
     return Relay.QL`mutation{updatePost}`
   }
 
+  // get Fat Query will update the response from server
+  // for item we update, this will update the Relay.Store
+  // by default all other items can access it
   getFatQuery() {
     return Relay.QL`
       fragment on UpdatePostPayload @relay(pattern: true) {
         post {
-          title
+          id
+          title          
+          published_at
+          tags
+          items {
+            id
+            text {
+              id
+              description
+            }
+            image {
+              id
+              caption
+            }
+            twitter {
+              id
+              twitter_id
+            }
+          }
         }        
       }
     `
@@ -34,6 +55,7 @@ export default class UpdatePostMutation extends Relay.Mutation {
    * REQUIRED_CHILDREN: get info of new node when redirect (children)
    */
   
+  // change field post, with response from fatQuery
   getConfigs() {
     return [{
       type: 'FIELDS_CHANGE',
@@ -45,16 +67,17 @@ export default class UpdatePostMutation extends Relay.Mutation {
 
   getVariables() {
     return {
-      title: this.props.title,
+      ...this.props.data,
       id: this.props.post.id,
     }
   }
 
   getOptimisticResponse() {     
+    // must have the same shape as fatQuery
+    // but we dont have these ids to return :v
     return {
-      post: {
-        title: this.props.title,
-        id: this.props.post.id,
+      post: {        
+        id: this.props.post.id,        
       },
     }
   }

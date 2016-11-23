@@ -1,8 +1,8 @@
 import { fork } from 'redux-saga/effects'
 
 import asyncAuthWatchers from 'store/sagas/auth'
-import asyncGeneralFetchWatchers from 'store/sagas/general'
-import asyncBookFetchWatchers from 'store/sagas/book'
+import asyncTagFetchWatchers from 'store/sagas/tag'
+import asyncPostFetchWatchers from 'store/sagas/post'
 
 // saga must be a function like generator of other functions
 const rootSaga = function* () {
@@ -11,8 +11,8 @@ const rootSaga = function* () {
     // we can use single generator, but we should use a collection for later usage
     // watchIncrementAsync(),    
     ...asyncAuthWatchers.map(watcher => fork(watcher)),    
-    ...asyncGeneralFetchWatchers.map(watcher => fork(watcher)),
-    ...asyncBookFetchWatchers.map(watcher => fork(watcher)),
+    ...asyncTagFetchWatchers.map(watcher => fork(watcher)),
+    ...asyncPostFetchWatchers.map(watcher => fork(watcher)),
   ]
 }
 

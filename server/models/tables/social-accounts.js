@@ -13,7 +13,7 @@ const social_accounts = sequelize.define("social_accounts", {
 }, {
   timestamps: false,
   classMethods: {
-    associate: function() {        
+    associate() {        
       // this.hasMany(sequelize.models.taggings, {foreignKey: 'subject_id'})
       this.belongsTo(sequelize.models.authors, {          
         foreignKey: 'author_id',

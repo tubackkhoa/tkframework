@@ -12,7 +12,10 @@ export const itemImageType = getQueryType('ItemImage', models.item_images, {
     type: GraphQLString,
     description: 'Absolute src of image item',    
   },  
-})
+},// remove full_src from db select
+  (id, {full_src, ...graphFields}) => 
+    models.item_images.findById(id, {attributes: Object.keys(graphFields)})
+)
 
 export const itemTwitterType = getQueryType('ItemTwitter', models.item_twitters)
  

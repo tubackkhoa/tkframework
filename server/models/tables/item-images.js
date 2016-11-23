@@ -10,11 +10,10 @@ const item_images = sequelize.define("item_images", {
   src : DataTypes.STRING,
   caption : DataTypes.STRING,    
 }, {
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
+  timestamps: false,
   getterMethods: {
-    full_src: function() {
-      return `/uploads/item_image/image/${this.id}/${this.src}`
+    full_src() {
+      return this.src ? `/uploads/item_image/image/${this.id}/${this.src}` : null
     }
   }
 })

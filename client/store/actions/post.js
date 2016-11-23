@@ -1,6 +1,6 @@
 
-export const replaceCurrentPost = (payload) => ({
-  type: 'app/replaceCurrentPost',
-  payload,
+export const createPost = (...args) => ({
+  type: 'app/createPost',
+  args,
 })
 

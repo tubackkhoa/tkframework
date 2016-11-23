@@ -14,7 +14,7 @@ const taggings = sequelize.define("taggings", {
   createdAt: 'created_at',
   updatedAt: 'updated_at',    
   classMethods: {
-    associate: function() {        
+    associate() {        
       this.belongsTo(sequelize.models.tags, {
         as: 'tag', 
         foreignKey: 'tag_id'

@@ -13,7 +13,7 @@ const tags = sequelize.define("tags", {
   createdAt: 'created_at',
   updatedAt: 'updated_at',
   classMethods: {
-    associate: function() {        
+    associate() {        
       // this.hasMany(sequelize.models.taggings, {foreignKey: 'subject_id'})
       this.belongsToMany(sequelize.models.posts, {
         through: taggingsPostConnect,

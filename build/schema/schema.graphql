@@ -42,6 +42,8 @@ type AuthorEdge {
 
 scalar Buffer
 
+scalar Date
+
 type DetailPost {
   node: Post
   next: Post
@@ -98,11 +100,23 @@ type ItemImage implements Node {
   id: ID!
   src: String
   caption: String
-  created_at: String!
-  updated_at: String!
 
   # Absolute src of image item
   full_src: String
+}
+
+input ItemImageInput {
+  id: ID
+  caption: String
+}
+
+input ItemInput {
+  id: ID
+  target_type: ID!
+  sort_rank: Int
+  text: ItemTextInput
+  twitter: ItemTwitterInput
+  image: ItemImageInput
 }
 
 enum itemstarget_typeEnumType {
@@ -117,8 +131,11 @@ type ItemText implements Node {
   # The ID of an object
   id: ID!
   description: String
-  created_at: String!
-  updated_at: String!
+}
+
+input ItemTextInput {
+  id: ID
+  description: String
 }
 
 type ItemTwitter implements Node {
@@ -127,8 +144,11 @@ type ItemTwitter implements Node {
   # The ID of an object
   id: ID!
   twitter_id: String
-  created_at: String!
-  updated_at: String!
+}
+
+input ItemTwitterInput {
+  id: ID
+  twitter_id: String
 }
 
 type Mutation {
@@ -137,6 +157,7 @@ type Mutation {
   removePost(input: RemovePostInput!): RemovePostPayload
   toggleAcceptancePost(input: ToggleAcceptancePostInput!): ToggleAcceptancePostPayload
   updateAuthor(input: UpdateAuthorInput!): UpdateAuthorPayload
+  updateItemImage(input: UpdateItemImageInput!): UpdateItemImagePayload
 }
 
 # An object with an ID
@@ -258,13 +279,6 @@ type RemovePostPayload {
   clientMutationId: String
 }
 
-input SettingInput {
-  id: Int
-  url: String!
-  account_type: Int
-  author_id: Int
-}
-
 type SocialAccount implements Node {
   type: String
 
@@ -273,6 +287,13 @@ type SocialAccount implements Node {
   author_id: Int
   account_type: Int
   url: String
+}
+
+input SocialAccountInput {
+  id: Int
+  url: String!
+  account_type: Int
+  author_id: Int
 }
 
 type Tag implements Node {
@@ -304,7 +325,7 @@ input UpdateAuthorInput {
   avatar: File
 
   # List social accounts input of the user
-  social_accounts: [SettingInput]
+  social_accounts: [SocialAccountInput]
   clientMutationId: String
 }
 
@@ -313,9 +334,28 @@ type UpdateAuthorPayload {
   clientMutationId: String
 }
 
+input UpdateItemImageInput {
+  id: ID!
+  full_src: File
+  clientMutationId: String
+}
+
+type UpdateItemImagePayload {
+  item_image: ItemImage
+  clientMutationId: String
+}
+
 input UpdatePostInput {
   id: ID!
   title: String!
+  lead_sentence: String!
+  published_at: Date!
+
+  # List tags input of the post
+  tags: [String!]
+
+  # List items input of the post
+  items: [ItemInput!]
   clientMutationId: String
 }
 

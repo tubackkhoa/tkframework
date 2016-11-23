@@ -12,6 +12,8 @@ import TagField from 'ui/backend/components/shared/TagField'
 import PostFormItem from 'ui/backend/components/Post/Forms/Item'
 import EditBox from 'ui/backend/components/Post/Forms/Item/Form/EditBox'
 
+import TARGET_TYPES from 'ui/shared/constants/targetTypes'
+
 // do not user higher order function for component or it will re-render everytime
 export const renderTextField = ({ input, label, type, meta: { touched, error, warning } }) => (  
   <TextField    
@@ -62,18 +64,18 @@ export const renderPostFormItem = ({ input:{value, onChange}, fields, index }) =
     item={value}
     sortRank={index}
     totalCount={fields.length}
-    handleUpdateItem={(sortRank, item)=> onChange(item)}
-    handleDeleteItem={sortRank=> fields.remove(sortRank)}
-    handleMoveItem={(sortRank, type)=> {
+    handleUpdateItem={(sort_rank, item)=> onChange({...item, sort_rank})}
+    handleDeleteItem={sort_rank => fields.remove(sort_rank)}
+    handleMoveItem={(sort_rank, type)=> {
       switch(type) {
         case 'TOP':
-          return fields.move(sortRank, 0)
+          return fields.move(sort_rank, 0)
         case 'UP':        
-          return fields.move(sortRank, sortRank - 1)
+          return fields.move(sort_rank, sort_rank - 1)
         case 'DOWN':
-          return fields.move(sortRank, sortRank - 1)
+          return fields.move(sort_rank, sort_rank + 1)
         case 'BOTTOM':
-          return fields.move(sortRank, fields.length - 1)
+          return fields.move(sort_rank, fields.length - 1)
       }
     }}    
   /> 
@@ -82,9 +84,9 @@ export const renderPostFormItem = ({ input:{value, onChange}, fields, index }) =
 
 export const renderTagField = ({ input:{value, onChange}, suggestions}) => (
   <TagField
-    tags={value}    
-    handleAddTag={tag=> onChange([...value, tag])}
-    handleDeleteTag={sortRank=> onChange(value.filter((_, index) => index !== sortRank))}
+    tags={value.map(item=>({id:item.id, text:item.text||item.name}))}    
+    handleAddTag={tag=> onChange([...value, {text: tag}])}
+    handleDeleteTag={sort_rank=> onChange(value.filter((_, index) => index !== sort_rank))}
     suggestions={suggestions}
   />
 )
@@ -109,7 +111,7 @@ export const renderSocialAccounts = ({ fields, meta: { error } }) => (
 )
   
 
-export const renderPostFormItems = ({ fields, meta: { error } }) => (
+export const renderPostFormItems = ({ fields, isNew=true, meta: { error } }) => (
   <section>
     <ul>
       {fields.map((item, index) => (
@@ -121,18 +123,46 @@ export const renderPostFormItems = ({ fields, meta: { error } }) => (
           component={renderPostFormItem}          
         />                  
       ))}
-      <li>
-        <EditBox handleAddItem={target_type => 
-          fields.push({
-            target_type, 
-            editing: true, 
-            isNew: true, 
-            image: {},
-            twitter: {},
-            text: {},
-          })
-        } />
-      </li>
+
+      {!isNew && 
+        <li>
+          <EditBox handleAddItem={target_type => 
+            fields.push({
+              target_type, 
+              editing: true, 
+              isNew: true, 
+              sort_rank: fields.length, // always at the end
+              image: target_type === TARGET_TYPES.IMAGE ? {} : null,
+              twitter: target_type === TARGET_TYPES.TWITTER ? {} : null,
+              text: target_type === TARGET_TYPES.TEXT ? {} : null,
+            })
+          } />
+        </li>
+      }
     </ul>    
   </section>
 )
+
+export const copyFromRelay = obj => {
+  if(!obj){
+    return obj
+  }
+  else if(typeof obj === 'object'){
+    const {__dataID__, __fragments__, ...data} = obj
+    sanitizeFromRelay(data)
+    return data
+  } 
+    
+  sanitizeFromRelay(obj)
+  return obj
+  
+}
+
+export const sanitizeFromRelay = obj => {
+  for(let prop in obj) {
+    if (prop === '__dataID__' || prop === '__fragments__')
+      delete obj[prop]
+    else if (typeof obj[prop] === 'object')
+      sanitizeFromRelay(obj[prop])
+  }
+}

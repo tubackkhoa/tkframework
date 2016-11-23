@@ -1,6 +1,5 @@
 import {
     fromGlobalId,
-    toGlobalId
 } from "graphql-relay"
 import checkPagingSanity from "./checkPagingSanity"
 

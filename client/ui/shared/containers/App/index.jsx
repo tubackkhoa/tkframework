@@ -37,8 +37,9 @@ export default class extends React.Component{
           ? <LoggedNavigationBar onLogout={logout} />
           : <LoginNavigationBar/>
         }
-        
-        {children}
+        <div className="container">
+          {children}
+        </div>
         <Toasts />
         <Footer/>
 

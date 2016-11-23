@@ -20,13 +20,13 @@ const projects = sequelize.define("projects", {
 
   getterMethods: {
     // do not use arrow function to have this as function context
-    full_image: function() {
+    full_image() {
       return this.image ? `/uploads/project/image/${this.id}/${this.image}` : null
     }
   },
 
   classMethods: {
-    associate: function() {        
+    associate() {        
       // we should use object instead of string to prevent errors prone
       this.belongsToMany(sequelize.models.tags, {
         through: taggingsProjectConnect,
@@ -38,7 +38,7 @@ const projects = sequelize.define("projects", {
 
   instanceMethods: {
     // arrow function can mislead this
-    getProjectTags: function(attributes) {    
+    getProjectTags(attributes) {    
       // with where and attributes
       return this.getTags({          
         attributes,

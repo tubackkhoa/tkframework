@@ -4,7 +4,7 @@ import Text from 'ui/shared/components/Post/Text'
 import Twitter from 'ui/shared/components/Post/Twitter'
 import Image from 'ui/shared/components/Post/Image'
 
-const renderComponent = (item) => {
+const renderComponent = (item) => {  
   switch (item.target_type) {
     case TARGET_TYPES.IMAGE:
       return <Image {...item.image} />

@@ -6,7 +6,6 @@ class DropzoneImage extends Component {
 
   constructor(props) {
     super(props)
-
     this.state = { errorMessage: '' }    
   }
 
@@ -57,7 +56,6 @@ class DropzoneImage extends Component {
 
   render() {
     const {props:{value, name}, state: {errorMessage}} = this
-    
     return (
       <div >
         <Dropzone

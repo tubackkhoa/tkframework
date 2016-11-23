@@ -36,9 +36,11 @@ export const getPostDetail = async (id, graphFields) => {
     ] = [text, twitter].map(fields=>Object.keys(fields))
 
     // must provide post_id for mapping or it will return empty, do not accept from user input
-    post.items = await post.getOrderedItems(['id', 'post_id', 'target_id', 'target_type'])
+    post.items = await post.getOrderedItems(['id', 'post_id', 'target_id', 'target_type'])    
     // mapping for detail
-    post.items.forEach(item=> {
+    post.items.forEach((item, index) => {
+      // re-assign sort_rank for client to render correctly
+      item.sort_rank = index
       switch(item.target_type) {
         case 'ItemText':          
           item.text = models.item_texts.findById(item.target_id, {attributes: textAttributes})

@@ -9,8 +9,7 @@ const item_twitters = sequelize.define("item_twitters", {
   id          : { type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true },    
   twitter_id : DataTypes.STRING,
 }, {
-  createdAt: 'created_at',
-  updatedAt: 'updated_at',
+  timestamps: false,
 })
 
 dataloaderSequelize(item_twitters)

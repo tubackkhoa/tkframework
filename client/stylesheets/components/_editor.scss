@@ -1,0 +1,27 @@
+.text-editor {
+  position: relative;
+  padding: 15px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: text;
+}
+
+.text-editor{
+  .toolbar{
+  
+    .block {
+      margin-bottom: 5px;
+    }
+    .button {
+      display: inline-block;
+      padding: 2px 0;
+      margin-right: 10px;
+      cursor: pointer;
+      color: $color-blue-lighter;
+    }
+
+    .button.active {
+      color: $color-blue;
+    }
+  }
+}

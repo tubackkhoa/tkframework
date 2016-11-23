@@ -1,18 +1,17 @@
-import React from 'react';
-import StyleButton from '../StyleButton/index';
-const styles = {};
-
+import React from 'react'
+import StyleButton from '../StyleButton/index'
 
 const INLINE_STYLES = [
   { label: 'Bold', style: 'BOLD' },
   { label: 'Italic', style: 'ITALIC' },
   { label: 'Underline', style: 'UNDERLINE' },
-];
+]
 
 export const InlineStyleControls = (props) => {
-  const currentStyle = props.editorState.getCurrentInlineStyle();
+  const currentStyle = props.editorState.getCurrentInlineStyle()
+  
   return (
-    <div className={styles.root}>
+    <div className='block inline-style'>
       {INLINE_STYLES.map(type =>
         <StyleButton
           key={type.label}
@@ -23,17 +22,17 @@ export const InlineStyleControls = (props) => {
         />
       )}
       <span
-        className={styles.button}
+        className='button addLink'
         onMouseDown={props.onPromptForLink}
       >
         Add Link
       </span>
       <span
-        className={styles.button}
+        className='button removeLink'
         onMouseDown={props.onRemoveLink}
       >
         Remove Link
       </span>
     </div>
-  );
-};
+  )
+}

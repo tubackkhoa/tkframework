@@ -25,7 +25,7 @@ export const fetchJson = (url, options = {}, base = API_BASE) => (
     },
   })
   .then(rejectErrors)
-  // default return empty json
+  // default return empty json when no content
   .then((res) => res.status === 204 ? {} : res.json())
 )
 
@@ -34,7 +34,7 @@ export const fetchJsonWithToken = (token, url, options = {}, ...args) => (
     ...options,
     headers: {
       ...options.header,
-      Authorization: token
-    }
+      Authorization: `Bearer ${token}`,
+    },
   }, ...args)
 )
