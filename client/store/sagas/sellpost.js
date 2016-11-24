@@ -23,6 +23,8 @@ const requestGetSellPostsAsync = createRequestSaga({
   key: 'getSellPosts',
   success: [   
     (data) => replaceSellPosts(data),    
+    // reset to empty for later edit
+    (data) => replaceSellPost({}),
   ],
 })
 
@@ -42,9 +44,8 @@ const requestUpdateSellPostAsync = createRequestSaga({
   request: api.sellpost.updateSellPost,
   key: 'updateSellPost',
   success: [   
-    () => setToast('Update sell post successfully!!!'), 
-    (data) => replaceSellPost(data),
-    ({id}) => forwardTo('/cms/sellposts'),    
+    () => setToast('Update sell post successfully!!!'),     
+    ({id}) => forwardTo('/cms/sellposts'),        
   ],
 })
 
