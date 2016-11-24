@@ -3,17 +3,18 @@ import path       from 'path'
 import express   from 'express'
 import bodyParser from 'body-parser'
 import cors  from 'cors'
-import { jwtSecret }   from 'config/constants'
+import { jwtSecret, publicPath }   from 'config/constants'
 import expressJwt from 'express-jwt'
 import passport from 'passport/local'
+import compression from 'compression'
 
-const publicPath = path.resolve(__dirname, '../public')
 const authenticate = expressJwt({
   secret: jwtSecret,
   credentialsRequired: false,
   userProperty: 'user',
 })
 const app = express()
+
 // we use this to authenticate the specific router
 app.set('port', (process.env.PORT || 3333))
 app.use(bodyParser.json({limit: '5mb'}))
@@ -32,13 +33,12 @@ app.use('/api', require('./routes/api').default)
 // GraphQL
 app.use('/graphql', require('./routes/graphql').default)
 
-// by default we can serve the public as standalone app
-if(process.env.NODE_ENV === 'server' || app.get('port') === 80) {
-  app.use(express.static(publicPath))
-  app.get('*', (req, res) => {
-    res.sendFile(publicPath + '/index.html')
-  })
-}
+// static folder and file, you can use nginx to server, and override file path with public path
+app.use(compression({level:9}))
+app.use(express.static(publicPath))
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(publicPath + '/index.html'))
+})
 
 app.listen(app.get('port'), () => {
   //eslint-disable-next-line no-console

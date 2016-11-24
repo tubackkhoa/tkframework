@@ -11,6 +11,11 @@ export const getSellPost = (...args) => ({
 })
 
 
+export const deleteSellPost = (...args) => ({
+  type: 'app/deleteSellPost',
+  args,
+})
+
 // pass page as argument
 export const getSellPosts = (...args) => ({
   type: 'app/getSellPosts',

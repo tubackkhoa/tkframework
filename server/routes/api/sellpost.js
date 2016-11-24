@@ -4,6 +4,12 @@ import sellposts from 'models/tables/Alop/sellposts'
 import authorize from 'data/graphql/authorize'
 import models from 'models'
 
+import { v4 } from 'uuid'
+import fse from 'fs-extra'
+import path from 'path'
+import { filePath } from 'config/constants'
+import { decodeBase64Image } from 'data/decoder/image'
+
 const router  = new Router()
 
 router.get('/index/:id', (req, res) => {
@@ -28,20 +34,45 @@ router.get('/', (req, res)=> {
   })
 })
 
+router.delete('/delete/:id', (req, res) => {
+  authorize(req)
+  const {id} = req.params
+  sellposts.destroy({
+    where:{id}
+  })
+  .then(deletedNumber => res.send({deletedNumber}))
+})
+
 // limit json post
 router.post('/update', async (req, res) => {
   // check authorize first, for update, also check author_id for post
   authorize(req)
   // currently we not process items, let it for edit phrase
-  const {sellpost:data, id} = req.body
+  const {sellpost:{image, ...data}, id} = req.body
+  const imageDecode = decodeBase64Image(image)
 
   // update from post data
   const item = id 
-    ? await sellposts.update(data, {where:{id}})
+    ? await sellposts.findById(id)
     : await sellposts.create(data)
 
+  if(id) {
+    item.updateAttributes(data)    
+  }
+
+  // delete old one
+  if(imageDecode.buffer) {
+    const imagePath = path.join(filePath, 'sellpost/image', id)
+    fse.removeSync(imagePath)   
+    const filename = v4() + '.png'  
+    // must save done then return   
+    fse.outputFileSync(path.join(imagePath, filename), imageDecode.buffer)    
+    item.updateAttributes({
+      image:`/uploads/sellpost/image/${item.id}/${filename}`
+    })
+  }  
   // send back inserted id as graphql id
-  res.send({id:item.id})
+  res.send(item)
 })
 
 export default router

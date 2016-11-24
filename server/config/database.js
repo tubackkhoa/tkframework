@@ -1,7 +1,7 @@
 export const connection = {
   dev: {
     username: "root",
-    password: "123456",
+    password: process.env.DB_PASS || "123456",
     database: "tkframework",
     host: "127.0.0.1",
     dialect: "mysql",

@@ -22,30 +22,39 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import Pagination from 'ui/backend/components/shared/Pagination'
 import inlineStyles from 'ui/shared/styles/MaterialUI'
 
-import { getSellPosts } from 'store/actions/sellpost'
+import { getSellPosts, deleteSellPost } from 'store/actions/sellpost'
 import { setToast } from 'store/actions/common'
 
+import * as authSelectors from 'store/selectors/auth'
 import * as sellpostSelectors from 'store/selectors/sellpost'
 
 
 const mapStateToProps = (state) => ({  
-  sellposts: sellpostSelectors.getSellPosts(state)
+  sellposts: sellpostSelectors.getSellPosts(state),
+  token: authSelectors.getToken(state),
 })
 
-@connect(mapStateToProps, { getSellPosts, setToast })
+@connect(mapStateToProps, { getSellPosts, setToast, deleteSellPost })
 export default class SellPostIndex extends Component {
 
   componentDidMount() {
     document.title = 'SellPost Management'
-    this.props.getSellPosts(1)
+    this._handleMovePage(1)
   }
 
   _handleMovePage = (page) => {
-    this.props.getSellPosts(page)
+    if(page){
+      this.page = page
+    }    
+    this.props.getSellPosts(this.page)
   }
 
   _handleRemove = (id) => {
-    
+    // allow callback function
+    this.props.deleteSellPost(this.props.token.accessToken, id, (data)=>{
+      this.props.setToast('delete sellpost successfully!!!')
+      this._handleMovePage()
+    }, (error)=> this.props.setToast('delete sellpost failed!!!'))
   }
 
   renderRow(row) {
@@ -71,7 +80,7 @@ export default class SellPostIndex extends Component {
           </Link>          
           <IconButton
             name="delete-button"
-            onClick={this._handleRemove}
+            onClick={e=>this._handleRemove(id)}
             disableTouchRipple
           >
             <ActionDelete/>
