@@ -1,0 +1,15 @@
+.dropzone {
+  width: 200px;
+  height: 200px;  
+  border:2px dashed $color-box-shadow;
+  padding-top: 80px;
+  text-align: center;
+}
+
+.dropzone>img{
+  margin-top:-40px;
+}
+
+.dropzone.active{
+  background-color: $color-blue-lightest;
+}

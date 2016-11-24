@@ -8,10 +8,10 @@ import ContentSave from 'material-ui/svg-icons/content/save'
 
 import inlineStyles from 'ui/shared/styles/MaterialUI'
 
-import { getSellPost, updateSellPost, replaceSellPost } from 'store/actions/sellpost'
+import { getServicePoint, updateServicePoint, replaceServicePoint } from 'store/actions/service-point'
 
 import * as authSelectors from 'store/selectors/auth'
-import * as sellPostSelectors from 'store/selectors/sellpost'
+import * as servicePointSelectors from 'store/selectors/service-point'
 
 
 import { 
@@ -23,34 +23,34 @@ const validate = (values) => {
   const errors = {}
   // first time it is empty
   if(!values) return errors
-  if (!values.title) {
-    errors.title = 'Enter title'
+  if (!values.name) {
+    errors.name = 'Enter name'
   } 
 
   return errors
 }
 
 const mapStateToProps = (state) => ({  
-  initialValues: sellPostSelectors.getSellPost(state),
+  initialValues: servicePointSelectors.getServicePoint(state),
   token: authSelectors.getToken(state)
 })
 
-@connect(mapStateToProps, {getSellPost, updateSellPost, replaceSellPost})
-@reduxForm({ form: 'SellPostForm', validate, enableReinitialize:true })
-export default class SellPostEdit extends Component {
+@connect(mapStateToProps, {getServicePoint, updateServicePoint, replaceServicePoint})
+@reduxForm({ form: 'ServicePointForm', validate, enableReinitialize:true })
+export default class ServicePointEdit extends Component {
 
   _handleSubmit = (props) => {    
     // call update, after that return to list page
-    this.props.updateSellPost(this.props.token.accessToken, this.props.params.id, props)
+    this.props.updateServicePoint(this.props.token.accessToken, this.props.params.id, props)
   }
 
   componentDidMount(){
     if(this.props.params.id){
-      this.props.getSellPost(this.props.params.id)
-      document.title = 'Edit SellPost'
+      this.props.getServicePoint(this.props.params.id)
+      document.title = 'Edit ServicePoint'
     } else {
-      document.title = 'Create SellPost'  
-      this.props.replaceSellPost({})
+      document.title = 'Create ServicePoint'  
+      this.props.replaceServicePoint({})
     }
     
   }
@@ -63,7 +63,10 @@ export default class SellPostEdit extends Component {
       <form onSubmit={handleSubmit(this._handleSubmit)} >
       
         <h2>{submitLabel} Post</h2>
-        <Field name="title" label="Enter Title" component={renderTextField} />
+        <Field name="name" label="Enter Name" component={renderTextField} />
+        <Field name="address" label="Enter Address" component={renderTextField} />
+        <Field name="lat" label="Enter Latitude" component={renderTextField} />
+        <Field name="lng" label="Enter Longitude" component={renderTextField} />
         <Field name="description" label="Description" component={renderTextField} />
         <Field name="phone" label="Phone" component={renderTextField} />
         <Field name="image" label="Image" component={renderDropzoneImage} base64={true} />

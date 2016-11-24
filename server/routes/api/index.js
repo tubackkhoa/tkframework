@@ -48,7 +48,7 @@ router.post('/post/create', async (req, res) => {
 })
 
 // service point
-router.use('/service', servicePoint)
+router.use('/servicepoint', servicePoint)
 
 // tire post
 router.use('/sellpost', sellPost)

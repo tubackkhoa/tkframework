@@ -47,6 +47,9 @@ const requestUpdateSellPostAsync = createRequestSaga({
     () => setToast('Update sell post successfully!!!'),     
     ({id}) => forwardTo('/cms/sellposts'),        
   ],
+  failure: [
+    (error) => setToast(error.message)
+  ]
 })
 
 // root saga reducer

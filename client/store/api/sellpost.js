@@ -1,11 +1,11 @@
 import { fetchJson, fetchJsonWithToken } from './common'
 
 export default {
-  updateSellPost(token, id, sellpost) {
+  updateSellPost(token, id, item) {
     return fetchJsonWithToken(token, '/api/sellpost/update',
     {
       method: 'POST',
-      body: JSON.stringify({ id, sellpost }),
+      body: JSON.stringify({ id, item }),
     })      
   },
 

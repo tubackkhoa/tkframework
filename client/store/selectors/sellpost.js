@@ -1,6 +1,6 @@
 
 export const getSellPost = (state) =>
-  state.sellpost.post || {}
+  state.sellpost.item || {}
 
 export const getSellPosts = (state) =>
-  state.sellpost.posts || {}
+  state.sellpost.items || {}

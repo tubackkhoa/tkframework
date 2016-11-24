@@ -60,6 +60,7 @@ class DropzoneImage extends Component {
       <div >
         <Dropzone
           name={name}
+          className='dropzone'
           activeClassName="dropzone active"
           accept="image/*"
           multipe={false}

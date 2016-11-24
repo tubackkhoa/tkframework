@@ -15,7 +15,7 @@ import {
 // create saga here
 // convenient way: [] instead of polymorph, such as item is not array then [item]
 // because later changes to code will be so easy, just add new row
-export const createRequestSaga = ({request, key, start, stop, success, failure, cancelled, timeout, cancel}) => {
+export const createRequestSaga = ({request, key, start, stop, success, failure, cancelled, timeout=API_TIMEOUT, cancel}) => {
 
   // when we dispatch a function, redux-thunk will give it a dispatch
   // while redux-saga will give it an action instead, good for testing
@@ -44,7 +44,7 @@ export const createRequestSaga = ({request, key, start, stop, success, failure, 
       // timeout is 0 mean default timeout, so default is 0 in case user input 0 
       let raceOptions = {
         data: call(request, ...args),
-        isTimeout: call(delay, timeout || API_TIMEOUT)
+        isTimeout: call(delay, timeout)
       }
 
       if(cancel) {

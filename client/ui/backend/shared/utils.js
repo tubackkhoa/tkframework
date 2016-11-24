@@ -11,6 +11,7 @@ import DatePicker from 'ui/backend/components/shared/CustomDatePicker'
 import TagField from 'ui/backend/components/shared/TagField'
 import PostFormItem from 'ui/backend/components/Post/Forms/Item'
 import EditBox from 'ui/backend/components/Post/Forms/Item/Form/EditBox'
+import Checkbox from 'material-ui/Checkbox'
 
 import TARGET_TYPES from 'ui/shared/constants/targetTypes'
 
@@ -24,6 +25,14 @@ export const renderTextField = ({ input, label, type, meta: { touched, error, wa
     style={inlineStyles.textField}
     {...input}
     errorText={touched && error ? error : ''}
+  />
+)
+
+export const renderCheckbox = ({ input, label }) => (
+  <Checkbox 
+    checked={input.value} 
+    onCheck={(e, isInputChecked) => input.onChange(isInputChecked)}
+    label={label} 
   />
 )
 

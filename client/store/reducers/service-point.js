@@ -1,9 +1,9 @@
 
-export const sellpostReducer = (state = {}, { type, payload }) => {
+export const servicePointReducer = (state = {}, { type, payload }) => {
   switch (type) {
-    case 'app/replaceSellPost':
+    case 'app/replaceServicePoint':
       return { ...state, item: payload } 
-    case 'app/replaceSellPosts':
+    case 'app/replaceServicePoints':
       return { ...state, items: payload }   
     default:
       return state

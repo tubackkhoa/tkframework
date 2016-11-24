@@ -7,6 +7,7 @@ import { tagSuggestionsReducer as tagSuggestions } from './tag'
 import { authReducer as auth } from './auth'
 
 import { sellpostReducer as sellpost } from './sellpost'
+import { servicePointReducer as servicePoint } from './service-point'
 // a rootReducer is like a single state, key is function return a sub state value
 const rootReducer = combineReducers({
 	routing,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   auth,
   tagSuggestions,
   sellpost,
+  servicePoint,
 })
 
 export default rootReducer

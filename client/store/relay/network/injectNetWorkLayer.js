@@ -11,8 +11,6 @@ import * as authSelectors from 'store/selectors/auth'
 // import {saveRefreshToken} from 'store/actions/auth'
 
 const injectNetWorkLayer = (store) => {
-  const state = store.getState()
-  const token = authSelectors.getToken(state)  
 
   const relayMiddlewares = [
     urlMiddleware({
@@ -31,7 +29,11 @@ const injectNetWorkLayer = (store) => {
     }),
     authMiddleware({
       // we will refresh token in config, to log messages in more detail
-      token: () => token ? token.accessToken : null,
+      token: () => {
+        // each time it will return as header
+        const token = authSelectors.getToken(store.getState())  
+        return token ? token.accessToken : null
+      },
       allowEmptyToken: true,
       // tokenRefreshPromise: (req) => {
       //   console.log('[client.js] resolve token refresh', req)
@@ -68,9 +70,6 @@ const injectNetWorkLayer = (store) => {
     disableBatchQuery: false 
   }))  // enable batch query for the future
 
-  // return something such as token
-  return {token}
-  
 }
 
 export default injectNetWorkLayer

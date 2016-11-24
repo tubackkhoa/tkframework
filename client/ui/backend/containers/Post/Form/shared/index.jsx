@@ -18,7 +18,7 @@ import {
   renderPostFormItems,
 } from 'ui/backend/shared/utils'
 
-function validate(values) {
+const validate = (values) => {
   const errors = {}
   if (!values.title) {
     errors.title = 'Enter title'

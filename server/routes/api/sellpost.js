@@ -48,22 +48,28 @@ router.post('/update', async (req, res) => {
   // check authorize first, for update, also check author_id for post
   authorize(req)
   // currently we not process items, let it for edit phrase
-  const {sellpost:{image, ...data}, id} = req.body
+  const {item:{image, ...data}, id} = req.body
   const imageDecode = decodeBase64Image(image)
 
+  // update current user id
+  data.user_id = req.user.id
   // update from post data
   const item = id 
     ? await sellposts.findById(id)
     : await sellposts.create(data)
 
-  if(id) {
-    item.updateAttributes(data)    
-  }
+  if(!id)
+    res.send({id:item.id})
+
+  // do at background
+  item.updateAttributes(data)    
 
   // delete old one
   if(imageDecode.buffer) {
-    const imagePath = path.join(filePath, 'sellpost/image', id)
-    fse.removeSync(imagePath)   
+    const imagePath = path.join(filePath, `sellpost/image${item.id}`)
+    if(id)    
+      fse.removeSync(imagePath)   
+    // update new image
     const filename = v4() + '.png'  
     // must save done then return   
     fse.outputFileSync(path.join(imagePath, filename), imageDecode.buffer)    

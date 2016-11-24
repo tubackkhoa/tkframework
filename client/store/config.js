@@ -2,7 +2,7 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 
 import createSagaMiddleware from 'redux-saga'
-import SagaManager from './sagas/saga_manager'
+import SagaManager from './sagas/saga-manager'
 
 import { persistStore, createTransform } from 'redux-persist'
 

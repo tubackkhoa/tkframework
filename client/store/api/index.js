@@ -2,6 +2,7 @@
 import tag from './tag'
 import post from './post'
 import sellpost from './sellpost'
+import servicePoint from './service-point'
 import auth from './auth'
 // import _general from './general'
 // import _dashboard from './dashboard'
@@ -17,4 +18,5 @@ export default {
   tag,
   post,
   sellpost,
+  servicePoint,
 }

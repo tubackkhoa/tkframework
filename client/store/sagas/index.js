@@ -5,6 +5,7 @@ import asyncTagFetchWatchers from 'store/sagas/tag'
 import asyncPostFetchWatchers from 'store/sagas/post'
 
 import asyncSellPostFetchWatchers from 'store/sagas/sellpost'
+import asyncServicePointFetchWatchers from 'store/sagas/service-point'
 
 // saga must be a function like generator of other functions
 const rootSaga = function* () {
@@ -18,6 +19,7 @@ const rootSaga = function* () {
 
     // make watcher for better groups of functions
     ...asyncSellPostFetchWatchers.map(watcher => fork(watcher)),
+    ...asyncServicePointFetchWatchers.map(watcher => fork(watcher)),
   ]
 }
 

@@ -22,23 +22,23 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import Pagination from 'ui/backend/components/shared/Pagination'
 import inlineStyles from 'ui/shared/styles/MaterialUI'
 
-import { getSellPosts, deleteSellPost } from 'store/actions/sellpost'
+import { getServicePoints, deleteServicePoint } from 'store/actions/service-point'
 import { setToast } from 'store/actions/common'
 
 import * as authSelectors from 'store/selectors/auth'
-import * as sellpostSelectors from 'store/selectors/sellpost'
+import * as servicePointSelectors from 'store/selectors/service-point'
 
 
 const mapStateToProps = (state) => ({  
-  sellposts: sellpostSelectors.getSellPosts(state),
+  servicePoints: servicePointSelectors.getServicePoints(state),
   token: authSelectors.getToken(state),
 })
 
-@connect(mapStateToProps, { getSellPosts, setToast, deleteSellPost })
-export default class SellPostIndex extends Component {
+@connect(mapStateToProps, { getServicePoints, setToast, deleteServicePoint })
+export default class ServicePointIndex extends Component {
 
   componentDidMount() {
-    document.title = 'SellPost Management'
+    document.title = 'ServicePoint Management'
     this._handleMovePage(1)
   }
 
@@ -46,25 +46,25 @@ export default class SellPostIndex extends Component {
     if(page){
       this.page = page
     }    
-    this.props.getSellPosts(this.page)
+    this.props.getServicePoints(this.page)
   }
 
   _handleRemove = (id) => {
     // allow callback function
-    this.props.deleteSellPost(this.props.token.accessToken, id, (data)=>{
-      this.props.setToast('delete sellpost successfully!!!')
+    this.props.deleteServicePoint(this.props.token.accessToken, id, (data)=>{
+      this.props.setToast('delete servicePoint successfully!!!')
       this._handleMovePage()
-    }, (error)=> this.props.setToast('delete sellpost failed!!!'))
+    }, (error)=> this.props.setToast('delete servicePoint failed!!!'))
   }
 
   renderRow(row) {
 
-    const {id, title, phone, updated_at} = row
+    const {id, name, phone, updated_at} = row
 
     return (
       <TableRow key={id} style={inlineStyles.row}>        
         <TableRowColumn colSpan="4" style={inlineStyles.rowColumn} >
-          {title}
+          {name}
         </TableRowColumn>
         <TableRowColumn colSpan="1" style={inlineStyles.rowColumn} >
           {phone}
@@ -73,7 +73,7 @@ export default class SellPostIndex extends Component {
           {updated_at}
         </TableRowColumn>
         <TableRowColumn colSpan="3" style={inlineStyles.rowColumn} >          
-          <Link to={`/cms/sellposts/${id}/edit`}>
+          <Link to={`/cms/servicepoints/${id}/edit`}>
             <IconButton disableTouchRipple >
               <EditorModeEdit />
             </IconButton>
@@ -92,9 +92,9 @@ export default class SellPostIndex extends Component {
 
   render() {
 
-    const {sellposts:{rows=[], count=0, offset=0} } = this.props
+    const {servicePoints:{rows=[], count=0, offset=0} } = this.props
     const newButton = (
-      <Link to="/cms/sellposts/new">
+      <Link to="/cms/servicepoints/new">
         <FloatingActionButton style={inlineStyles.floatButton} disableTouchRipple={true}>
           <ContentAdd />
         </FloatingActionButton>
@@ -104,12 +104,12 @@ export default class SellPostIndex extends Component {
     return (
       <section>
        {newButton}
-        <h1>Sell Post</h1>
+        <h1>Service Point</h1>
         <Table fixedHeader fixedFooter>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow selectable={false}>              
               <TableHeaderColumn colSpan="4" style={inlineStyles.headerColumn}>
-                Title
+                Name
               </TableHeaderColumn>
               <TableHeaderColumn colSpan="1" style={inlineStyles.headerColumn}>
                 Phone
