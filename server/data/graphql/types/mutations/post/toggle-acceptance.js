@@ -16,7 +16,7 @@ import {
 import { postType } from 'data/graphql/types/queries/post'
 
 import models from 'models'
-import authorize from 'data/graphql/authorize'
+import authorize from 'passport/authorize'
 
 import { viewerType } from 'data/graphql/types/queries/viewer'
 import { getViewer } from 'data/graphql/viewer'

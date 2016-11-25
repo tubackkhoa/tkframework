@@ -4,11 +4,8 @@ import {
   toGlobalId,
 } from 'graphql-relay'
 
-import authorize from 'data/graphql/authorize'
+import authorize from 'passport/authorize'
 import models from 'models'
-
-import servicePoint from './service-point'
-import sellPost from './sellpost'
 
 const router  = new Router()
 
@@ -47,12 +44,13 @@ router.post('/post/create', async (req, res) => {
   res.send({id:toGlobalId(post.type, post.id)})
 })
 
-// service point
-router.use('/servicepoint', servicePoint)
+// service point, use require for adding route without naming, and faster to change
+router.use('/servicepoint', require('./service-point').default)
 
 // tire post
-router.use('/sellpost', sellPost)
+router.use('/sellpost', require('./sellpost').default)
 
-
+// user
+router.use('/user', require('./user').default)
 
 export default router

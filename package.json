@@ -120,7 +120,7 @@
     "jsonwebtoken": "^7.1.9",
     "localStorage": "^1.0.3",
     "material-ui": "^0.16.4",
-    "multer": "^1.2.0",
+    "multer": "^1.2.0",    
     "normalizr": "^2.2.1",
     "npm": "^4.0.2",
     "passport": "^0.3.2",

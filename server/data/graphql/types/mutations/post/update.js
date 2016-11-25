@@ -19,7 +19,7 @@ import { postType } from 'data/graphql/types/queries/post'
 import { itemInputType } from 'data/graphql/types/inputs/item'
 
 import models from 'models'
-import authorize from 'data/graphql/authorize'
+import authorize from 'passport/authorize'
 
 const deleteOldItemsFromItems = async (postId, items) => {
   const oldItems = await models.items.findAll({

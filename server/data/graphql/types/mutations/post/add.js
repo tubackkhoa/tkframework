@@ -14,7 +14,7 @@ import { getViewer } from 'data/graphql/viewer'
 import { postEdge } from 'data/graphql/connections/post'
 
 import models from 'models'
-import authorize from 'data/graphql/authorize'
+import authorize from 'passport/authorize'
 
 export const addPost = mutationWithClientMutationId({
   name: 'AddPost',

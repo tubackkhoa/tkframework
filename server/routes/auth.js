@@ -22,9 +22,11 @@ const doLogin = (req, res, next ) => {
 
 const generateAccessToken = (req, res, next) => {  
   // we just get back user with id and email is good enough  
+  // we use role to differentiate with other users
   jwt.sign({
     id: req.user.id,
-    email: req.user.email
+    email: req.user.email,
+    role: 'admin',
   }, jwtSecret, {
     expiresIn: 60*60*24,   // just 1 day, user can refresh token automatically at client
   },(err, accessToken) => {    

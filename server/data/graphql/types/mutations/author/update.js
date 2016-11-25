@@ -20,7 +20,7 @@ import { fileInputType } from 'data/graphql/types/inputs/file'
 import { authorType } from 'data/graphql/types/queries/author'
 
 import models from 'models'
-import authorize from 'data/graphql/authorize'
+import authorize from 'passport/authorize'
 
 import fs from 'fs'
 import path from 'path'

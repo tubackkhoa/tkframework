@@ -1,8 +1,7 @@
 import {Router} from 'express'
 import sellposts from 'models/tables/Alop/sellposts'
 
-import authorize from 'data/graphql/authorize'
-import models from 'models'
+import authorize from 'passport/authorize'
 
 import { v4 } from 'uuid'
 import fse from 'fs-extra'
@@ -15,7 +14,9 @@ const router  = new Router()
 router.get('/index/:id', (req, res) => {
   // tag is public
   const {id} = req.params
-  sellposts.findById(id).then( item => {
+  sellposts.findById(id,{
+    attributes:['id','title','description','phone','image','user_id']
+  }).then( item => {
     // logout passport to end access token immediately
     // convert back to base64 string
     res.send(item)
@@ -29,6 +30,7 @@ router.get('/', (req, res)=> {
   sellposts.findAndCount({
     limit: maxLimit,
     offset,
+    attributes:['id','title','description','phone','image','user_id'],
   }).then(result => {
     res.send({...result, offset})
   })

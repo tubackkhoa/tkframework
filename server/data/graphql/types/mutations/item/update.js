@@ -19,7 +19,7 @@ import { fileInputType } from 'data/graphql/types/inputs/file'
 import { itemImageType } from 'data/graphql/types/queries/item'
 
 import models from 'models'
-import authorize from 'data/graphql/authorize'
+import authorize from 'passport/authorize'
 
 import fse from 'fs-extra'
 import path from 'path'
