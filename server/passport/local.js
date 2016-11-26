@@ -33,7 +33,7 @@ passport.use(new LocalStrategy(async (email, password, done) => {
       }
     }  
 
-    done(new Error('Email or password is not correct!!!'), null)        
+    done(null, null)        
   
 }))
 

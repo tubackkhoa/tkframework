@@ -19,7 +19,7 @@ const validate = (values) => {
   const errors = {}
   // first time it is empty
   if(!values) return errors
-  if (!values.username) errors.title = 'Enter username'
+  if (!values.username) errors.username = 'Enter username'
   if (!values.password) errors.password = 'Enter password'
 
   return errors

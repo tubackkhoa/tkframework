@@ -14,6 +14,10 @@ const doLogin = (req, res, next ) => {
       return res.status(401).send(err.message)
     }    
     // not error, user is existed, bind it to request
+    if(!user)
+      return res.status(401).send('Email or password is not correct!!!')
+
+    // default process more
     req.user = user    
     // next filter
     next()    
