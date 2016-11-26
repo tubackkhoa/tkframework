@@ -39,7 +39,7 @@ class TagField extends Component {
           classNames={{
             tagInput: 'tag-input',
             selected: 'selected',
-            tag: 'tag',
+            tag: 'tag-link',
             remove: 'remove',
             suggestions: 'suggestions',
           }}
