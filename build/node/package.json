@@ -22,6 +22,7 @@
     "graphql-sequelize": "^4.0.2",
     "multer": "^1.2.0",
     "mysql": "github:mysqljs/mysql",
-    "sequelize": "^3.25.0"
+    "sequelize": "^3.25.0",
+    "isomorphic-fetch": "^2.2.1"
   }
 }
