@@ -20,6 +20,7 @@ import getGraphqlFields from 'data/graphql/utils/getGraphqlFields'
 import { getPostDetail } from 'data/graphql/types/queries/helpers/post'
 
 import { taggingsPostConnect } from 'models/shared/connect'
+import authorize from 'passport/authorize'
 
 import models from 'models'
 
@@ -52,11 +53,11 @@ export const posts = {
       // only published item for unauthorized users
       // for edit post, also check request.user.id to modify post
       options.where = {}
-      if(request.user){
+      if(authorize(request, false)){
         if(args.accepted)
           options.where.accepted = args.accepted
       } else 
-        options.where.accepted
+        options.where.accepted = 1
 
       // update options with tag
       if(args.tagId){

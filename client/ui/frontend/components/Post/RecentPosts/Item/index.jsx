@@ -1,13 +1,12 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
+import { CardTitle, CardHeader } from 'material-ui/Card'
 
-
-const Item = ({ id, title, leadSentence }) => {
+const Item = ({ id, title, lead_sentence }) => {
   return (
     <li className='post-item'>
       <Link to={`/posts/${id}`}>
-        <p className='title'>{title}</p>
-        <p className='leadSentence'>{leadSentence}</p>
+        <CardHeader title={title} subtitle={lead_sentence} />
       </Link>
     </li>
   );

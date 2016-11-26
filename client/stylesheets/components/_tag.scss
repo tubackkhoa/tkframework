@@ -1,0 +1,18 @@
+.tag-list{
+  display:flex;
+}
+
+.tag-text {
+  margin-left: 5px;
+}
+
+.tag-link{
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 3px;
+  line-height: 22px;
+  letter-spacing: 0;
+  color: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.05);
+  margin: 5px;
+}

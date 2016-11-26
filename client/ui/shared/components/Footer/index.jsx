@@ -6,7 +6,7 @@ class Footer extends Component {
   render() {
     
     return (      
-      <div className="footer row">
+      <div className="footer">
         <div className="container">
           <div className="copyright ml-20">
           TKFramework @ 2016

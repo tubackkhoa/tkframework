@@ -5,7 +5,7 @@ import Item from 'ui/frontend/components/Post/Show/Item'
 import Pagination from 'ui/frontend/components/Post/Show/Pagination'
 import ActionSchedule from 'material-ui/svg-icons/action/schedule'
 import inlineStyles from 'ui/shared/styles/MaterialUI/index'
-
+import Divider from 'material-ui/Divider'
 
 const cmsRegexp = /^(\/cms)*/
 
@@ -22,18 +22,19 @@ class PostShow extends Component {
 
   render() {
     const {node, next, prev} = this.props.viewer.detailPost
-
+    node.published_at = node.published_at || new Date().toString()
     return (node &&
       <section>        
         <div >
           <h1 >{node.title} </h1>
           <div >
             <ActionSchedule color={inlineStyles.iconColor} style={inlineStyles.dateTimeLogo} />
-            <span >{node.published_at}</span>
+            <span >{node.published_at.replace(/\s*GMT.*$/,'')}</span>
           </div>
         </div>
         {node.items.map((item) => <Item key={item.id} item={item} />)}
         <Tags adminPath={this.adminPath} tags={node.tags} />
+        <Divider/>
         {(next || prev) &&
           <Pagination
             adminPath={this.adminPath}

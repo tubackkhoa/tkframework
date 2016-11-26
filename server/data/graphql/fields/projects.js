@@ -79,8 +79,8 @@ export const latestProject = {
   description: 'Latest project',
   resolve: (_, args, {request}, info) => {
     // there is no __typename because we will not use node general select
-    const graphFields = getGraphqlFields(info)
-    
+    const {full_image, ...graphFields} = getGraphqlFields(info)
+    full_image && (graphFields.image = full_image)
     // by default it will return a promise resolve an object
     return models.projects.findOne({
       where:{accepted:1},

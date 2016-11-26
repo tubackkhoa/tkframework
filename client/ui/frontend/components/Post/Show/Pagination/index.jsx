@@ -10,17 +10,17 @@ class Pagination extends Component {
   render() {
     const {prev, next, adminPath} = this.props
     return (
-      <section>
+      <section className='mt-20'>
         {prev && 
-          <Link to={`${adminPath}/posts/${prev.id}`} >
-            <NavigationChevronLeft color={inlineStyles.iconColor} style={inlineStyles.prevIcon} />
-            <div >{prev.title}</div>
+          <Link className='col-xs-6' to={`${adminPath}/posts/${prev.id}`} >
+            <NavigationChevronLeft className='col-xs-3' color={inlineStyles.iconColor} style={inlineStyles.prevIcon} />
+            <div className='col-xs-9 mt-10'>{prev.title}</div>
           </Link>
         }
         {next &&
-          <Link to={`${adminPath}/posts/${next.id}`} >
-            <div >{next.title}</div>
-            <NavigationChevronRight color={inlineStyles.iconColor} style={inlineStyles.nextIcon} />
+          <Link className='col-xs-6' to={`${adminPath}/posts/${next.id}`} >
+            <NavigationChevronRight className='col-xs-3 pull-right' color={inlineStyles.iconColor} style={inlineStyles.nextIcon} />
+            <div className='col-xs-9 mt-10 pull-right text-right'>{next.title}</div>            
           </Link>
         }
       </section>

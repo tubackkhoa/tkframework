@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 
 const Item = ({ adminPath, id, name }) => {
   return (
-    <Link to={`${adminPath}/posts?tag-id=${id}`} >
+    <Link className='tag-link' to={`${adminPath}/posts?tag-id=${id}`} >
       {name}
     </Link>
   )

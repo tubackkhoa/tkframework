@@ -3,7 +3,7 @@ import Item from './Item'
 
 function Tags({ tags, adminPath }) {
   return (
-    <section >
+    <section className='tag-list'>
       {tags.map((tag) => (
         <Item
           key={tag.id}

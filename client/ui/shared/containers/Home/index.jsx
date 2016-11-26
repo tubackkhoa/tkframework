@@ -14,7 +14,8 @@ class Home extends Component {
     const {viewer:{latestPosts, latestProject}} = this.props
 
     return (
-      <section>                
+      <section>          
+        <img src={latestProject.full_image} />
         <TextDisplay description={latestProject.description} />
         <div className='posts' >
           {
@@ -29,7 +30,7 @@ class Home extends Component {
 export default Relay.createContainer(Home, {
 
   initialVariables: {
-    limit: 3,        
+    limit: 5,        
   },
 
   fragments: {
@@ -44,7 +45,7 @@ export default Relay.createContainer(Home, {
         latestProject {
           id
           title
-          image
+          full_image
           description
         }                
       }

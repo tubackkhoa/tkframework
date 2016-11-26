@@ -12,7 +12,7 @@ const RecentPosts = ({ posts }) => {
         })}
       </ul>
       <Link to="/posts">
-        ALL POSTS
+        <h2>ALL POSTS</h2>
       </Link>
     </div>
   )
