@@ -1,20 +1,14 @@
-import {Router} from 'express'
-import sellposts from 'models/tables/Alop/sellposts'
-
+import { Router } from 'express'
+import users from 'models/tables/Alop/users'
+import {sequelize, DataTypes} from 'models/config'
 import authorize from 'passport/authorize'
-import models from 'models'
+import { getPagingRouter, getDetailRouter, getDeleteRouter, uploadImage } from 'routes/shared/utils'
 
-import { v4 } from 'uuid'
-import fse from 'fs-extra'
-import path from 'path'
-import { filePath } from 'config/constants'
-import { decodeBase64Image } from 'data/decoder/image'
 import { cryptPassword, comparePassword } from 'passport/password-crypto'
 import jwt from 'jsonwebtoken'
 import { jwtSecret }   from 'config/constants'
 
-import users from 'models/tables/Alop/users'
-
+// share code with client
 import 'isomorphic-fetch'
 
 const router  = new Router()
@@ -121,60 +115,29 @@ const respondLogin = ({user, token}, res) => {
 
 const updateUser = (req, user) => {
   const {password, email, avatar, phone, name} = req.body
-  const imageDecode = decodeBase64Image(avatar)
   const info = {password, email, avatar, phone, name}
-  if(imageDecode.buffer) {
-    const imagePath = path.join(filePath, `user/image${user.id}`)
-    // clear old image first
-    fse.removeSync(imagePath)   
-    // update new image
-    const filename = v4() + '.png'  
-    // must save done then return   
-    fse.outputFileSync(path.join(imagePath, filename), imageDecode.buffer)        
-    info.avatar = `/uploads/user/image/${user.id}/${filename}`
-  } 
-  
+  uploadImage(avatar, `user/image${item.id}`, imagePath => info.avatar=imagePath)  
   user.updateAttributes(info)
   return info
 }
 
-router.get('/index/:id', (req, res) => {
-  // tag is public
-  const {id} = req.params
-  sellposts.findById(id,{
-    attributes:['id','title','description','phone','image','user_id']
-  }).then( item => {
-    // logout passport to end access token immediately
-    // convert back to base64 string
-    res.send(item)
-  })   
-})
+router.get('/index/:id', getDetailRouter(users, ['id','name', 'username', 'phone','avatar','email','registered_at']))
+router.get('/', getPagingRouter(users, ['id','name','registered_at','username','phone','email','avatar','block']))
 
 router.get('/me', (req, res) => {
   res.send(req.user)
-})
-
-router.get('/', (req, res)=> {
-  const {page=1, limit=10} = req.query  
-  const maxLimit = Math.min(+limit, 10)
-  const offset = (page-1) * limit
-  sellposts.findAndCount({
-    limit: maxLimit,
-    offset,
-    attributes:['id','title','description','phone','image','user_id'],
-  }).then(result => {
-    res.send({...result, offset})
-  })
 })
 
 router.put('/block/:id', (req, res) => {
   authorize(req)
   // only admin user can block
   const {id} = req.params
-  sellposts.destroy({
-    where:{id}
+  users.update({
+    block: sequelize.literal('NOT `block`'),
+  }, {
+    where: {id},
   })
-  .then(deletedNumber => res.send({deletedNumber}))
+  res.send({id})
 })
 
 // limit json post

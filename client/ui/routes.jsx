@@ -31,6 +31,11 @@ import SellPostFormEdit from './backend/containers/SellPost/Form/edit'
 import ServicePointIndexBackend from './backend/containers/ServicePoint/Index'
 import ServicePointFormEdit from './backend/containers/ServicePoint/Form/edit'
 
+import NewsPostIndexBackend from './backend/containers/NewsPost/Index'
+import NewsPostFormEdit from './backend/containers/NewsPost/Form/edit'
+
+import UserIndexBackend from './backend/containers/User/Index'
+
 import * as authSelectors from 'store/selectors/auth'
 
 // login for check login, may be put in other file
@@ -74,6 +79,12 @@ export const Routes = (store) => (
       <Route path="/cms/servicepoints" component={ServicePointIndexBackend} />
       <Route path="/cms/servicepoints/new" component={ServicePointFormEdit} />
       <Route path="/cms/servicepoints/:id/edit" component={ServicePointFormEdit} />
+
+      <Route path="/cms/newsposts" component={NewsPostIndexBackend} />
+      <Route path="/cms/newsposts/new" component={NewsPostFormEdit} />
+      <Route path="/cms/newsposts/:id/edit" component={NewsPostFormEdit} />
+
+      <Route path="/cms/users" component={UserIndexBackend} />
       
     </Route>
     

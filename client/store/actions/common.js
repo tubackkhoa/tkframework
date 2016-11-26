@@ -14,6 +14,12 @@ export const noop = (explanation) => ({
   payload: explanation,
 })
 
+// do callback and get result as paload
+export const invokeCallback = (callback, ...args) => ({
+  type: 'app/invokeCallback',
+  payload: callback && callback.call(null, ...args),
+})
+
 export const log = (data, type='table') => {    
   console[type](data) 
   return {

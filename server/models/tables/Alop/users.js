@@ -10,6 +10,7 @@ export default sequelize.define("users", {
   login_type: DataTypes.ENUM('local','facebook','google'), 
   avatar: DataTypes.STRING,
   login_token: DataTypes.STRING,
+  block: DataTypes.BOOLEAN,
 }, {
   createdAt: 'registered_at',
   updatedAt: 'updated_at',

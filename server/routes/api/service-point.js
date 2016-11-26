@@ -1,14 +1,10 @@
 import {Router} from 'express'
 import service_points from 'models/tables/Alop/service-points'
+import { getPagingRouter, getDetailRouter, getDeleteRouter, uploadImage } from 'routes/shared/utils'
 
 import authorize from 'passport/authorize'
 import {sequelize, DataTypes} from 'models/config'
 
-import { v4 } from 'uuid'
-import fse from 'fs-extra'
-import path from 'path'
-import { filePath } from 'config/constants'
-import { decodeBase64Image } from 'data/decoder/image'
 
 const router  = new Router()
 
@@ -53,40 +49,12 @@ HAVING distance <= ${distance_in_kilometers}  ORDER BY distance LIMIT 10`
 
 })
 
-// detail item
-router.get('/index/:id', (req, res) => {
-  // tag is public
-  const {id} = req.params
-  service_points.findById(id, {
-    attributes: ['id','name','address','phone','lat','lng','description','owner_id','image'],
-  }).then( item => {
-    // logout passport to end access token immediately
-    // convert back to base64 string
-    res.send(item)
-  })   
-})
+router.get('/index/:id', getDetailRouter(service_points, 
+  ['id','name','address','phone','lat','lng','description','owner_id','image']))
+router.get('/', getPagingRouter(service_points, 
+  ['id','name','address','phone','lat','lng','description','owner_id','image']))
+router.delete('/delete/:id', getDetailRouter(service_points))
 
-router.get('/', (req, res)=> {
-  const {page=1, limit=10} = req.query  
-  const maxLimit = Math.min(+limit, 10)
-  const offset = (page-1) * limit
-  service_points.findAndCount({
-    limit: maxLimit,
-    offset,
-    attributes: ['id','name','address','phone','lat','lng','description','owner_id','image'],
-  }).then(result => {
-    res.send({...result, offset})
-  })
-})
-
-router.delete('/delete/:id', (req, res) => {
-  authorize(req)
-  const {id} = req.params
-  service_points.destroy({
-    where:{id}
-  })
-  .then(deletedNumber => res.send({deletedNumber}))
-})
 
 // limit json post
 router.post('/update', async (req, res) => {
@@ -94,7 +62,7 @@ router.post('/update', async (req, res) => {
   authorize(req)
   // currently we not process items, let it for edit phrase
   const {item:{image, ...data}, id} = req.body
-  const imageDecode = decodeBase64Image(image)
+  
   data.user_id = req.user.id
   const rad_lat = data.lat * RAD
   const rad_lng = data.lng * RAD
@@ -112,22 +80,11 @@ router.post('/update', async (req, res) => {
   if(!id)
     res.send({id:item.id})
 
+  uploadImage(image, `service_point/image/${item.id}`, imagePath => data.image=imagePath)
+
   // otherwise update
   item.updateAttributes(data)    
 
-  // delete old one
-  if(imageDecode.buffer) {
-    const imagePath = path.join(filePath, `service_point/image/${item.id}`)
-    if(id)      
-      fse.removeSync(imagePath)   
-    // update new image
-    const filename = v4() + '.png'  
-    // must save done then return   
-    fse.outputFileSync(path.join(imagePath, filename), imageDecode.buffer)    
-    item.updateAttributes({
-      image:`/uploads/service_point/image/${item.id}/${filename}`
-    })
-  }  
   // send back inserted id as graphql id
   res.send(item)
 })

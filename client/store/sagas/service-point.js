@@ -1,7 +1,7 @@
 import { takeLatest, takeEvery } from 'redux-saga'
 
 import api from 'store/api'
-import { setToast, forwardTo, noop } from 'store/actions/common'
+import { setToast, forwardTo, invokeCallback } from 'store/actions/common'
 import { replaceServicePoint, replaceServicePoints } from 'store/actions/service-point'
 
 
@@ -33,10 +33,10 @@ const requestDeleteServicePointAsync = createRequestSaga({
   key: 'deleteServicePoint',
   success: [   
     // you can return other action from callback, such as getPage
-    (data, {args:[token, id, callback]}) => (callback && callback(data)) || noop('invoke success callback'),    
+    (data, {args:[token, id, callback]}) => invokeCallback(callback, data),
   ],
   failure: [
-    (data, {args:[token, id, callback, error]}) => (error && error(data)) || noop('invoke error callback'),
+    (data, {args:[token, id, callback, error]}) => invokeCallback(error, data),
   ]
 })
 

@@ -57,7 +57,7 @@ class DropzoneImage extends Component {
   render() {
     const {props:{value, name}, state: {errorMessage}} = this
     return (
-      <div >
+      <div className="pt-20 pb-20">
         <Dropzone
           name={name}
           className='dropzone'
