@@ -33,5 +33,5 @@ Usage
 - Create minified bundle: *npm run bundle*
 - Serve ./public with your production server of choice
 - Run sshpass -p "password" npm run deploy to deploy on server
-- Run PORT=9999 DB_PASS=123456 forever -w start index.js to keep server running and restarting on changes
+- Run PORT=80 DB_PASS=123456 forever -w start index.js to keep server running and restarting on changes
 - Run node-inspector & npm run server if node does not support --inspect
