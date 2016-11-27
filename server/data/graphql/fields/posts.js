@@ -120,13 +120,15 @@ export const detailPost = {
     if (ret.node) {
       if (nextGraphFields) {
         ret.next = await getPostDetail({
-          id:{ $gt:ret.node.id }
+          id:{ $gt:ret.node.id },
+          accepted:1,
         }, nextGraphFields)
       }
 
       if (prevGraphFields) {
         ret.prev = await getPostDetail({
-          id:{ $lt:ret.node.id }
+          id:{ $lt:ret.node.id },
+          accepted:1,
         }, prevGraphFields)
       }
     }
