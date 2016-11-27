@@ -24,6 +24,7 @@ configureStore(store => {
 	
 	const history = syncHistoryWithStore(browserHistory, store)
   // scroll to top on new location, but preserve scroll position on back action
+  // for better user-experience, do this on OnChange event of router, when component is rendered
   history.listen(location => (location.action !== 'POP') && window.scrollTo(0, 0))
 	
 	// ready to render

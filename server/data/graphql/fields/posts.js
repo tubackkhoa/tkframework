@@ -117,6 +117,7 @@ export const detailPost = {
     const {next: nextGraphFields, prev: prevGraphFields, node: nodeGraphFields} = graphFields
     const ret = {}
     ret.node = await getPostDetail(postId, nodeGraphFields)
+    // no need to order :v, so it is like random select
     if (ret.node) {
       if (nextGraphFields) {
         ret.next = await getPostDetail({
