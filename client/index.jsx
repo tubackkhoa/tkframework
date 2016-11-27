@@ -23,6 +23,8 @@ configureStore(store => {
 	configureRelayWithStore(store)
 	
 	const history = syncHistoryWithStore(browserHistory, store)
+  // scroll to top on new location, but preserve scroll position on back action
+  history.listen(location => (location.action !== 'POP') && window.scrollTo(0, 0))
 	
 	// ready to render
 	render(<Root store={store} history={history}/>, rootElement)
