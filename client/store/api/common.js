@@ -37,7 +37,7 @@ export const fetchJsonWithToken = (token, url, options = {}, ...args) => (
     ...options,
     headers: {
       ...options.header,
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token.accessToken || token}`,
     },
   }, ...args)
 )

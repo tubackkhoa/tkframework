@@ -51,7 +51,7 @@ export default class ServicePointIndex extends Component {
 
   _handleRemove = (id) => {
     // allow callback function
-    this.props.deleteServicePoint(this.props.token.accessToken, id, (data)=>{
+    this.props.deleteServicePoint(this.props.token, id, (data)=>{
       this.props.setToast('delete servicePoint successfully!!!')
       this._handleMovePage()
     }, (error)=> this.props.setToast('delete servicePoint failed!!!'))

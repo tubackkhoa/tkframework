@@ -51,7 +51,7 @@ export default class SellPostIndex extends Component {
 
   _handleRemove = (id) => {
     // allow callback function
-    this.props.deleteSellPost(this.props.token.accessToken, id, (data)=>{
+    this.props.deleteSellPost(this.props.token, id, (data)=>{
       this.props.setToast('delete sellpost successfully!!!')
       this._handleMovePage()
     }, (error)=> this.props.setToast('delete sellpost failed!!!'))

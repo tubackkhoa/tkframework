@@ -34,7 +34,7 @@ class PostFormCreate extends Component {
     // so it will not be come complicated for us to trick mutation with empty item
     const {tags, items, ...data} = post
     data.tags = tags.map(tag=> tag.text || tag.name)
-    this.props.createPost(this.props.token.accessToken, data)
+    this.props.createPost(this.props.token, data)
   }
   
 

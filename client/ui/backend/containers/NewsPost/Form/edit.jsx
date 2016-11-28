@@ -42,7 +42,7 @@ export default class NewsPostEdit extends Component {
 
   _handleSubmit = (props) => {    
     // call update, after that return to list page
-    this.props.updateNewsPost(this.props.token.accessToken, this.props.params.id, props)
+    this.props.updateNewsPost(this.props.token, this.props.params.id, props)
   }
 
   componentDidMount(){

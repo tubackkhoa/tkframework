@@ -91,4 +91,3 @@ export const Routes = (store) => (
     <Route path='*' component={NotFound} />
   </Route>  
 )
-

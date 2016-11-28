@@ -41,7 +41,7 @@ export default class SellPostEdit extends Component {
 
   _handleSubmit = (props) => {    
     // call update, after that return to list page
-    this.props.updateSellPost(this.props.token.accessToken, this.props.params.id, props)
+    this.props.updateSellPost(this.props.token, this.props.params.id, props)
   }
 
   componentDidMount(){

@@ -5,8 +5,15 @@ import {
   markRequestPending,
   markRequestSuccess,
   markRequestCancelled,
-  markRequestFailed
+  markRequestFailed,
+  setToast,
 } from 'store/actions/common'
+
+import {
+  saveRefreshToken
+} from 'store/actions/auth'
+
+import api from 'store/api'
 
 import {  
   API_TIMEOUT
@@ -71,6 +78,18 @@ export const createRequestSaga = ({request, key, start, stop, success, failure, 
       }            
       
     } catch (reason) {
+      // try refresh token
+      const token = action.args[0]
+      // catch exception is safer than just read response status
+      if(token && token.refreshToken){
+        // tell user to wait, no need to catch for more errors this step!!!
+        yield put(setToast('Refreshing token... You should reload page for sure!'))
+        // try refresh token, then reload page ?
+        const { token: newToken } = yield call(api.auth.refreshAccessToken, token.refreshToken)          
+        // it can return more such as user info, expired date ?            
+        // call action creator to update        
+        yield put(saveRefreshToken(newToken))
+      } 
       if(failure) for(let actionCreator of failure){          
         yield put(actionCreator(reason, action))
       }        

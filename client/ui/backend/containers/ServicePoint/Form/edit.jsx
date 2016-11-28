@@ -41,7 +41,7 @@ export default class ServicePointEdit extends Component {
 
   _handleSubmit = (props) => {    
     // call update, after that return to list page
-    this.props.updateServicePoint(this.props.token.accessToken, this.props.params.id, props)
+    this.props.updateServicePoint(this.props.token, this.props.params.id, props)
   }
 
   componentDidMount(){

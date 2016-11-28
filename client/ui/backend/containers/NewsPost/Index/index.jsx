@@ -51,7 +51,7 @@ export default class NewsPostIndex extends Component {
 
   _handleRemove = (id) => {
     // allow callback function
-    this.props.deleteNewsPost(this.props.token.accessToken, id, (data)=>{
+    this.props.deleteNewsPost(this.props.token, id, (data)=>{
       this.props.setToast('delete newspost successfully!!!')
       this._handleMovePage()
     }, (error)=> this.props.setToast('delete newspost failed!!!'))

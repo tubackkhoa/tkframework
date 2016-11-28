@@ -62,7 +62,7 @@ export default class UserIndex extends Component {
 
   _handleToggle = (id) => {
     // allow callback function
-    this.props.toggleBlockUser(this.props.token.accessToken, id, (data)=>{
+    this.props.toggleBlockUser(this.props.token, id, (data)=>{
       this.props.setToast('update user successfully!!!')
       this._handleMovePage()
     }, (error)=> this.props.setToast('update user failed!!!'))
