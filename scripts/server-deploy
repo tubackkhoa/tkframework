@@ -1,1 +1,1 @@
-npm run server-bundle && npm run rsync-server
+npm run server-bundle && npm run server-rsync

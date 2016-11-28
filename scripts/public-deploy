@@ -1,1 +1,1 @@
-npm run sass-bundle && npm run rsync-client
+npm run sass-bundle && npm run client-rsync

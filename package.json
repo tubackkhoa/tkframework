@@ -29,9 +29,9 @@
     "DEPLOY_PATH": "root@luthornguyen.com:/home/nodejs/tkframework/node"
   },
   "scripts": {
-    "test-client": "scripts/test-client",
-    "test-server": "scripts/test-server",
-    "test": "npm run test-client && npm run test-server",
+    "client-test": "scripts/client-test",
+    "server-test": "scripts/server-test",
+    "test": "npm run client-test && npm run server-test",
     "update-schema": "cross-env NODE_ENV=build NODE_PATH=server babel-node ./build/updateSchema.js",
     "sass": "scripts/sass",
     "sass-bundle": "scripts/sass-bundle",
@@ -39,8 +39,8 @@
     "server-debug": "scripts/server-debug",
     "dev": "scripts/dev",
     "start": "run-p sass dev",
-    "rsync-client": "scripts/rsync-client",
-    "rsync-server": "scripts/rsync-server",
+    "client-rsync": "scripts/client-rsync",
+    "server-rsync": "scripts/server-rsync",
     "client-bundle": "scripts/client-bundle",
     "client-deploy": "scripts/client-deploy",
     "public-deploy": "scripts/public-deploy",
