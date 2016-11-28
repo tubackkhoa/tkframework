@@ -1,0 +1,1 @@
+npm run server-bundle && npm run rsync-server

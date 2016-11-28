@@ -1,0 +1,1 @@
+npm run sass-bundle && npm run update-schema && cross-env NODE_ENV=production webpack

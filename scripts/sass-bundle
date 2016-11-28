@@ -1,0 +1,1 @@
+node-sass client/stylesheets/main.scss --output-style compressed public/assets/main.css
