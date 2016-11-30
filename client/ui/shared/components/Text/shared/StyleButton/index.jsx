@@ -1,12 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-class StyleButton extends Component {
-  static propTypes = {
-    label: PropTypes.string.isRequired,
-    active: PropTypes.bool.isRequired,
-    style: PropTypes.string.isRequired,
-    onToggle: PropTypes.func.isRequired,
-  }
+class StyleButton extends Component {  
 
   _handleToggle = (event) => {
     event.preventDefault()

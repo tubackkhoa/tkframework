@@ -17,11 +17,17 @@
       padding: 2px 0;
       margin-right: 10px;
       cursor: pointer;
-      color: $color-blue-lighter;
+      color: $color-black;
+      font-size: 20px;
+      vertical-align: top;
     }
 
     .button.active {
       color: $color-blue;
+    }
+
+    .button svg {
+      color:inherit!important;
     }
   }
 }

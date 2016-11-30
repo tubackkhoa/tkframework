@@ -8,7 +8,7 @@ import {
   AppRegistry,  
 } from 'react-native'
 
-import ReactNotes from './ui'
+import ReactNotes from './App'
 
 // registry
 AppRegistry.registerComponent('ReactNotes', () => ReactNotes)

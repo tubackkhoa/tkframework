@@ -1,10 +1,15 @@
 import React from 'react'
 import StyleButton from '../StyleButton/index'
+import FormatBold from 'material-ui/svg-icons/editor/format-bold'
+import FormatItalic from 'material-ui/svg-icons/editor/format-italic'
+import FormatUnderline from 'material-ui/svg-icons/editor/format-underlined'
+import Link from 'material-ui/svg-icons/editor/insert-link'
+import { LinkOff } from 'ui/shared/components/Icon'
 
 const INLINE_STYLES = [
-  { label: 'Bold', style: 'BOLD' },
-  { label: 'Italic', style: 'ITALIC' },
-  { label: 'Underline', style: 'UNDERLINE' },
+  { label: <FormatBold/>, style: 'BOLD' },
+  { label: <FormatItalic/>, style: 'ITALIC' },
+  { label: <FormatUnderline/>, style: 'UNDERLINE' },
 ]
 
 export const InlineStyleControls = (props) => {
@@ -12,26 +17,20 @@ export const InlineStyleControls = (props) => {
   
   return (
     <div className='block inline-style'>
-      {INLINE_STYLES.map(type =>
+      {INLINE_STYLES.map(({label, style},index) =>
         <StyleButton
-          key={type.label}
-          active={currentStyle.has(type.style)}
-          label={type.label}
+          key={index}
+          active={currentStyle.has(style)}
+          label={label}
           onToggle={props.onToggle}
-          style={type.style}
+          style={style}
         />
       )}
-      <span
-        className='button addLink'
-        onMouseDown={props.onPromptForLink}
-      >
-        Add Link
+      <span className='button addLink' onMouseDown={props.onPromptForLink}>
+        <Link/>
       </span>
-      <span
-        className='button removeLink'
-        onMouseDown={props.onRemoveLink}
-      >
-        Remove Link
+      <span className='button removeLink' onMouseDown={props.onRemoveLink}>
+        <LinkOff/>
       </span>
     </div>
   )
