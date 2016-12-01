@@ -31,6 +31,8 @@ class Playlist extends Player {
     // it can lead to horrible errors
     if(this.clipIndex === this.items.length - 1){      
       super.stop()
+      // console.log('audio stop'+this.clipIndex)
+      // console.log(this.props.items)
     } else {  
       // be sure it is still on page
       if(!unloading) {
@@ -60,14 +62,16 @@ class Playlist extends Player {
     super.initControls(opts)
        
     // next we process event
-    this.refs.next.onclick = (e) => {            
+    this.refs.next.onclick = (e) => {     
+      this.props.onNextClick && this.props.onNextClick()     
       if(this.clipIndex < this.items.length - 1){
         this.clipIndex++        
         this.play()
       }
     }
 
-    this.refs.back.onclick = (e) => {      
+    this.refs.back.onclick = (e) => {  
+      this.props.onBackClick && this.props.onBackClick()       
       if(this.clipIndex > 0) {
         this.clipIndex--
         this.play()
@@ -97,6 +101,9 @@ class Playlist extends Player {
         nextText = <AVFastForward color="inherit" />,
         backText = <AVFastRewind color="inherit" />
       } = this.props.ui      
+
+      // console.log('sound/playlist.jsx - render() - this.props.items')
+      // console.log(this.props.items)
 
       return (
         <div className={"sound-wrapper sound-playlist " + theme}>          

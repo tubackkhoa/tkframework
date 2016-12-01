@@ -6,11 +6,14 @@ import {
 } from 'react-native'
 
 import SimpleButton from './SimpleButton'
+import NotesList from './NotesList'
 
-class HomeScreen extends React.Component {
+export default class HomeScreen extends React.Component {
   render () {
     return (
       <View style={styles.container}>
+
+        <NotesList navigator={this.props.navigator}/>
 
         <Text style={styles.noNotesText}>You haven't created any notes!</Text>
 
@@ -32,6 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 60
   },
   noNotesText: {
     color: '#48209A',
@@ -58,7 +62,5 @@ const styles = StyleSheet.create({
     fontSize: 16
   }
 
+})
 
-});
-
-export default HomeScreen;

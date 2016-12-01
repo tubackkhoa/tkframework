@@ -165,11 +165,13 @@ class Player extends React.Component {
         this.setProgressWidth(x)
       }      
       
-      // track click moves playHead       
-      this.refs.track.onclick = (e) => {       
-        
-        dragTo(e.offsetX + (e.target.tagName === 'STRONG' ? e.target.offsetLeft : 0) - ballWidth / 2)
-      }
+      // track click moves playHead 
+      //enable drag     
+      if(this.options.enableDrag){
+        this.refs.track.onclick = (e) => {       
+          dragTo(e.offsetX + (e.target.tagName === 'STRONG' ? e.target.offsetLeft : 0) - ballWidth / 2)
+        }
+      } 
 
       // arrow auto bind this to context
       this.refs.play.onclick = () => {       
@@ -219,6 +221,7 @@ class Player extends React.Component {
           return
         }
 
+
         // progress width, when finish, we have also to set the progress bar
         if (!this.player.isPaused()) {
 
@@ -254,8 +257,9 @@ class Player extends React.Component {
         // clear previous timer   
         clearInterval(this.timer)        
 
-        this.seekTo(Math.max(this.options.time, this.options.start))          
-     
+        this.seekTo(Math.max(this.options.time, this.options.start))    
+
+
         // begin timer            
         this.timer = setInterval(() => updateTime(clip), 100)
 
@@ -300,13 +304,19 @@ class Player extends React.Component {
   setClip(clip) {
     if(this.player){
       // stop update
-      clearInterval(this.timer)
+      // clearInterval(this.timer)
+      // this.player.stop()
       // maybe url or src attribute
-      this.player.setClip({url: clip.url || clip.src, start: clip.start, duration:clip.duration})      
+      const clipData = {url: clip.url || clip.src, start: clip.start, duration:clip.duration}
       // check if we are playing media
+      console.log(this.getStatus())
       if(this.getStatus().playing){        
         this.start()
-      }          
+        this.player.play(clipData)  
+      } else {
+        this.player.setClip(clipData)
+      }
+      
     } else {
       Object.assign(this.config.clip, clip)           
     }

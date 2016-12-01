@@ -8,7 +8,9 @@ import {
 } from 'react-native'
 
 class NoteScreen extends React.Component {
+
   render () {
+    console.log(this.props)
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
@@ -17,8 +19,9 @@ class NoteScreen extends React.Component {
             autoCapitalize="sentences"
             placeholder="Untitled"
             style={[styles.textInput, styles.title]}
-            onEndEditing={(text) => {this.refs.body.focus()}}
+            onEndEditing={text => this.refs.body.focus()}
             underlineColorAndroid="transparent"
+            value={this.props.note.title}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -29,6 +32,7 @@ class NoteScreen extends React.Component {
             style={[styles.textInput, styles.body]}
             textAlignVertical="top"
             underlineColorAndroid="transparent"
+            value={this.props.note.body}
           />
         </View>
       </View>
