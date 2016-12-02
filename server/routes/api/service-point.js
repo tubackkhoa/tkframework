@@ -27,7 +27,7 @@ router.get('/getNearByService', async (req, res) => {
 
     const sql = `SELECT name, password, address,
 acos(${lat_sin} * lat_sin + ${lat_cos} * lat_cos * cos((${lng} - lng) * ${RAD})) * ${DEGREE} * ${distance_unit} AS distance       
-FROM wifi_chua
+FROM ${service_points.tableName}
 WHERE lat BETWEEN 
   ${lat} - (${distance_in_kilometers} / ${distance_unit}) 
   AND 
@@ -38,10 +38,10 @@ WHERE lat BETWEEN
   ${lng} + (${distance_in_kilometers} / (${distance_unit} * ${lat_cos}))  
 HAVING distance <= ${distance_in_kilometers}  ORDER BY distance LIMIT 10`
      
-     
-  sequelize.query(sql,{ type: DataTypes.SELECT})
-   .then(items => res.send(items))
-   .catch(e =>res.status(400).write('Error'))      
+  // use spread instead of then, or two result will be merged
+  sequelize.query(sql, { type: DataTypes.SELECT})   
+    .spread(items => res.send(items))
+    .catch(e =>res.status(400).write('Error'))       
       
  } else {
   res.status(204).end() 
