@@ -47,6 +47,7 @@ export const HTML2ContentState = convertFromHTML({
       case 'img':
         if(inBlock !=='atomic')
           return 'atomic'
+        break
 
       default:
         break

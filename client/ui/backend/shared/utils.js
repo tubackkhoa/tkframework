@@ -36,9 +36,10 @@ export const renderCheckbox = ({ input, label }) => (
   />
 )
 
-export const renderTextEditor = ({ input }) => (
+export const renderTextEditor = ({ input, mode='raw' }) => (
   <TextEditor    
     {...input}
+    mode={mode}
     handleUpdate={value => input.onChange(value)}
   />  
 )

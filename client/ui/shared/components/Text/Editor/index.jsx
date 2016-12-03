@@ -17,23 +17,28 @@ import ContentAddCircle from 'material-ui/svg-icons/content/add-circle'
 import TextField from 'material-ui/TextField'
 import IconButton from 'material-ui/IconButton'
 import Divider from 'material-ui/Divider'
-import inlineStyles from 'ui/shared/styles/MaterialUI'
-
-const HTML2EditorState = html => html 
-  ? EditorState.createWithContent(HTML2ContentState(html), decorator)
-  : EditorState.createEmpty(decorator)
+import inlineStyles from 'ui/shared/styles/MaterialUI'   
 
 class TextEditor extends Component {
-
+  // we can use defaultProps or better use render method from redux Field
   constructor(props) {
     super(props)
     // render via state
+    console.log(props.mode)
     this.state = {
-      editorState: HTML2EditorState(props.value),
+      editorState: this.getEditorState(props.mode, props.value),
       inputtable: false,
       urlValue: '',
     }    
   }  
+
+  getEditorState(mode, value){
+    return value
+      ? EditorState.createWithContent(mode === 'html' 
+        ? HTML2ContentState(value) 
+        : convertFromRaw(JSON.parse(value)), decorator)   
+      : EditorState.createEmpty(decorator)
+  }
 
   _handleFocus = () => this.refs.editor.focus()
 
@@ -90,7 +95,11 @@ class TextEditor extends Component {
   }
 
   _handleUpdate = () => {
-    const content = ContentState2HTML(this.state.editorState.getCurrentContent())            
+    const contentState = this.state.editorState.getCurrentContent()
+    const content = this.props.mode === 'html'
+      ? ContentState2HTML(contentState)            
+      : JSON.stringify(convertToRaw(contentState))
+
     this.props.handleUpdate(content)
   }
 
@@ -122,7 +131,7 @@ class TextEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this._handleChange(HTML2EditorState(nextProps.value))
+    this._handleChange(this.getEditorState(nextProps.mode, nextProps.value))
   }
 
   renderURLField() {
@@ -146,7 +155,8 @@ class TextEditor extends Component {
   }
 
   _handlePastedText = (text, html) => {    
-    const newState = HTML2EditorState(html)
+    // must be html mode to parse
+    const newState = getEditorState('html', html)
     this._handleChange(newState)
     return true
   }

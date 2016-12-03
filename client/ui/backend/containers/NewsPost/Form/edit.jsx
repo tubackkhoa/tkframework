@@ -67,7 +67,7 @@ export default class NewsPostEdit extends Component {
         
         <Field name="title" label="Enter Title" component={renderTextField} />
         <Field name="description" label="Description" component={renderTextField} />
-        <Field name="content" label="Content" component={renderTextEditor} />
+        <Field name="content" label="Content" mode="html" component={renderTextEditor} />
         <Field name="image" label="Image" component={renderDropzoneImage} base64={true} />
 
         <FloatingActionButton label={submitLabel} type="submit"
