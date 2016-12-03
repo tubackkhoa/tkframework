@@ -2,6 +2,15 @@ import {
   toGlobalId,
 } from 'graphql-relay'
 
+import {
+  Draft
+} from 'draft-js'
+
+import {
+  convertFromHTML,
+  convertToHTML,
+} from 'draft-convert'
+
 import { Router } from 'express'
 
 import authorize from 'passport/authorize'
@@ -30,6 +39,12 @@ router.post('/create', async (req, res) => {
   post.tags = await post.updateTags(tags)
   // send back inserted id as graphql id
   res.send({id:toGlobalId(post.type, post.id)})
+})
+
+router.get('/testconvert', (req,res)=>{
+  const rawData = {"entityMap":{},"blocks":[{"key":"b21it","text":"Love is all we need","type":"header-two","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]}
+  const contentState = Draft.ContentState.createFromBlockArray(Draft.convertFromRaw(rawData))
+  res.send(convertToHTML()(contentState))
 })
 
 export default router
