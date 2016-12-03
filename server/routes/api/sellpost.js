@@ -6,7 +6,7 @@ import authorize from 'passport/authorize'
 const router  = new Router()
 
 router.get('/index/:id', getDetailRouter(sellposts, ['id','title','description','phone','image','user_id']))
-router.get('/', getPagingRouter(sellposts, ['id','title','description','phone','user_id']))
+router.get('/', getPagingRouter(sellposts, ['id','title','description','phone','user_id','image']))
 router.delete('/delete/:id', getDetailRouter(sellposts))
 
 // limit json post

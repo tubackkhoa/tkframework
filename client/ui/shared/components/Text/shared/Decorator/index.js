@@ -4,35 +4,28 @@ import MultiDecorator from 'draft-js-multidecorators'
 import PrismDecorator from 'draft-js-prism'
 
 
-const Link = (props) => {
-  const { url } = Entity.get(props.entityKey).getData()
-
-  return (
-    <a href={url}>
-      {props.children}
-    </a>
-  )
+const Media = (props) => {
+  const entity = Entity.get(props.entityKey)        
+  const attrs = entity.getData()
+  const type = entity.getType()
+  switch(type){
+    case 'IMAGE': return <img {...attrs} />
+    default     : return <a {...attrs} >{props.children}</a>
+  }
 }
-
-Link.propTypes = {
-  children: PropTypes.array,
-  entityKey: PropTypes.string,
-}
-
 
 const findLinkEntities = (contentBlock, callback) => {
   contentBlock.findEntityRanges(
     (character) => {
       const entityKey = character.getEntity()
-      return (
-        entityKey !== null &&
-        Entity.get(entityKey).getType() === 'LINK'
-      )
+      return entityKey !== null &&
+        ['LINK','IMAGE'].indexOf(Entity.get(entityKey).getType()) !== -1      
     },
     callback
   )
 }
 
+// we can define more decorators
 export const decorator = new MultiDecorator([
   // default is javascript
   new PrismDecorator({
@@ -41,7 +34,7 @@ export const decorator = new MultiDecorator([
   new CompositeDecorator([
     {
       strategy: findLinkEntities,
-      component: Link,
+      component: Media,
     },
   ]),
 ])

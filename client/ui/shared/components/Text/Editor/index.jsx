@@ -10,6 +10,7 @@ import {
 
 import { getBlockStyle } from '../shared/utils'
 import { decorator } from '../shared/Decorator'
+import { HTML2ContentState, ContentState2HTML } from '../shared/Converter'
 import { BlockStyleControls } from '../shared/BlockStyleControl'
 import { InlineStyleControls } from '../shared/InlineStyleControl'
 import ContentAddCircle from 'material-ui/svg-icons/content/add-circle'
@@ -18,6 +19,9 @@ import IconButton from 'material-ui/IconButton'
 import Divider from 'material-ui/Divider'
 import inlineStyles from 'ui/shared/styles/MaterialUI'
 
+const HTML2EditorState = html => html 
+  ? EditorState.createWithContent(HTML2ContentState(html), decorator)
+  : EditorState.createEmpty(decorator)
 
 class TextEditor extends Component {
 
@@ -25,13 +29,11 @@ class TextEditor extends Component {
     super(props)
     // render via state
     this.state = {
-      editorState: props.value 
-        ? EditorState.createWithContent(convertFromRaw(JSON.parse(props.value)), decorator)
-        : EditorState.createEmpty(decorator),
+      editorState: HTML2EditorState(props.value),
       inputtable: false,
       urlValue: '',
     }    
-  }
+  }  
 
   _handleFocus = () => this.refs.editor.focus()
 
@@ -88,8 +90,8 @@ class TextEditor extends Component {
   }
 
   _handleUpdate = () => {
-    const description = JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))
-    this.props.handleUpdate(description)
+    const content = ContentState2HTML(this.state.editorState.getCurrentContent())            
+    this.props.handleUpdate(content)
   }
 
   _handleToggleBlockType = (blockType) => {
@@ -100,7 +102,6 @@ class TextEditor extends Component {
       )
     )
   }
-
 
   _handleToggleInlineStyle = (inlineStyle) => {
     this._handleChange(
@@ -121,12 +122,7 @@ class TextEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.value && nextProps.value) {
-      const blocks = convertFromRaw(JSON.parse(nextProps.value))
-      this.setState({ editorState: EditorState.createWithContent(blocks, decorator) })
-    } else if (!nextProps.value) {
-      this.state = { editorState: EditorState.createEmpty(decorator) }
-    }
+    this._handleChange(HTML2EditorState(nextProps.value))
   }
 
   renderURLField() {
@@ -149,12 +145,46 @@ class TextEditor extends Component {
     }
   }
 
+  _handlePastedText = (text, html) => {    
+    const newState = HTML2EditorState(html)
+    this._handleChange(newState)
+    return true
+  }
+
+  addImages(files) {    
+    files.forEach(blob=>{
+      const reader = new window.FileReader()
+      reader.readAsDataURL(blob) 
+      reader.onload = () => {
+        const src = reader.result                
+        const entityKey = Entity.create(
+          'IMAGE',
+          'MUTABLE',
+           { src }
+        )          
+        const newState = AtomicBlockUtils.insertAtomicBlock(this.state.editorState, entityKey, ' ')
+        this._handleChange(newState)
+      }
+    })          
+    
+    return true
+  }
+
+  _handlePastedFiles = (files) => {
+    return this.addImages(files)
+  }
+
+  _handleDroppedFiles = (selection, files) =>{
+    return this.addImages(files)
+  }
+
   render() {
     const { editorState } = this.state
 
     return (
       <div className="text-editor" onBlur={this._handleUpdate} >
-        <div className='toolbar'>
+        <div className='toolbar'>          
+        
           <BlockStyleControls
             editorState={editorState}
             onToggle={this._handleToggleBlockType}
@@ -177,6 +207,9 @@ class TextEditor extends Component {
             placeholder="Enter Text"
             ref="editor"
             handleKeyCommand={this._handleKeyCommand}
+            handlePastedText={this._handlePastedText}
+            handleDroppedFiles={this._handleDroppedFiles}
+            handlePastedFiles={this._handlePastedFiles}
           />
         </div>
       </div>
