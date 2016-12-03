@@ -33,15 +33,15 @@ export const HTML2ContentState = convertFromHTML({
 
     switch(nodeName){
       case 'figure':
-        if(node.firstChild.nodeName === 'IMG')
+        const {firstChild} = node
+        if(firstChild && firstChild.nodeName === 'IMG')
           return {
             type: 'atomic',
             data: {
               atomicType: 'image',
-              src: node.firstChild.getAttribute('src')
+              src: firstChild.getAttribute('src')
             }
-          }
-        
+          }        
         break
 
       case 'img':
