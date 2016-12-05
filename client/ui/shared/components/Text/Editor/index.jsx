@@ -24,7 +24,6 @@ class TextEditor extends Component {
   constructor(props) {
     super(props)
     // render via state
-    console.log(props.mode)
     this.state = {
       editorState: this.getEditorState(props.mode, props.value),
       inputtable: false,

@@ -13,7 +13,18 @@ import HomeScreen from './Components/HomeScreen'
 var NavigationBarRouteMapper = {
   LeftButton: function(route, navigator, index, navState) {
     switch (route.name) {
+      case 'home':
+        return (
+          <SimpleButton
+            onPress={()=>navigator.push({name:'noteLocations'})}
+            customText='Map'
+            style={styles.navBarLeftButton}
+            textStyle={styles.navBarButtonText}
+          />
+        )
       case 'createNote':
+      case 'noteLocations':
+      case 'camera':
         return (
           <SimpleButton
             onPress={() => navigator.pop()}
@@ -55,8 +66,12 @@ var NavigationBarRouteMapper = {
         );
       case 'createNote':
         return (
-          <Text style={styles.navBarTitleText}>Create Note</Text>
-        );
+          <Text style={styles.navBarTitleText}>{route.note ? route.note.title : 'Create Note'}</Text>          
+        )
+      case 'camera':
+        return (
+          <Text style={styles.navBarTitleText}>Take Picture</Text>
+        )
     }
   }
 };
@@ -64,6 +79,24 @@ var NavigationBarRouteMapper = {
 class ReactNotes extends React.Component {
   constructor (props) {
     super(props);
+  }
+
+  saveNoteImage(imagePath, note){
+    note.imagePath = imagePath
+    this.updateNote(note)
+  }
+
+  updateNote(note) {
+    var newNotes = Object.assign({}, this.state.notes);
+
+    if (!note.isSaved) {
+      note.location = this.state.lastPosition;
+    }
+
+    note.isSaved = true;
+    newNotes[note.id] = note;
+    this.setState({notes:newNotes});
+    this.saveNotes(newNotes);
   }
 
   renderScene (route, navigator) {
@@ -74,8 +107,14 @@ class ReactNotes extends React.Component {
         );
       case 'createNote':
         return (
-          <NoteScreen />
+          <NoteScreen navigator={navigator} note={route.note}
+            onChangeNote={note=>this.updateNote(note)}
+            showCameraButton={true}/>
         );
+      case 'camera':
+        return (
+          <CameraScreen onPicture={imagePath=>this.saveNoteImage(imagePath, route.note)}/>
+        )
     }
   }
 
