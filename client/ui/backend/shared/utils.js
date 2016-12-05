@@ -12,7 +12,7 @@ import TagField from 'ui/backend/components/shared/TagField'
 import PostFormItem from 'ui/backend/components/Post/Forms/Item'
 import EditBox from 'ui/backend/components/Post/Forms/Item/Form/EditBox'
 import Checkbox from 'material-ui/Checkbox'
-
+import { RadioButtonGroup } from 'material-ui/RadioButton'
 import TARGET_TYPES from 'ui/shared/constants/targetTypes'
 
 // do not user higher order function for component or it will re-render everytime
@@ -42,6 +42,14 @@ export const renderTextEditor = ({ input, mode='raw' }) => (
     mode={mode}
     handleUpdate={value => input.onChange(value)}
   />  
+)
+
+export const renderRadioGroup = ({ input, children }) => (
+  <RadioButtonGroup 
+    {...input}
+    children={children}
+    valueSelected={input.value}
+    onChange={(e, value) => input.onChange(value)}/>
 )
 
 // also accept extra params to extend to it ?
