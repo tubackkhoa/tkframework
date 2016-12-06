@@ -6,6 +6,12 @@ import {
   View,  
 } from 'react-native'
 
+import Relay, { 
+  Route,
+  RootContainer,
+  DefaultNetworkLayer
+} from 'react-relay'
+
 import SimpleButton from './Components/SimpleButton'
 import NoteScreen from './Components/NoteScreen'
 import HomeScreen from './Components/HomeScreen'

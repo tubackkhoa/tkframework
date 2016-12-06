@@ -7,11 +7,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "babel-relay-plugin": "^0.9.3",
     "react": "~15.4.0-rc.4",
     "react-native": "0.38.0",
     "react-native-camera": "^0.4.0",
     "react-native-material-ui": "^1.4.0",
     "react-native-vector-icons": "^3.0.0",
+    "react-relay": "^0.9.3",
     "whatwg-fetch": "^2.0.1"
   },
   "devDependencies": {

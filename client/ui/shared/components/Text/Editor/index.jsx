@@ -6,6 +6,7 @@ import {
   convertFromRaw,
   convertToRaw,
   Entity,
+  AtomicBlockUtils,
 } from 'draft-js'
 
 import { getBlockStyle } from '../shared/utils'
