@@ -156,7 +156,7 @@ class TextEditor extends Component {
 
   _handlePastedText = (text, html) => {    
     // must be html mode to parse
-    const newState = getEditorState('html', html)
+    const newState = this.getEditorState('html', html)
     this._handleChange(newState)
     return true
   }
