@@ -39,20 +39,24 @@ export const getDeleteRouter = (model) => (req, res) => {
   .then(deletedNumber => res.send({deletedNumber}))
 }
 
-export const uploadImage = (field, folder, setter) => {
+export const uploadImage = (field, folder, setter, clear=true) => {
   const imageDecode = decodeBase64Image(field)
   // delete old one
   if(imageDecode.buffer) {
     const imagePath = path.join(filePath, folder)
     // delete folder, by default we treat the whole folder like a collection of files, including thumb.v..v
     // for later
-    fse.removeSync(imagePath)   
+    clear && fse.removeSync(imagePath)   
     // update new image
     const filename = v4() + '.png'  
     // must save done then return   
     fse.outputFileSync(path.join(imagePath, filename), imageDecode.buffer)    
     // return file upload path ? not always return, so use setter method
-    setter && setter(`/uploads/${folder}/${filename}`) 
+    const imageURL = `/uploads/${folder}/${filename}`
+    setter && setter(imageURL) 
+    return imageURL
   }  
+  // return by default
+  return field
   
 }
