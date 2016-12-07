@@ -1,24 +1,29 @@
-import Home from './containers/Home';
+import Home from './containers/Home'
 // components
-import ActionButton from './containers/ActionButton';
-import ActionButtonToolbar from './containers/ActionButton/toolbar';
-import ActionButtonSpeedDial from './containers/ActionButton/speed-dial';
-import Avatar from './containers/Avatar';
-import Badge from './containers/Badge';
-import Button from './containers/Button';
-import Card from './containers/Card';
-import Checkbox from './containers/Checkbox';
-import Dialog from './containers/Dialog';
-import Drawer from './containers/Drawer';
-import IconToggle from './containers/IconToggle';
-import List from './containers/List';
-import RadioButton from './containers/RadioButton';
-import Toolbar from './containers/Toolbar';
+import ActionButton from './containers/ActionButton'
+import ActionButtonToolbar from './containers/ActionButton/toolbar'
+import ActionButtonSpeedDial from './containers/ActionButton/speed-dial'
+import Avatar from './containers/Avatar'
+import Badge from './containers/Badge'
+import Button from './containers/Button'
+import Card from './containers/Card'
+import RelayPage from './containers/RelayPage'
+import Checkbox from './containers/Checkbox'
+import Dialog from './containers/Dialog'
+import Drawer from './containers/Drawer'
+import IconToggle from './containers/IconToggle'
+import List from './containers/List'
+import RadioButton from './containers/RadioButton'
+import Toolbar from './containers/Toolbar'
 
 export default {
     home: {
         title: 'Select component',
         Page: Home,
+    },
+    relay: {
+        title: 'Relay & GraphQL',
+        Page: RelayPage,
     },
     actionButton: {
         title: 'Action buttons',
@@ -47,11 +52,7 @@ export default {
     card: {
         title: 'Cards',
         Page: Card,
-    },
-    checkbox: {
-        title: 'Checkboxes',
-        Page: Checkbox,
-    },
+    },    
     dialog: {
         title: 'Dialogs',
         Page: Dialog,
@@ -76,4 +77,4 @@ export default {
         title: 'Toolbars',
         Page: Toolbar,
     },
-};
+}

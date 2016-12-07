@@ -15,9 +15,8 @@ const uiTheme = {
 }
 
 export default class App extends Component {
-
     static configureScene(route) {
-        return route.animationType || Navigator.SceneConfigs.FloatFromRight
+        return route.animationType || Navigator.SceneConfigs.HorizontalSwipeJump
     }
 
     static renderScene(route, navigator) {

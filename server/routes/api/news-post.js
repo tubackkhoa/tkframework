@@ -16,6 +16,12 @@ router.post('/update', async (req, res) => {
   // currently we not process items, let it for edit phrase
   const {item:{image, ...data}, id} = req.body
 
+  // when delete, should delete all images belong to this content
+  data.content = data.content.replace(/<img(.*?)src="(.*?)"/g, (m, g1, g2)=>{
+    // replace base 64 with src
+    return `<img${g1}src="${uploadImage(g2, 'images', null, false)}"`
+  })
+  
   // update current user id
   data.user_id = req.user.id
   // update from post data

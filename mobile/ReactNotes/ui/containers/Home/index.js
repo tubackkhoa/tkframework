@@ -111,12 +111,12 @@ export default class Home extends Component {
                     keyboardShouldPersistTaps
                     keyboardDismissMode="interactive"
                 >
+                    {this.renderItem('Relay', routes.relay)}
                     {this.renderItem('Action buttons', routes.actionButton)}
                     {this.renderItem('Avatars', routes.avatar)}
                     {this.renderItem('Badge', routes.badge)}
                     {this.renderItem('Buttons', routes.button)}
-                    {this.renderItem('Cards', routes.card)}
-                    {this.renderItem('Checkbox', routes.checkbox)}
+                    {this.renderItem('Cards', routes.card)}                    
                     {this.renderItem('Dialog', routes.dialog)}
                     {this.renderItem('Drawer', routes.drawer)}
                     {this.renderItem('Icon toggles', routes.iconToggle)}

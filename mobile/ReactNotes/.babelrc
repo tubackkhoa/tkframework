@@ -1,3 +1,11 @@
 {
-"presets": ["react-native"]
+  "passPerPreset": true,
+  "presets": [
+    {
+      "plugins": [
+        "../../build/babelRelayPlugin"
+      ]
+    },
+    "react-native"    
+  ]
 }
