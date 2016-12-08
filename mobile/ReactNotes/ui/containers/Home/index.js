@@ -73,6 +73,7 @@ export default class Home extends Component {
                 leftElement="menu"
                 onLeftElementPress={() => this.props.navigator.pop()}
                 centerElement={this.props.route.title}
+                onPress={() => this.setState({ searchText: '' })}
                 searchable={{
                     autoFocus: true,
                     placeholder: 'Search',
@@ -83,16 +84,16 @@ export default class Home extends Component {
         )
     }
 
-    renderItem (title, route) {
+    renderItem (key, route) {
         const searchText = this.state.searchText.toLowerCase()
-
+        const title = route.title
         if (searchText.length > 0 && title.toLowerCase().indexOf(searchText) < 0) {
             return null
         }
 
         return (
             <ListItem
-                divider
+                key={key} divider
                 leftElement={<Avatar text={title[0]} />}
                 onLeftElementPress={() => this.onAvatarPressed(title)}
                 centerElement={title}
@@ -111,18 +112,10 @@ export default class Home extends Component {
                     keyboardShouldPersistTaps
                     keyboardDismissMode="interactive"
                 >
-                    {this.renderItem('Relay', routes.relay)}
-                    {this.renderItem('Action buttons', routes.actionButton)}
-                    {this.renderItem('Avatars', routes.avatar)}
-                    {this.renderItem('Badge', routes.badge)}
-                    {this.renderItem('Buttons', routes.button)}
-                    {this.renderItem('Cards', routes.card)}                    
-                    {this.renderItem('Dialog', routes.dialog)}
-                    {this.renderItem('Drawer', routes.drawer)}
-                    {this.renderItem('Icon toggles', routes.iconToggle)}
-                    {this.renderItem('List items', routes.list)}
-                    {this.renderItem('Radio buttons', routes.radioButton)}
-                    {this.renderItem('Toolbars', routes.toolbar)}
+                    {Object.keys(routes)
+                        .filter(key=>key!=='home')
+                        .map(key=>this.renderItem(key, routes[key]))
+                    }                    
                 </ScrollView>  
 
                 <ActionButton

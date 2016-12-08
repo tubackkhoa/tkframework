@@ -5,6 +5,9 @@ import { COLOR, ThemeProvider } from 'react-native-material-ui'
 import routes from 'ReactNotes/ui/routes'
 import Container from 'ReactNotes/ui/components/Container'
 
+// router => render component base on url
+// history.push => location match => return component using navigator push
+
 const UIManager = NativeModules.UIManager
 
 const uiTheme = {

@@ -9,5 +9,6 @@ router.use('/servicepoint', require('./service-point').default)
 router.use('/sellpost', require('./sellpost').default)
 router.use('/user', require('./user').default)
 router.use('/newspost', require('./news-post').default)
+router.use('/youtube', require('./youtube').default)
 
 export default router

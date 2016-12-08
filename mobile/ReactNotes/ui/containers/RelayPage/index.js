@@ -18,7 +18,7 @@ import Relay, {
   RootContainer,
 } from 'react-relay'
 
-import { SERVER_BASE } from 'ReactNotes/constants'
+import { API_BASE } from 'ReactNotes/store/constants/api'
 
 const styles = StyleSheet.create({
     container: {
@@ -30,17 +30,16 @@ const styles = StyleSheet.create({
     }
 })
 
-class RelayPage extends Component {
-    
+class RelayPage extends Component {    
 
     render() {
-        const {viewer:{projects:{edges}}} = this.props
+        const {viewer:{projects:{edges}}, navigator, route} = this.props
         return (
             <View style={styles.container}>
                 <Toolbar
                     leftElement="arrow-back"
-                    onLeftElementPress={() => this.props.navigator.pop()}
-                    centerElement={this.props.route.title}
+                    onLeftElementPress={() => navigator.pop()}
+                    centerElement={route.title}
                 />
                 <ScrollView style={styles.container}>                    
                     <Subheader text="GraphQL Result:" />
@@ -50,7 +49,7 @@ class RelayPage extends Component {
                       divider
                       leftElement={
                         <Image style={styles.image}
-                          source={{uri: `${SERVER_BASE}/${node.full_image}`}}/>
+                          source={{uri: `${API_BASE}/${node.full_image}`}}/>
                       }
                       numberOfLines="dynamic"
                       centerElement={{
@@ -124,7 +123,7 @@ export default class RelayPageSpec extends Component {
     return (
       <RootContainer
         Component={RelayPageContainer}
-        route={new RelayPageRoute({ first: 10 })}
+        route={new RelayPageRoute({ first: 5 })}
         renderFetched={data=>
           <RelayPageContainer 
             {...this.props}

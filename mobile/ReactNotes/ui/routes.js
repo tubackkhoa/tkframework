@@ -8,6 +8,7 @@ import Badge from './containers/Badge'
 import Button from './containers/Button'
 import Card from './containers/Card'
 import RelayPage from './containers/RelayPage'
+import Youtube from './containers/Youtube'
 import Checkbox from './containers/Checkbox'
 import Dialog from './containers/Dialog'
 import Drawer from './containers/Drawer'
@@ -24,6 +25,10 @@ export default {
     relay: {
         title: 'Relay & GraphQL',
         Page: RelayPage,
+    },
+    youtube: {
+        title: 'Youtube',
+        Page: Youtube,
     },
     actionButton: {
         title: 'Action buttons',

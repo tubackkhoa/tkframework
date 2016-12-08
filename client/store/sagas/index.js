@@ -1,13 +1,13 @@
 import { fork } from 'redux-saga/effects'
 
-import asyncAuthWatchers from 'store/sagas/auth'
-import asyncTagFetchWatchers from 'store/sagas/tag'
-import asyncPostFetchWatchers from 'store/sagas/post'
+import asyncAuthWatchers from './auth'
+import asyncTagFetchWatchers from './tag'
+import asyncPostFetchWatchers from './post'
 
-import asyncSellPostFetchWatchers from 'store/sagas/sellpost'
-import asyncServicePointFetchWatchers from 'store/sagas/service-point'
-import asyncNewsPostFetchWatchers from 'store/sagas/newspost'
-import asyncUserFetchWatchers from 'store/sagas/user'
+import asyncSellPostFetchWatchers from './sellpost'
+import asyncServicePointFetchWatchers from './service-point'
+import asyncNewsPostFetchWatchers from './newspost'
+import asyncUserFetchWatchers from './user'
 
 // saga must be a function like generator of other functions
 const rootSaga = function* () {

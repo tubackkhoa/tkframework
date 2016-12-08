@@ -4,7 +4,7 @@ import api from 'store/api'
 
 import {     
   createRequestSaga
-} from 'store/sagas/common'
+} from './common'
 
 import { replaceCommits } from 'store/actions/general'
 
