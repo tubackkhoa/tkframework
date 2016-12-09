@@ -2,8 +2,12 @@ import YouTube from 'react-native-youtube'
 import { View, StyleSheet, Text } from 'react-native'
 import React, { Component, PropTypes } from 'react'
 
-import { Avatar, Card, ListItem, Toolbar } from 'react-native-material-ui'
+import { Avatar, Card, ListItem, Toolbar, Button } from 'react-native-material-ui'
 import Container from 'ReactNotes/ui/components/Container'
+
+import { connect } from 'react-redux'
+import { detailYoutube } from 'ReactNotes/store/actions/youtube'
+import * as youtubeSelectors from 'ReactNotes/store/selectors/youtube'
 
 const styles = StyleSheet.create({
     textContainer: {
@@ -16,8 +20,21 @@ const styles = StyleSheet.create({
       backgroundColor: 'black', 
       marginVertical: 10
     },
+    rowContainer: {
+        margin: 8,
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    button: {
+        marginHorizontal: 1,
+    },
 })
 
+const mapStateToProps = (state) => ({  
+  item: youtubeSelectors.getOpenItem(state),  
+})
+
+@connect(mapStateToProps, { detailYoutube })
 class YoutubePlayer extends Component {
 
   static propTypes = {
@@ -25,9 +42,13 @@ class YoutubePlayer extends Component {
     route: PropTypes.object.isRequired,
   }
 
+  componentWillMount(){
+    this.props.detailYoutube(this.props.route.videoId)
+  }
+
   render() {
 
-    const {route, navigator} = this.props
+    const {route, navigator, item:{statistics}} = this.props
     return (
         <Container>
             <Toolbar
@@ -52,6 +73,17 @@ class YoutubePlayer extends Component {
 
               style={styles.player}
             />
+
+            {statistics &&
+            <View style={styles.rowContainer}>
+                <View style={styles.button}>
+                    <Button primary text={statistics.viewCount} icon="visibility" />
+                </View>
+                <View style={styles.button}>
+                    <Button primary text={statistics.likeCount} icon="mood" />
+                </View>
+            </View>
+            }
             
         </Container>
     )

@@ -5,5 +5,9 @@ export default {
   search(keyword) {
     return fetchJson(`/api/youtube/search?q=${keyword}`)      
   },
+
+  detail(id) {
+    return fetchJson(`/api/youtube/index/${id}`)      
+  },
   
 }
