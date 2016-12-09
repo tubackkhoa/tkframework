@@ -37,6 +37,7 @@
 		24A66F191DF9219F009721A6 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24A66F101DF9219F009721A6 /* Octicons.ttf */; };
 		24A66F1A1DF9219F009721A6 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24A66F111DF9219F009721A6 /* SimpleLineIcons.ttf */; };
 		24A66F1B1DF9219F009721A6 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24A66F121DF9219F009721A6 /* Zocial.ttf */; };
+		24A66F651DFAA513009721A6 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 24A66F641DFAA513009721A6 /* main.jsbundle */; };
 		40BF51ED9BED4652BD62D955 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 312913EC4CBC45699DC4FADB /* MaterialIcons.ttf */; };
 		4FFF103017594CABA0254B40 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 26D7AC20E698412B915FC12A /* Ionicons.ttf */; };
 		78D3198F1C58478F940DB028 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB738D624EE44D50B77585E9 /* Octicons.ttf */; };
@@ -198,7 +199,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
 		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
@@ -228,6 +228,7 @@
 		24A66F101DF9219F009721A6 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		24A66F111DF9219F009721A6 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		24A66F121DF9219F009721A6 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
+		24A66F641DFAA513009721A6 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = SOURCE_ROOT; };
 		26D7AC20E698412B915FC12A /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		312913EC4CBC45699DC4FADB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		4770702F266F4551A9F89F91 /* RCTYouTube.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTYouTube.xcodeproj; path = "../node_modules/react-native-youtube/RCTYouTube.xcodeproj"; sourceTree = "<group>"; };
@@ -360,7 +361,6 @@
 			children = (
 				24A66F091DF9219F009721A6 /* Fonts */,
 				24A66EC71DF91E51009721A6 /* Assets */,
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -383,6 +383,7 @@
 		24A66EC71DF91E51009721A6 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				24A66F641DFAA513009721A6 /* main.jsbundle */,
 				24A66EC81DF91E51009721A6 /* YTPlayerView-iframe-player.html */,
 			);
 			name = Assets;
@@ -811,6 +812,7 @@
 				4FFF103017594CABA0254B40 /* Ionicons.ttf in Resources */,
 				40BF51ED9BED4652BD62D955 /* MaterialIcons.ttf in Resources */,
 				78D3198F1C58478F940DB028 /* Octicons.ttf in Resources */,
+				24A66F651DFAA513009721A6 /* main.jsbundle in Resources */,
 				EF229C5790BB4B7FA3EF49B9 /* SimpleLineIcons.ttf in Resources */,
 				01875DA0F7644C068022318B /* Zocial.ttf in Resources */,
 			);

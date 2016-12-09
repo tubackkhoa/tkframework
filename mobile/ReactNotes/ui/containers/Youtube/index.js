@@ -1,10 +1,11 @@
-import { View, StyleSheet, Text, Image } from 'react-native'
+import { View, StyleSheet, Text, Image, ScrollView } from 'react-native'
 import React, { Component, PropTypes } from 'react'
 
-import { Avatar, Card, ListItem, Toolbar } from 'react-native-material-ui'
+import { Avatar, Card, ListItem, Toolbar, Subheader } from 'react-native-material-ui'
 import Container from 'ReactNotes/ui/components/Container'
 
-// import YouTube from 'react-native-youtube'
+import YoutubePlayer from './youtube-player'
+
 import { connect } from 'react-redux'
 import { searchYoutube } from 'ReactNotes/store/actions/youtube'
 import * as youtubeSelectors from 'ReactNotes/store/selectors/youtube'
@@ -26,26 +27,32 @@ class YoutubeSpec extends Component {
     this.props.searchYoutube('the beatles')
   }
 
+  _handleItemClick = (videoId, title) => {
+    const {navigator} = this.props
+    navigator.push({
+        title: title,
+        Page: YoutubePlayer,
+        videoId,
+    })
+  }
+
   renderSearchResult(){
     const {result} = this.props
-    return result.map(({snippet:item},index)=>(
-      <Card key={index}>
-          <ListItem
-              leftElement={<Image style={styles.image}
-                          source={{uri: item.thumbnails.default.url}}/>}
-
-              centerElement={{
-                  primaryText: item.channelTitle,
-                  secondaryText: item.publishedAt,
-              }}
-          />
-          <View style={styles.textContainer}>
-              <Text>
-                  {item.title}
-              </Text>
-          </View>
+    return result.map(({snippet:item,id:{videoId}},index)=>(
       
-      </Card>
+      <ListItem
+        key={index} 
+        onPress={() => this._handleItemClick(videoId, item.title)}
+        divider
+        leftElement={<Image style={styles.image}
+                      source={{uri: item.thumbnails.default.url}}/>}
+        numberOfLines="dynamic"
+        centerElement={{
+            primaryText: item.title,
+            secondaryText: item.publishedAt,
+        }}
+      />                
+      
     ))  
   }
 
@@ -63,9 +70,9 @@ class YoutubeSpec extends Component {
                       onChangeText: value => this.props.searchYoutube(value),                      
                   }}
               />             
-
-              {this.renderSearchResult()}               
-
+              <ScrollView style={styles.container}>                  
+                {this.renderSearchResult()}               
+              </ScrollView>
           </Container>
       )
   }
@@ -79,6 +86,9 @@ const styles = StyleSheet.create({
     image:{
       width: 50, 
       height: 50
+    },
+    container: {
+        flex: 1,
     },
 })
 
