@@ -1,4 +1,11 @@
-import { View, StyleSheet, Text, Image, ScrollView } from 'react-native'
+import { 
+  View, 
+  StyleSheet, 
+  Text, 
+  Image, 
+  ScrollView,   
+} from 'react-native'
+
 import React, { Component, PropTypes } from 'react'
 
 import { Avatar, Card, ListItem, Toolbar, Subheader } from 'react-native-material-ui'
@@ -57,7 +64,6 @@ class YoutubeSpec extends Component {
   }
 
   render() {
-    
       return (
           <Container>
               <Toolbar
@@ -66,7 +72,7 @@ class YoutubeSpec extends Component {
                   centerElement={this.props.route.title}                  
                   searchable={{
                       autoFocus: true,
-                      placeholder: 'Search',
+                      placeholder: 'Search video',
                       onChangeText: value => this.props.searchYoutube(value),                      
                   }}
               />             

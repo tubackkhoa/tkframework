@@ -1,5 +1,10 @@
 import YouTube from 'react-native-youtube'
-import { View, StyleSheet, Text } from 'react-native'
+import { 
+  View, 
+  StyleSheet, 
+  Text,
+  Video, 
+} from 'react-native'
 import React, { Component, PropTypes } from 'react'
 
 import { Avatar, Card, ListItem, Toolbar, Button } from 'react-native-material-ui'

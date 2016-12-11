@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import React, { Component, PropTypes } from 'react';
 
 import { Avatar, Card, ListItem, Toolbar } from 'react-native-material-ui';
@@ -8,6 +8,10 @@ const styles = StyleSheet.create({
     textContainer: {
         paddingHorizontal: 16,
         paddingBottom: 16,
+    },
+    image:{
+        width: 200,
+        height: 200,
     },
 });
 
@@ -25,6 +29,7 @@ class CardSpec extends Component {
                     onLeftElementPress={() => this.props.navigator.pop()}
                     centerElement={this.props.route.title}
                 />
+                <ScrollView>
                 <Card>
                     <ListItem
                         leftElement={<Avatar text="JM" />}
@@ -41,6 +46,11 @@ class CardSpec extends Component {
                             quasi architecto beatae vitae dicta sunt explicabo.
                         </Text>
                     </View>
+                    <Image
+                        source={{
+                            uri:
+                            'https://dantri4.vcmedia.vn/79e4ba3e/zoom/344_258/9bb6d7c338/2016/12/10/t-1481333821915.jpg'}}
+                        style={styles.image} />
                 </Card>
                 <Card>
                     <ListItem
@@ -57,8 +67,10 @@ class CardSpec extends Component {
                             Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
                             ut aliquip ex ea commodo consequat.
                         </Text>
+
                     </View>
                 </Card>
+                </ScrollView>
             </Container>
         );
     }
