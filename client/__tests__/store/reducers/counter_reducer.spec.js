@@ -8,6 +8,16 @@ test('incrementAsync Saga test', (assert) => {
 
   const gen = incrementAsync()
 
+  const {password, email, avatar, phone, name, user_type = 1} = {
+    password:'sfsf',
+    email:'afafa',
+    vai:'dan',
+  }  
+
+  const info = {password, email, avatar, phone, name, user_type}
+
+  console.log(info)
+
   assert.deepEqual(
     gen.next().value,
     call(delay, 1000),

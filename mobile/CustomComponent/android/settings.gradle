@@ -1,0 +1,3 @@
+rootProject.name = 'CustomComponent'
+
+include ':app'
