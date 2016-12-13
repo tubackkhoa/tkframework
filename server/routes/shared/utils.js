@@ -5,15 +5,22 @@ import { filePath } from 'config/constants'
 import { decodeBase64Image } from 'data/decoder/image'
 import authorize from 'passport/authorize'
 
-export const getPagingRouter = (model, attributes) => (req, res)=> {
+export const getPagingRouter = (model, attributes, where, order) => (req, res)=> {
   const {page=1, limit=10} = req.query  
   const maxLimit = Math.min(+limit, 10)
   const offset = (page-1) * limit
-  model.findAndCount({
+  const options = {
     limit: maxLimit,
     offset,
     attributes,
-  }).then(result => {
+  }
+  if(where){
+    options.where = typeof where === 'function' ? where(req) : where
+  }
+  if(order){
+    options.order = typeof order === 'function' ? order(req) : order
+  }
+  model.findAndCount(options).then(result => {
     res.send({...result, offset})
   })
 }

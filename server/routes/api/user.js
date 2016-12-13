@@ -46,7 +46,7 @@ const doLoginSocial = async (login_type, login_token, req, next) => {
 
   let user = await users.findOne({
     where:{email:userInfo.email},
-    attributes: ['id', 'email', 'phone', 'username', 'avatar', 'name'],
+    attributes: ['id', 'email', 'phone', 'username', 'avatar', 'name', 'user_type'],
   })
 
   if(!user) {
@@ -68,7 +68,7 @@ const doLoginLocal = async (username, password, req, next) => {
     where:{
       username,        
     },
-    attributes: ['id', 'email', 'phone', 'avatar', 'name', 'encrypted_password'],
+    attributes: ['id', 'email', 'phone', 'avatar', 'name', 'encrypted_password', 'user_type'],
   })
 
   if(row){
@@ -190,5 +190,17 @@ router.post('/register', async (req, res, next) => {
     })
   }  
 }, generateAccessToken, respondLogin)
+
+// we just logout the passport, then redirect to home page or login page
+// we do not use session, if you use it you have to redirect in req.session.destroy(function (err) {})
+router.post('/logout', (req, res) => {
+
+  if(!req.user){
+    return res.status(204).end()
+  }
+  
+  // logout passport to end access token immediately
+  req.logout()
+})
 
 export default router
