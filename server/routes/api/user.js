@@ -14,44 +14,47 @@ import 'isomorphic-fetch'
 const router  = new Router()
 
 const doLoginSocial = async (login_type, login_token, req, next) => {
+  
+  const userInfo = {
+    username: login_token,
+    login_type,
+    login_token,
+  }    
+  if(login_type === 'facebook') {
+    Object.assign(userInfo, 
+      await fetch(`https://graph.facebook.com/me?fields=email,name,id&access_token=${login_token}`)
+      // assume this service is always working
+      .then(res => res.json())  
+      .then(json => ({          
+        name: json.name,
+        avatar: `http://graph.facebook.com/${json.id}/picture?type=large`,  
+        email: json.email, 
+      }))
+    )
+  } else {
+    Object.assign(userInfo,
+      await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${login_token}`)
+      // assume this service is always working
+      .then(res => res.json())  
+      .then(json => ({          
+        name: json.name,
+        avatar: json.picture,  
+        email: json.email, 
+      }))
+    )      
+  }
 
   let user = await users.findOne({
-    where:{login_token},
+    where:{email:userInfo.email},
     attributes: ['id', 'email', 'phone', 'username', 'avatar', 'name'],
   })
 
   if(!user) {
-    const userInfo = {
-      username: login_token,
-      login_type,
-      login_token,
-    }    
-    if(login_type === 'facebook') {
-      Object.assign(userInfo, 
-        await fetch(`https://graph.facebook.com/me?fields=email,name,id&access_token=${login_token}`)
-        // assume this service is always working
-        .then(res => res.json())  
-        .then(json => ({          
-          name: json.name,
-          avatar: `http://graph.facebook.com/${json.id}/picture?type=large`,  
-          email: json.email, 
-        }))
-      )
-    } else {
-      Object.assign(userInfo,
-        await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${login_token}`)
-        // assume this service is always working
-        .then(res => res.json())  
-        .then(json => ({          
-          name: json.name,
-          avatar: json.picture,  
-          email: json.email, 
-        }))
-      )      
-    }
-
     // insert new user
     user = await users.create(userInfo)
+  } else {
+    // update at background
+    user.updateAttributes(userInfo)
   }
 
   req.user = user
@@ -114,15 +117,15 @@ const respondLogin = ({user, token}, res) => {
 }
 
 const updateUser = (req, user) => {
-  const {password, email, avatar, phone, name, user_type = 1} = req.body
-  const info = {password, email, avatar, phone, name, user_type}
-  uploadImage(avatar, `user/image${item.id}`, imagePath => info.avatar=imagePath)  
+  const {email:username, avatar, phone, name, user_type = 1} = req.body
+  const info = {username, avatar, phone, name, user_type}
+  uploadImage(avatar, `user/image/${user.id}`, imagePath => info.avatar=imagePath)  
   user.updateAttributes(info)
   return info
 }
 
 router.get('/index/:id', getDetailRouter(users, ['id','name', 'username', 'phone','avatar','email','registered_at']))
-router.get('/', getPagingRouter(users, ['id','name','registered_at','username','phone','email','avatar','block']))
+router.get('/', getPagingRouter(users, ['id','name','registered_at','username','phone','email','avatar','block','updated_at']))
 
 router.get('/me', (req, res) => {
   res.send(req.user)
@@ -168,15 +171,24 @@ router.post('/login', async (req, res, next) => {
 }, generateAccessToken, respondLogin)
 
 router.post('/register', async (req, res, next) => {
-  const {username} = req.body
+  const {email, password} = req.body
   const encrypted_password = await cryptPassword(password)   
   // need some validation here
-  const user = await users.create({
-    username,
-    encrypted_password,
-  })
-  // wait for avatar to return, update attribute at background
-  req.user = {...updateUser(req, user), username}
+  try{
+    const user = await users.create({
+      email,
+      encrypted_password,
+    })
+    // wait for avatar to return, update attribute at background
+    req.user = {...updateUser(req, user), email}
+    // call next action
+    next()
+  } catch(ex) {
+    res.send({
+      message: ex.message,
+      success: false,
+    })
+  }  
 }, generateAccessToken, respondLogin)
 
 export default router
