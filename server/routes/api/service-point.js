@@ -53,7 +53,7 @@ router.get('/index/:id', getDetailRouter(service_points,
   ['id','name','address','phone','lat','lng','description','owner_id','image']))
 router.get('/', getPagingRouter(service_points, 
   ['id','name','address','phone','lat','lng','description','owner_id','image']))
-router.delete('/delete/:id', getDetailRouter(service_points))
+router.delete('/delete/:id', getDeleteRouter(service_points))
 
 
 // limit json post

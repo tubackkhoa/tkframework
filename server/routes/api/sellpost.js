@@ -7,7 +7,7 @@ const router  = new Router()
 
 router.get('/index/:id', getDetailRouter(sellposts, ['id','title','description','phone','image','user_id']))
 router.get('/', getPagingRouter(sellposts, ['id','title','description','phone','user_id','image']))
-router.delete('/delete/:id', getDetailRouter(sellposts))
+router.delete('/delete/:id', getDeleteRouter(sellposts))
 
 // limit json post
 router.post('/update', async (req, res) => {

@@ -117,7 +117,7 @@ const respondLogin = ({user, token}, res) => {
 }
 
 const updateUser = (req, user) => {
-  const {email:username, avatar, phone, name, user_type = 1} = req.body
+  const {email:username, avatar, phone, name, user_type} = req.body
   const info = {username, avatar, phone, name, user_type}
   uploadImage(avatar, `user/image/${user.id}`, imagePath => info.avatar=imagePath)  
   user.updateAttributes(info)
