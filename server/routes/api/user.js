@@ -44,6 +44,9 @@ const doLoginSocial = async (login_type, login_token, req, next) => {
     )      
   }
 
+  // if use does not allow access email, then use login_token as unique username
+  userInfo.email = userInfo.email || login_token
+
   let user = await users.findOne({
     where:{email:userInfo.email},
     attributes: ['id', 'email', 'phone', 'username', 'avatar', 'name', 'user_type'],
@@ -118,7 +121,7 @@ const respondLogin = ({user, token}, res) => {
 
 const updateUser = (req, user) => {
   const {email:username, avatar, phone, name, user_type} = req.body
-  const info = {username, avatar, phone, name, user_type}
+  const info = {username, phone, name, user_type}
   uploadImage(avatar, `user/image/${user.id}`, imagePath => info.avatar=imagePath)  
   user.updateAttributes(info)
   return info

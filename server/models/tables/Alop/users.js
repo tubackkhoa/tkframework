@@ -2,7 +2,8 @@ import { sequelize, DataTypes } from 'models/config'
 
 export default sequelize.define("users", {    
   id         : { type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true },    
-  email : DataTypes.STRING,
+  // email : DataTypes.STRING,
+  email : { type: DataTypes.STRING, validate: {isEmail: true} },
   username : DataTypes.STRING,
   name: DataTypes.STRING,
   encrypted_password : DataTypes.STRING,
