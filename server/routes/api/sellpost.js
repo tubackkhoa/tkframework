@@ -26,7 +26,7 @@ router.post('/update', async (req, res) => {
   if(!id)
     res.send({id:item.id})
 
-  uploadImage(image, `sellpost/image${item.id}`, imagePath => data.image=imagePath)
+  uploadImage(image, `sellpost/image/${item.id}`, imagePath => data.image=imagePath)
 
   // do at background
   item.updateAttributes(data)    
