@@ -120,8 +120,8 @@ const respondLogin = ({user, token}, res) => {
 }
 
 const updateUser = (req, user) => {
-  const {email:username, avatar, phone, name, user_type} = req.body
-  const info = {username, phone, name, user_type}
+  const {avatar, phone, name, user_type} = req.body
+  const info = {phone, name, user_type}
   uploadImage(avatar, `user/image/${user.id}`, imagePath => info.avatar=imagePath)  
   user.updateAttributes(info)
   return info
@@ -180,10 +180,11 @@ router.post('/register', async (req, res, next) => {
   try{
     const user = await users.create({
       email,
+      username: email,
       encrypted_password,
     })
     // wait for avatar to return, update attribute at background
-    req.user = {...updateUser(req, user), email}
+    req.user = {...updateUser(req, user), email, username: email}
     // call next action
     next()
   } catch(ex) {
