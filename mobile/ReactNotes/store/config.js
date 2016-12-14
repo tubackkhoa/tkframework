@@ -1,5 +1,7 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+import {AsyncStorage} from 'react-native'
+import { persistStore, autoRehydrate } from 'redux-persist'
 
 import rootReducer from './reducers'
 import rootSaga from './sagas'
@@ -23,12 +25,18 @@ if (__DEV__) {
 export const store = createStore(
   rootReducer,
   initialState,
-  applyMiddleware(...middleware)
+  compose(
+    // if you use getStoredState then no need to use auto hydrate to get state back
+    autoRehydrate(),
+    applyMiddleware(...middleware),      
+  )
 )
+
+// Enable persistence
+persistStore(store, {storage: AsyncStorage})
 
 // then run the saga
 sagaMiddleware.run(rootSaga)
-
 
 
 
