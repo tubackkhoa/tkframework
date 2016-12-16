@@ -69,7 +69,7 @@ class YoutubePlayer extends Component {
               hidden={false}        // control visiblity of the entire view
               playsInline={true}    // control whether the video should play inline
               loop={false}          // control whether the video should loop when ended
-
+              apiKey='AIzaSyAYMWfgMbdpwAzUPyxd7XhrgKCfmAq5IQY'
               onReady={(e)=>{this.setState({isReady: true})}}
               onChangeState={(e)=>{this.setState({status: e.state})}}
               onChangeQuality={(e)=>{this.setState({quality: e.quality})}}

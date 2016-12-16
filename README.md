@@ -29,6 +29,7 @@ Usage
 - Install the dependencies: *npm install*
 - Go to mobile/ReactNotes then run *npm install* again to setup development environment for mobile
 - You may run script from server/data/db/schema.js or import scripts/tkframework.sql using phpmyadmin
+- Run *echo "sdk.dir=$ANDROID_HOME" > android/local.properties* to setup android environment
 
 ### Development
 - Run Webpack development server: *npm start*
