@@ -63,17 +63,17 @@ export default class NewsPostIndex extends Component {
 
     return (
       <TableRow key={id} style={inlineStyles.row}>        
-        <TableRowColumn colSpan="4" style={inlineStyles.rowColumn} >
+        <TableRowColumn colSpan="2" style={inlineStyles.rowColumn} >
           {title}
         </TableRowColumn>
-        <TableRowColumn colSpan="1" style={inlineStyles.rowColumn} >
+        <TableRowColumn colSpan="3" style={inlineStyles.rowColumn} >
           {description}
         </TableRowColumn>
         <TableRowColumn colSpan="2" style={inlineStyles.rowColumn} >
           {updated_at}
         </TableRowColumn>
         <TableRowColumn colSpan="3" style={inlineStyles.rowColumn} >          
-          <Link to={`/cms/newsposts/${id}/edit`}>
+          <Link to={`/admin/newsposts/${id}/edit`}>
             <IconButton disableTouchRipple >
               <EditorModeEdit />
             </IconButton>
@@ -94,7 +94,7 @@ export default class NewsPostIndex extends Component {
 
     const {newsposts:{rows=[], count=0, offset=0} } = this.props
     const newButton = (
-      <Link to="/cms/newsposts/new">
+      <Link to="/admin/newsposts/new">
         <FloatingActionButton style={inlineStyles.floatButton} disableTouchRipple={true}>
           <ContentAdd />
         </FloatingActionButton>
@@ -108,10 +108,10 @@ export default class NewsPostIndex extends Component {
         <Table fixedHeader fixedFooter>
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow selectable={false}>              
-              <TableHeaderColumn colSpan="4" style={inlineStyles.headerColumn}>
+              <TableHeaderColumn colSpan="2" style={inlineStyles.headerColumn}>
                 Title
               </TableHeaderColumn>
-              <TableHeaderColumn colSpan="1" style={inlineStyles.headerColumn}>
+              <TableHeaderColumn colSpan="3" style={inlineStyles.headerColumn}>
                 Description
               </TableHeaderColumn>
               <TableHeaderColumn colSpan="2" style={inlineStyles.headerColumn}>
