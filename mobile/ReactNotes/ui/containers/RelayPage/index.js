@@ -123,7 +123,7 @@ export default class RelayPageSpec extends Component {
     return (
       <RootContainer
         Component={RelayPageContainer}
-        route={new RelayPageRoute({ first: 5 })}
+        route={new RelayPageRoute({ first: 3 })}
         renderFetched={data=>
           <RelayPageContainer 
             {...this.props}
