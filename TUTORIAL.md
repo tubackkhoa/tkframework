@@ -13,7 +13,7 @@ It is also easier to learn and has better performance than other frameworks. And
 1. Choosing Code editor (Sublime Text 3)
 1. Installing Node.js and npm (node 7)
 1. Setting up Webpack and Babel (webpack 2.0, ES 2015, ES7, JSX).
-1. Setting up enviroment (hot reload, production and development)
+1. Setting up environment (hot reload, production and development)
 1. Setting up Express as server, GraphQL as query language for your API, Chrome as browser. 
 1. React Native CLI Installation and ensure simulator is installed
 
