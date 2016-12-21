@@ -33,6 +33,11 @@
     "server-test": "scripts/server-test",
     "test": "npm run client-test && npm run server-test",
     "update-schema": "cross-env NODE_ENV=build NODE_PATH=server babel-node ./build/updateSchema.js",
+
+    "db:schema": "cross-env NODE_PATH=server babel-node ./build/db/schema.js",
+    "db:seed": "cross-env NODE_PATH=server babel-node ./build/db/seeds.js",
+    "db:migrate": "cross-env NODE_PATH=server babel-node ./build/db/migrate/$VERSION.js",
+    
     "sass": "scripts/sass",
     "sass-bundle": "scripts/sass-bundle",
     "server": "scripts/server",
