@@ -22,7 +22,7 @@ import { authorType } from 'data/graphql/types/queries/author'
 import models from 'models'
 import authorize from 'passport/authorize'
 
-import fs from 'fs'
+import fse from 'fs-extra'
 import path from 'path'
 import { filePath } from 'config/constants'
 
@@ -63,18 +63,16 @@ export const updateAuthor = mutationWithClientMutationId({
 
     const authorAttributes = {description, introduction, name}
     if(avatar) {
-      // first, delete image of author, then upload image, 
-      //fs.delete(author.image)
+      // first, delete image of author, then upload image,       
       // should use saveSync, because we have to wait here, sync is always faster if      
       const imagePath = path.join(filePath, 'author/image', authorId)
       // delete at background
-      fs.unlink(path.join(imagePath, author.image), err => 
+      author.image && fse.remove(path.join(imagePath, author.image), err => 
         console.log(err || `Removed file ${author.image}`)
       )
-      
       // update new image, use v4 to share code with client
       const filename = v4() + path.extname(avatar.originalname)     
-      fs.writeFileSync(path.join(imagePath, filename), avatar.buffer)
+      fse.outputFileSync(path.join(imagePath, filename), avatar.buffer)
       authorAttributes.image = filename
     }    
 
