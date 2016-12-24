@@ -142,6 +142,7 @@
     "react-addons-shallow-compare": "^15.3.2",
     "react-dom": "^15.4.0",
     "react-dropzone": "^3.7.3",
+    "react-google-maps": "^6.0.1",
     "react-infinite": "^0.10.0",
     "react-redux": "^4.4.0",
     "react-relay": "^0.9.3",

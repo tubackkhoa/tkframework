@@ -1,10 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 
 import { connect } from 'react-redux'
-import { Field, FieldArray, reduxForm } from 'redux-form'
+import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentSave from 'material-ui/svg-icons/content/save'
+
+import {
+  withGoogleMap,
+  GoogleMap,
+  Marker,
+} from 'react-google-maps'
 
 import inlineStyles from 'ui/shared/styles/MaterialUI'
 
@@ -19,6 +25,18 @@ import {
   renderDropzoneImage, 
 } from 'ui/backend/shared/utils'
 
+const ServicePointGoogleMap = withGoogleMap(({position}) => (
+  <GoogleMap    
+    defaultZoom={10}
+    defaultCenter={position}    
+  >    
+    <Marker key='VietNam' defaultAnimation={2}
+      position={position}     
+    />
+    
+  </GoogleMap>
+))
+
 const validate = (values) => {
   const errors = {}
   // first time it is empty
@@ -30,9 +48,12 @@ const validate = (values) => {
   return errors
 }
 
+const formSelector = formValueSelector('ServicePointForm')
+
 const mapStateToProps = (state) => ({  
   initialValues: servicePointSelectors.getServicePoint(state),
-  token: authSelectors.getToken(state)
+  token: authSelectors.getToken(state),
+  position: formSelector(state, 'lat', 'lng'),  
 })
 
 @connect(mapStateToProps, {getServicePoint, updateServicePoint, replaceServicePoint})
@@ -56,8 +77,9 @@ export default class ServicePointEdit extends Component {
   }
   
   render() {    
-    const { params:{id}, handleSubmit, submitting } = this.props    
+    const { params:{id}, handleSubmit, submitting, position:{lat,lng} } = this.props        
     const submitLabel = !id ? 'Create' : 'Update'    
+
     return (
 
       <form onSubmit={handleSubmit(this._handleSubmit)} >
@@ -67,6 +89,17 @@ export default class ServicePointEdit extends Component {
         <Field name="address" label="Enter Address" component={renderTextField} />
         <Field name="lat" label="Enter Latitude" component={renderTextField} />
         <Field name="lng" label="Enter Longitude" component={renderTextField} />
+        {lat && lng && 
+          <ServicePointGoogleMap
+            containerElement={
+              <div style={{ height: 400 }} />
+            }
+            mapElement={
+              <div style={{ height: `100%` }} />
+            }          
+            position={{lat:+lat,lng:+lng}}
+          />
+        }
         <Field name="description" label="Description" component={renderTextField} />
         <Field name="phone" label="Phone" component={renderTextField} />
         <Field name="image" label="Image" component={renderDropzoneImage} base64={true} />
