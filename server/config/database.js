@@ -3,7 +3,7 @@ export const connection = {
     username: "root",
     password: process.env.DB_PASS || "123456",
     database: "tkframework",
-    host: "127.0.0.1",
+    host: process.env.DB_SERVER || "127.0.0.1",
     dialect: "mysql",
     pool: {
       max: 50,
@@ -15,7 +15,7 @@ export const connection = {
     password: process.env.DB_PASS,
     database: "tkframework",
     logging: false,
-    host: "localhost",
+    host: process.env.DB_SERVER || "127.0.0.1",
     dialect: "mysql",
     pool: {
       max: 50,

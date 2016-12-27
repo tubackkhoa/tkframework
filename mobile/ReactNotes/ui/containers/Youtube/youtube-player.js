@@ -3,12 +3,15 @@ import {
   View, 
   StyleSheet, 
   Text,
-  Video, 
+  TouchableHighlight,
 } from 'react-native'
 import React, { Component, PropTypes } from 'react'
 
 import { Avatar, Card, ListItem, Toolbar, Button } from 'react-native-material-ui'
 import Container from 'ReactNotes/ui/components/Container'
+
+import Sound from 'react-native-sound'
+import {AudioRecorder, AudioUtils} from 'react-native-audio'
 
 import { connect } from 'react-redux'
 import { detailYoutube } from 'ReactNotes/store/actions/youtube'
@@ -33,6 +36,30 @@ const styles = StyleSheet.create({
     button: {
         marginHorizontal: 1,
     },
+    controls: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+    },
+    progressText: {
+      paddingTop: 50,
+      fontSize: 50,
+      color: "#fff"
+    },
+    button: {
+      padding: 20
+    },
+    disabledButtonText: {
+      color: '#eee'
+    },
+    buttonText: {
+      fontSize: 20,
+      color: "#fff"
+    },
+    activeButtonText: {
+      fontSize: 20,
+      color: "#B81F00"
+    },
 })
 
 const mapStateToProps = (state) => ({  
@@ -45,6 +72,88 @@ class YoutubePlayer extends Component {
   static propTypes = {
     navigator: PropTypes.object.isRequired,
     route: PropTypes.object.isRequired,
+  }
+
+  state = {
+    currentTime: 0.0,
+    recording: false,
+    stoppedRecording: false,
+    finished: false,
+    audioPath: AudioUtils.DocumentDirectoryPath + '/test.aac',
+  }
+
+  prepareRecordingPath(audioPath){
+    AudioRecorder.prepareRecordingAtPath(audioPath, {
+      SampleRate: 22050,
+      Channels: 1,
+      AudioQuality: "Low",
+      AudioEncoding: "aac",
+      AudioEncodingBitRate: 32000
+    })
+  }
+
+  componentDidMount() {
+    this.prepareRecordingPath(this.state.audioPath)
+    AudioRecorder.onProgress = (data) => {
+      this.setState({currentTime: Math.floor(data.currentTime)})
+    };
+    AudioRecorder.onFinished = (data) => {
+      this.setState({finished: data.status === "OK"})
+      console.log(`Finished recording of duration ${this.state.currentTime} seconds at path: ${data.audioFileURL}`)
+    }
+  }
+
+  _renderButton(title, onPress, active) {
+    const style = (active) ? styles.activeButtonText : styles.buttonText
+
+    return (
+      <TouchableHighlight style={styles.button} onPress={onPress}>
+        <Text style={style}>
+          {title}
+        </Text>
+      </TouchableHighlight>
+    )
+  }
+
+  _pause() {
+    if (this.state.recording){
+      AudioRecorder.pauseRecording()
+      this.setState({stoppedRecording: true, recording: false})
+    }
+  }
+
+  _stop() {
+    if (this.state.recording) {
+      AudioRecorder.stopRecording()
+      this.setState({stoppedRecording: true, recording: false})
+    }
+  }
+
+  _play() {
+    this._stop()
+    const sound = new Sound(this.state.audioPath, '', (error) => {
+      if (error) {
+        console.log('failed to load the sound', error)
+      }
+    })
+
+    setTimeout(() => {
+      sound.play((success) => {
+        if (success) {
+           console.log('successfully finished playing')
+         } else {
+           console.log('playback failed due to audio decoding errors')
+         }
+      })
+    }, 500)
+  }
+
+  _record() {
+    if(this.state.stoppedRecording){
+      this.prepareRecordingPath(this.state.audioPath)
+    }
+    AudioRecorder.startRecording();
+    this.setState({recording: true})
   }
 
   componentWillMount(){
@@ -79,16 +188,25 @@ class YoutubePlayer extends Component {
               style={styles.player}
             />
 
-            {statistics &&
-            <View style={styles.rowContainer}>
-                <View style={styles.button}>
-                    <Button primary text={statistics.viewCount} icon="visibility" />
-                </View>
-                <View style={styles.button}>
-                    <Button primary text={statistics.likeCount} icon="mood" />
-                </View>
-            </View>
+            {
+            //   statistics &&
+            // <View style={styles.rowContainer}>
+            //     <View style={styles.button}>
+            //         <Button primary text={statistics.viewCount} icon="visibility" />
+            //     </View>
+            //     <View style={styles.button}>
+            //         <Button primary text={statistics.likeCount} icon="mood" />
+            //     </View>
+            // </View>
             }
+
+            <View style={styles.controls}>
+              {this._renderButton("RECORD", () => {this._record()}, this.state.recording )}
+              {this._renderButton("PLAY", () => {this._play()} )}
+              {this._renderButton("STOP", () => {this._stop()} )}
+              {this._renderButton("PAUSE", () => {this._pause()} )}
+              <Text style={styles.progressText}>{this.state.currentTime}s</Text>
+            </View>
             
         </Container>
     )

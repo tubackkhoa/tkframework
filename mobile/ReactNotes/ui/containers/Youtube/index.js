@@ -3,7 +3,7 @@ import {
   StyleSheet, 
   Text, 
   Image, 
-  ScrollView,   
+  ScrollView,    
 } from 'react-native'
 
 import React, { Component, PropTypes } from 'react'
@@ -31,7 +31,7 @@ class YoutubeSpec extends Component {
   }
 
   componentDidMount(){
-    this.props.searchYoutube('the beatles')
+    this.props.searchYoutube('Jingle bell karaoke')
   }
 
   _handleItemClick = (videoId, title) => {
@@ -73,7 +73,7 @@ class YoutubeSpec extends Component {
                   searchable={{
                       autoFocus: true,
                       placeholder: 'Search video',
-                      onChangeText: value => this.props.searchYoutube(value),                      
+                      onChangeText: value => this.props.searchYoutube(value.replace(/(?:karaoke)?$/i,'karaoke')),                      
                   }}
               />             
               <ScrollView style={styles.container}>                  
