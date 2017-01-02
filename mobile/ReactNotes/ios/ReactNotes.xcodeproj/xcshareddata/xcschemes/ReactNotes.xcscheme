@@ -52,6 +52,16 @@
                ReferencedContainer = "container:ReactNotes.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "24EED5171E18D512009ECE7D"
+               BuildableName = "ReactNotesUITests.xctest"
+               BlueprintName = "ReactNotesUITests"
+               ReferencedContainer = "container:ReactNotes.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

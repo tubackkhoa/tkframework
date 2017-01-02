@@ -15,7 +15,6 @@
 		00E356F31AD99517003FC87E /* ReactNotesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactNotesTests.m */; };
 		01875DA0F7644C068022318B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8FE2D7C71D93493FA87876B7 /* Zocial.ttf */; };
 		075F0A140A954ECD85606628 /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F5F4E5CEAF4ED6B4BE805A /* libRCTVideo.a */; };
-		12B69274F24E4D00A4F2A7B0 /* libRCTYouTube.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E451FD990ED4E57A5201A54 /* libRCTYouTube.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -40,6 +39,8 @@
 		24A66F1B1DF9219F009721A6 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24A66F121DF9219F009721A6 /* Zocial.ttf */; };
 		24A66F651DFAA513009721A6 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 24A66F641DFAA513009721A6 /* main.jsbundle */; };
 		24A66FB81DFD56A5009721A6 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24A66FA11DFD569C009721A6 /* libRCTAnimation.a */; };
+		24EED51B1E18D512009ECE7D /* ReactNotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EED51A1E18D512009ECE7D /* ReactNotesUITests.swift */; };
+		24EED5231E18D5B4009ECE7D /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EED5221E18D5B4009ECE7D /* SnapshotHelper.swift */; };
 		3B2CA3E17C5B4A159A9A815A /* libRNAudio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDBBFF6A579A4E24AB82876D /* libRNAudio.a */; };
 		40BF51ED9BED4652BD62D955 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 312913EC4CBC45699DC4FADB /* MaterialIcons.ttf */; };
 		4FFF103017594CABA0254B40 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 26D7AC20E698412B915FC12A /* Ionicons.ttf */; };
@@ -165,13 +166,6 @@
 			remoteGlobalIDString = 2D2A28131D9B038B00D4039D;
 			remoteInfo = "React-tvOS";
 		};
-		24A66F051DF92094009721A6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4770702F266F4551A9F89F91 /* RCTYouTube.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8BDB9BC91B4289AE00EF9FEF;
-			remoteInfo = RCTYouTube;
-		};
 		24A66F3C1DF921F9009721A6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 101E5EFBB0CD421A869BC9BC /* RNVectorIcons.xcodeproj */;
@@ -220,6 +214,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
 			remoteInfo = RNSound;
+		};
+		24EED51D1E18D512009ECE7D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = ReactNotes;
 		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -270,11 +271,13 @@
 		24A66F121DF9219F009721A6 /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zocial.ttf; sourceTree = "<group>"; };
 		24A66F641DFAA513009721A6 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = SOURCE_ROOT; };
 		24A66F9A1DFD569C009721A6 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		24EED5181E18D512009ECE7D /* ReactNotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactNotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		24EED51A1E18D512009ECE7D /* ReactNotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactNotesUITests.swift; sourceTree = "<group>"; };
+		24EED51C1E18D512009ECE7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		24EED5221E18D5B4009ECE7D /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		26D7AC20E698412B915FC12A /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		312913EC4CBC45699DC4FADB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		4770702F266F4551A9F89F91 /* RCTYouTube.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTYouTube.xcodeproj; path = "../node_modules/react-native-youtube/RCTYouTube.xcodeproj"; sourceTree = "<group>"; };
 		63222512A8994B3BBD461039 /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
-		6E451FD990ED4E57A5201A54 /* libRCTYouTube.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTYouTube.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		81359462F2F74A94BBD742A3 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -317,12 +320,18 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				12B69274F24E4D00A4F2A7B0 /* libRCTYouTube.a in Frameworks */,
 				9D69DF4A29C1467BBC5D4081 /* libRCTCamera.a in Frameworks */,
 				CCFD1540C5284F969C2698E2 /* libRNVectorIcons.a in Frameworks */,
 				075F0A140A954ECD85606628 /* libRCTVideo.a in Frameworks */,
 				3B2CA3E17C5B4A159A9A815A /* libRNAudio.a in Frameworks */,
 				54F5D97BD31A47F892A51B70 /* libRNSound.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		24EED5151E18D512009ECE7D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,14 +449,6 @@
 			path = "../node_modules/react-native-youtube/Assets";
 			sourceTree = "<group>";
 		};
-		24A66EF31DF92094009721A6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				24A66F061DF92094009721A6 /* libRCTYouTube.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		24A66F091DF9219F009721A6 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -514,6 +515,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		24EED5191E18D512009ECE7D /* ReactNotesUITests */ = {
+			isa = PBXGroup;
+			children = (
+				24EED5221E18D5B4009ECE7D /* SnapshotHelper.swift */,
+				24EED51A1E18D512009ECE7D /* ReactNotesUITests.swift */,
+				24EED51C1E18D512009ECE7D /* Info.plist */,
+			);
+			path = ReactNotesUITests;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,7 +548,6 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				4770702F266F4551A9F89F91 /* RCTYouTube.xcodeproj */,
 				E0893902043141A9AAD25E75 /* RCTCamera.xcodeproj */,
 				101E5EFBB0CD421A869BC9BC /* RNVectorIcons.xcodeproj */,
 				B034018A123F4F68AA8B02D3 /* RCTVideo.xcodeproj */,
@@ -562,6 +572,7 @@
 				13B07FAE1A68108700A75B9A /* ReactNotes */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ReactNotesTests */,
+				24EED5191E18D512009ECE7D /* ReactNotesUITests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				9ABC848D792246948DE755B2 /* Resources */,
 			);
@@ -574,6 +585,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* ReactNotes.app */,
 				00E356EE1AD99517003FC87E /* ReactNotesTests.xctest */,
+				24EED5181E18D512009ECE7D /* ReactNotesUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -633,12 +645,31 @@
 			productReference = 13B07F961A680F5B00A75B9A /* ReactNotes.app */;
 			productType = "com.apple.product-type.application";
 		};
+		24EED5171E18D512009ECE7D /* ReactNotesUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 24EED51F1E18D512009ECE7D /* Build configuration list for PBXNativeTarget "ReactNotesUITests" */;
+			buildPhases = (
+				24EED5141E18D512009ECE7D /* Sources */,
+				24EED5151E18D512009ECE7D /* Frameworks */,
+				24EED5161E18D512009ECE7D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				24EED51E1E18D512009ECE7D /* PBXTargetDependency */,
+			);
+			name = ReactNotesUITests;
+			productName = ReactNotesUITests;
+			productReference = 24EED5181E18D512009ECE7D /* ReactNotesUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -649,6 +680,12 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 4KDYLQEH6Z;
+					};
+					24EED5171E18D512009ECE7D = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = EUKQS3744F;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 				};
 			};
@@ -713,10 +750,6 @@
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
 				},
 				{
-					ProductGroup = 24A66EF31DF92094009721A6 /* Products */;
-					ProjectRef = 4770702F266F4551A9F89F91 /* RCTYouTube.xcodeproj */;
-				},
-				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
@@ -737,6 +770,7 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* ReactNotes */,
 				00E356ED1AD99517003FC87E /* ReactNotesTests */,
+				24EED5171E18D512009ECE7D /* ReactNotesUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -847,13 +881,6 @@
 			remoteRef = 24A66EE71DF91E51009721A6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		24A66F061DF92094009721A6 /* libRCTYouTube.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTYouTube.a;
-			remoteRef = 24A66F051DF92094009721A6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		24A66F3D1DF921F9009721A6 /* libRNVectorIcons.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -956,6 +983,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		24EED5161E18D512009ECE7D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -993,6 +1027,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		24EED5141E18D512009ECE7D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24EED51B1E18D512009ECE7D /* ReactNotesUITests.swift in Sources */,
+				24EED5231E18D5B4009ECE7D /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1000,6 +1043,11 @@
 			isa = PBXTargetDependency;
 			target = 13B07F861A680F5B00A75B9A /* ReactNotes */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
+		24EED51E1E18D512009ECE7D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* ReactNotes */;
+			targetProxy = 24EED51D1E18D512009ECE7D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1028,15 +1076,7 @@
 				INFOPLIST_FILE = ReactNotesTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReactNotes.app/ReactNotes";
 			};
@@ -1051,15 +1091,7 @@
 				INFOPLIST_FILE = ReactNotesTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ReactNotes.app/ReactNotes";
 			};
@@ -1076,7 +1108,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-youtube/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-video",
@@ -1106,7 +1137,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-youtube/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-video",
@@ -1123,6 +1153,51 @@
 				);
 				PRODUCT_NAME = ReactNotes;
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		24EED5201E18D512009ECE7D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = EUKQS3744F;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ReactNotesUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.ReactNotesUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = ReactNotes;
+			};
+			name = Debug;
+		};
+		24EED5211E18D512009ECE7D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = EUKQS3744F;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = ReactNotesUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.ReactNotesUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = ReactNotes;
 			};
 			name = Release;
 		};
@@ -1164,7 +1239,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-youtube/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-video",
@@ -1210,7 +1284,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-youtube/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-video",
@@ -1244,6 +1317,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		24EED51F1E18D512009ECE7D /* Build configuration list for PBXNativeTarget "ReactNotesUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24EED5201E18D512009ECE7D /* Debug */,
+				24EED5211E18D512009ECE7D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ReactNotes" */ = {
 			isa = XCConfigurationList;

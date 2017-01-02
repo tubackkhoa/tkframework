@@ -3,6 +3,11 @@ React + Redux + Saga + Relay + GraphQL + Express + Sequelize + Material-UI + Web
 The purpose of this framework is to show how to set up a concise [React](https://facebook.github.io/react) app aimed at rapid development and sophisticated asynchronic processing. The actual application code is written using [ECMAScript 6](http://www.ecma-international.org/ecma-262/6.0), [JSX](https://facebook.github.io/jsx/), and [not-yet-standardized JavaScript](https://github.com/tc39/proposals) syntax. As of 10/2016, modern browsers (excluding IE11 and older, naturally) [implement more than 90% of ES6 specification](https://kangax.github.io/compat-table/es6), and therefore it is no more absolutely necessary to transpile ES6 into ES5, unless support for obsolete browsers is required. In such case, [Babel preset for ES6->ES5 transpilation](http://babeljs.io/docs/plugins/preset-es2015) can be used.
 For more detail, please go to this [React Ecosystem and Tutorials](TUTORIAL.md)
 
+TKFramework overview
+![React-redux-saga Diagram](docs/TKFramework.png)
+![React-relay-graphql Diagram](docs/TKFramework2.png)
+![Code sharing Diagram](docs/TKFramework3.png)
+
 Main dependencies
 -----------------
 - [babel](https://github.com/babel/babel) for transpiling next-generation JavaScript and JSX into JavaScript supported by current browsers
@@ -31,6 +36,8 @@ Usage
 - Go to mobile/ReactNotes then run *npm install* again to setup development environment for mobile
 - You may run script from server/data/db/schema.js or import scripts/tkframework.sql using phpmyadmin
 - Run *echo "sdk.dir=$ANDROID_HOME" > android/local.properties* to setup android environment
+- Run *rnpm install module* to install and linke a module
+- Run *rnpm unlink module* to unlink a module
 
 ### Development
 - Run Webpack development server: *npm start*
