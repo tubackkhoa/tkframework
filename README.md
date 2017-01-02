@@ -4,6 +4,7 @@ The purpose of this framework is to show how to set up a concise [React](https:/
 For more detail, please go to this [React Ecosystem and Tutorials](TUTORIAL.md)
 
 TKFramework overview
+-----------------
 ![React-redux-saga Diagram](docs/TKFramework.png)
 ![React-relay-graphql Diagram](docs/TKFramework2.png)
 ![Code sharing Diagram](docs/TKFramework3.png)
