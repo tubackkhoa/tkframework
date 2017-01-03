@@ -15,7 +15,7 @@ const muiTheme = getMuiTheme(myTheme)
 const Root = ({ store, history }) => (
 	<Provider store={store}>
 		<MuiThemeProvider muiTheme={muiTheme}>
-      <Router
+      <Router      
         environment={Relay.Store}
         history={history}
         render={applyRouterMiddleware(useRelay)} 

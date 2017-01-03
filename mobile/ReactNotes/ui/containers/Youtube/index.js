@@ -25,6 +25,10 @@ const mapStateToProps = (state) => ({
 @connect(mapStateToProps, { searchYoutube })
 class YoutubeSpec extends Component {
 
+  constructor(props) {
+    super(props)
+  }
+
   static propTypes = {
     navigator: PropTypes.object.isRequired,
     route: PropTypes.object.isRequired,
@@ -40,7 +44,8 @@ class YoutubeSpec extends Component {
     //     title: title,
     //     Page: YoutubePlayer,
     //     videoId,
-    // })
+    // })   
+
   }
 
   renderSearchResult(){

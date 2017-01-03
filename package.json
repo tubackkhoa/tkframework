@@ -33,11 +33,9 @@
     "server-test": "scripts/server-test",
     "test": "npm run client-test && npm run server-test",
     "update-schema": "cross-env NODE_ENV=build NODE_PATH=server babel-node ./build/updateSchema.js",
-
     "db:schema": "cross-env NODE_PATH=server babel-node ./build/db/schema.js",
     "db:seed": "cross-env NODE_PATH=server babel-node ./build/db/seeds.js",
     "db:migrate": "cross-env NODE_PATH=server babel-node ./build/db/migrate/$VERSION.js",
-    
     "sass": "scripts/sass",
     "sass-bundle": "scripts/sass-bundle",
     "server": "scripts/server",
@@ -94,7 +92,7 @@
     "react-hot-loader": "^3.0.0-",
     "redux-mock-store": "^1.2.1",
     "sequelize": "^3.24.8",
-    "sequelize-cli": "^2.4.0",    
+    "sequelize-cli": "^2.4.0",
     "style-loader": "^0.13.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.2",
@@ -159,6 +157,7 @@
     "redux-saga": "^0.13.0",
     "relay-cursor-paging": "^0.1.1",
     "sequelize": "^3.25.0",
+    "socket.io": "^1.7.2",
     "uuid": "^2.0.3",
     "youtube-node": "^1.3.0"
   }

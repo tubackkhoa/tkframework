@@ -9,6 +9,8 @@ import Button from './containers/Button'
 import Card from './containers/Card'
 import RelayPage from './containers/RelayPage'
 import Youtube from './containers/Youtube'
+import Chat from './containers/Chat'
+import MapPage from './containers/Map'
 import Checkbox from './containers/Checkbox'
 import Dialog from './containers/Dialog'
 import Drawer from './containers/Drawer'
@@ -29,6 +31,14 @@ export default {
     youtube: {
         title: 'Youtube',
         Page: Youtube,
+    },
+    chat: {
+        title: 'Chat',
+        Page: Chat,
+    },
+    map: {
+        title: 'Map',
+        Page: MapPage,
     },
     actionButton: {
         title: 'Action buttons',

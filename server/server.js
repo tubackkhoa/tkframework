@@ -7,6 +7,9 @@ import { jwtSecret, publicPath }   from 'config/constants'
 import expressJwt from 'express-jwt'
 import passport from 'passport/local'
 import compression from 'compression'
+import http from 'http'
+
+import chatServer from './chat-server'
 
 const authenticate = expressJwt({
   secret: jwtSecret,
@@ -14,6 +17,8 @@ const authenticate = expressJwt({
   userProperty: 'user',
 })
 const app = express()
+const server = http.Server(app)
+const websocket = chatServer(server)
 
 // we use this to authenticate the specific router
 app.set('port', (process.env.PORT || 3333))
@@ -40,7 +45,10 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(publicPath + '/index.html'))
 })
 
-app.listen(app.get('port'), () => {
+server.listen(app.get('port'), () => {
   //eslint-disable-next-line no-console
   console.log('Express is listening on port ' + app.get('port') + '!')
 })
+
+
+
