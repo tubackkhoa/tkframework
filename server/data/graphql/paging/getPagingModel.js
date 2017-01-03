@@ -140,7 +140,7 @@ export const getNumberPagingModel = async (args, ...left) => {
   const hasPreviousPage = false // because we only move forward using offset
   const hasNextPage = offset + limit < count
 
-  // just for testing
+  // just for testing must run npm install sleep
   // require('sleep').sleep(6)
 
   // just give enough information, forget about cursor

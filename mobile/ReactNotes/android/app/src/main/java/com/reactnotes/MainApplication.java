@@ -33,8 +33,9 @@ public class MainApplication extends Application implements ReactApplication {
             new RNSoundPackage(),
             new ReactNativeAudioPackage(),
               new VectorIconsPackage(),
-              new RCTCameraPackage(),
-              new ReactNativeYouTube()
+              new RCTCameraPackage()
+//              ,
+//              new ReactNativeYouTube()
       );
     }
   };
