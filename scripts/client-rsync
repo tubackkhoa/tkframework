@@ -1,1 +1,1 @@
-rsync -chavzP --exclude public/uploads --stats public $npm_package_config_DEPLOY_PATH
+cross-conf-env rsync -chavzP --exclude public/uploads --stats public npm_package_config_DEPLOY_PATH

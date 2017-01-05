@@ -1,1 +1,1 @@
-cross-env PORT=$npm_package_config_SERVER_PORT NODE_ENV=server NODE_PATH=server nodemon --inspect --watch server -- server/index.js
+cross-conf-env cross-env PORT=npm_package_config_SERVER_PORT NODE_ENV=server NODE_PATH=server nodemon --inspect --watch server -- server/index.js

@@ -1,1 +1,1 @@
-rsync -chavzP --stats build/node $npm_package_config_NODE_DEPLOY_PATH
+cross-conf-env  rsync -chavzP --stats build/node npm_package_config_NODE_DEPLOY_PATH
