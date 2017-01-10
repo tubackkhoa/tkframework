@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "94538ef2-5d81-defe-8889-ce57b7db7bff++8823",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "94538ef2-5d81-defe-8889-ce57b7db7bff++8823" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E271218A04E2DDAA552CB5E12BBCF3C1B707E191" : 9223372036854775807,
+    "94538ef2-5d81-defe-8889-ce57b7db7bff++8823" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "6F302FEF-799C-4745-B438-DAE6E5C0E132",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E271218A04E2DDAA552CB5E12BBCF3C1B707E191" : "..\/..",
+    "94538ef2-5d81-defe-8889-ce57b7db7bff++8823" : "ios\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ReactNotes",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ReactNotes.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tubackkhoa\/tkframework",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "94538ef2-5d81-defe-8889-ce57b7db7bff++8823"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/tubackkhoa\/tkframework.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E271218A04E2DDAA552CB5E12BBCF3C1B707E191"
+    }
+  ]
+}

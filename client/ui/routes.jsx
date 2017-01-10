@@ -12,6 +12,7 @@ import {
 } from 'store/relay/params'
 
 import Home from './shared/containers/Home'
+import HomeBackend from './backend/containers/Home'
 import PostIndex from './frontend/containers/Post/Index'
 import PostShow from './frontend/containers/Post/Show'
 import ProjectIndex from './frontend/containers/Project/Index'
@@ -65,6 +66,7 @@ export const Routes = (store) => (
     <Route path='/login' component={Login}/>
 
     <Route onEnter={checkAuth(store)} path='/cms'>
+      <IndexRoute component={HomeBackend} />
       <Route path="author/edit" component={AuthorForm} queries={ViewerQueries} 
         prepareParams={prepareAuthorParams(store)} />
 

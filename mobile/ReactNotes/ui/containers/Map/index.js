@@ -30,14 +30,14 @@ export default class MapSpec extends Component {
 
     render() {
         return (
-            <Container>
+            <Container >
                 <Toolbar
                     leftElement="arrow-back"
                     onLeftElementPress={() => this.props.navigator.pop()}
                     centerElement={this.props.route.title}
                 />
                 
-                <View style ={styles.container}>
+                <View style={styles.container}>
                     <MapView
                          provider={PROVIDER_GOOGLE}
                          style={styles.map}
