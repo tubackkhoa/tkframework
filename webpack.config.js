@@ -1,5 +1,5 @@
 'use strict'
-
+require('babel-polyfill')
 const Path = require('path')
 const Webpack = require('webpack')
 
@@ -78,6 +78,7 @@ if (MODE_DEV_SERVER) {
 		filename: '[file].map'
 	}))
 	conf.entry = [
+	 	'babel-polyfill', //ie
 		'react-hot-loader/patch', // this has to be the first loaded plugin in order to work properly!
 		'webpack-dev-server/client?http://0.0.0.0:' + DEV_SERVER_PORT, // WebpackDevServer host and port
 		'webpack/hot/only-dev-server', // 'only' prevents reload on syntax errors

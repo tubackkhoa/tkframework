@@ -1,6 +1,6 @@
 import React from 'react'
 import TextField from 'material-ui/TextField'
-
+import AutoComplete from 'material-ui/AutoComplete'
 import { Field } from 'redux-form'
 
 import inlineStyles from 'ui/shared/styles/MaterialUI'
@@ -15,7 +15,7 @@ import Checkbox from 'material-ui/Checkbox'
 import { RadioButtonGroup } from 'material-ui/RadioButton'
 import TARGET_TYPES from 'ui/shared/constants/targetTypes'
 
-// do not user higher order function for component or it will re-render everytime
+// do not use higher order function for component or it will re-render everytime
 export const renderTextField = ({ input, label, type, meta: { touched, error, warning } }) => (  
   <TextField    
     floatingLabelText={label}
@@ -24,6 +24,17 @@ export const renderTextField = ({ input, label, type, meta: { touched, error, wa
     type={type}
     style={inlineStyles.textField}
     {...input}
+    errorText={touched && error ? error : ''}
+  />
+)
+
+export const renderAutoComplete = ({ input, label, meta: { touched, error, warning }, ...args}) => (
+  <AutoComplete    
+    floatingLabelText={label}
+    hintText={label}
+    fullWidth={true}      
+    {...input}
+    {...args}
     errorText={touched && error ? error : ''}
   />
 )

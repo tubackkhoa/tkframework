@@ -5,7 +5,7 @@ import { Field, FieldArray, reduxForm, formValueSelector } from 'redux-form'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentSave from 'material-ui/svg-icons/content/save'
-
+import MenuItem from 'material-ui/MenuItem'
 import {
   withGoogleMap,
   GoogleMap,
@@ -19,11 +19,15 @@ import { getServicePoint, updateServicePoint, replaceServicePoint } from 'store/
 import * as authSelectors from 'store/selectors/auth'
 import * as servicePointSelectors from 'store/selectors/service-point'
 
+import { GOOGLE_API_KEY } from 'store/constants/api'
+
 
 import { 
   renderTextField, 
   renderDropzoneImage, 
+  renderAutoComplete,
 } from 'ui/backend/shared/utils'
+
 
 const ServicePointGoogleMap = withGoogleMap(({position}) => (
   <GoogleMap    
@@ -60,6 +64,13 @@ const mapStateToProps = (state) => ({
 @reduxForm({ form: 'ServicePointForm', validate, enableReinitialize:true })
 export default class ServicePointEdit extends Component {
 
+  autocompleteService = new google.maps.places.AutocompleteService()
+
+  state = {
+    dataSource: [],    
+  }
+  
+
   _handleSubmit = (props) => {    
     // call update, after that return to list page
     this.props.updateServicePoint(this.props.token, this.props.params.id, props)
@@ -85,8 +96,18 @@ export default class ServicePointEdit extends Component {
       <form onSubmit={handleSubmit(this._handleSubmit)} >
       
         <h2>{submitLabel} Post</h2>
-        <Field name="name" label="Enter Name" component={renderTextField} />
-        <Field name="address" label="Enter Address" component={renderTextField} />
+        <Field name="name" label="Enter Name" component={renderTextField} />   
+             
+        <Field name="address" label="Enter Address" component={renderAutoComplete} 
+          onUpdateInput={searchText => searchText && this.autocompleteService.getPlacePredictions({
+            input: searchText,            
+          }, data => this.setState({
+            dataSource: data.map(place => place.description),
+          }))}
+          dataSource={this.state.dataSource}
+          filter={searchText => true}
+        />
+
         <Field name="lat" label="Enter Latitude" component={renderTextField} />
         <Field name="lng" label="Enter Longitude" component={renderTextField} />
         {lat && lng && 

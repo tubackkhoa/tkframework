@@ -1,3 +1,4 @@
+require('babel-polyfill')
 const Path = require('path')
 const Webpack = require('webpack')
 const OPTIMIZE = true
