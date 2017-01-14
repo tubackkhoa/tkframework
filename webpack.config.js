@@ -55,7 +55,7 @@ const conf = {
 		rules: [
 			// if we have many code then use cacheDirectory, but this time almost code is on node_modules
 			// ?cacheDirectory=true
-			{ test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/, query:{cacheDirectory: true} },
+			{ test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/, query:{cacheDirectory: true} },
 			{ test: /\.css$/, loader: "style-loader!css-loader" },
 			{ test: /\.json$/, loader: 'json-loader'},
 			{ test: /\.(eot|svg|ttf|woff|woff2)$/, loader: 'file?name=public/fonts/[name].[ext]' },   

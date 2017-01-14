@@ -1,1 +1,1 @@
-node-sass client/stylesheets/main.scss public/assets/main.css
+node-sass client\stylesheets\main.scss public\assets\main.css
