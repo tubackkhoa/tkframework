@@ -4,6 +4,8 @@ import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker'
 import FlatButton from 'material-ui/FlatButton'
 
+import Table from 'ui/backend/components/CSSModules/Table'
+
 class DateTimeForm extends React.Component {
   constructor(props){
     super(props)
@@ -51,6 +53,7 @@ class DateTimeForm extends React.Component {
         <form>
           <DatePicker onChange={this.handleDate} value ={this.state.date} container="inline" hintText="Date to be completed by" />
           <TimePicker onChange={this.handleTime} value={this.state.time} container="inline" hintText="Time to be completed by" />
+          <Table/>
         </form>
         {actions}
       </div>

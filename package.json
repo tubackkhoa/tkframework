@@ -57,6 +57,7 @@
     "babel-core": "^6.16.0",
     "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.0",
+    "babel-plugin-react-css-modules": "^2.2.0",
     "babel-plugin-react-relay": "^0.9.3-3",
     "babel-plugin-transform-class-properties": "^6.18.0",
     "babel-plugin-transform-decorators": "^6.13.0",
@@ -75,6 +76,7 @@
     "babel-runtime": "^6.11.0",
     "body-parser": "^1.15.2",
     "colors": "^1.1.2",
+    "cross-conf-env": "^1.0.7",
     "cross-env": "^2.0.1",
     "css-loader": "^0.25.0",
     "eslint": "^3.7.0",
@@ -98,12 +100,12 @@
     "tape": "^4.6.2",
     "uglify-js": "git://github.com/mishoo/UglifyJS2#harmony",
     "url-loader": "^0.5.7",
-    "webpack": "^2.1.0-",
+    "webpack": "^2.2.0-rc.3",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-dev-server": "^2.1.0-",
     "webpack-node-externals": "^1.5.4"
   },
-  "dependencies": {
+  "dependencies": {    
     "base-64": "^0.1.0",
     "bcryptjs": "^2.3.0",
     "btoa": "^1.1.2",

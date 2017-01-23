@@ -19,7 +19,8 @@ const uiTheme = {
 
 export default class App extends Component {
     static configureScene(route) {
-        return route.animationType || Navigator.SceneConfigs.HorizontalSwipeJump
+        // use default as PushFromRight, do not use HorizontalSwipeJump or it can lead to swipe horizontal unwanted
+        return Navigator.SceneConfigs[route.animationType || 'PushFromRight']
     }
 
     static renderScene(route, navigator) {

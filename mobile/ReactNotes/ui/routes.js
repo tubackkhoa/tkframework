@@ -19,6 +19,8 @@ import List from './containers/List'
 import RadioButton from './containers/RadioButton'
 import Toolbar from './containers/Toolbar'
 
+// we can use animationType object for each route via Navigator.SceneConfigs
+
 export default {
     home: {
         title: 'Select component',
@@ -38,11 +40,12 @@ export default {
     },
     map: {
         title: 'Map',
-        Page: MapPage,
+        Page: MapPage,        
     },
     actionButton: {
         title: 'Action buttons',
         Page: ActionButton,
+        animationType: 'HorizontalSwipeJump',
     },
     actionButtonToolbar: {
         title: 'Toolbar transition',

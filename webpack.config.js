@@ -8,8 +8,8 @@ const NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : 'de
 const MODE_DEV_SERVER = process.argv[1].indexOf('webpack-dev-server') > -1 ? true : false
 const FAIL_ON_ERROR = process.env.FAIL_ON_ERROR ? JSON.parse(process.env.FAIL_ON_ERROR) : !MODE_DEV_SERVER // disabled on dev-server mode, enabled in build mode
 const OPTIMIZE = process.env.OPTIMIZE ? JSON.parse(process.env.OPTIMIZE) : NODE_ENV === 'production'
-
-const appEntry = Path.join(__dirname, 'client/index')
+const context = Path.resolve(__dirname, 'client');
+const appEntry = Path.join(context, 'index')
 
 const plugins = [
 	new Webpack.DefinePlugin({
@@ -21,7 +21,7 @@ const plugins = [
 ]
 
 if (!FAIL_ON_ERROR) {
-	plugins.push(new Webpack.NoErrorsPlugin())
+	plugins.push(new Webpack.NoEmitOnErrorsPlugin())
 }
 
 if (OPTIMIZE) {
@@ -51,12 +51,26 @@ const conf = {
 		filename: 'bundle.js',
 		publicPath: '/assets/'
 	},
+	stats: 'minimal',
 	module: {
 		rules: [
 			// if we have many code then use cacheDirectory, but this time almost code is on node_modules
 			// ?cacheDirectory=true
-			{ test: /\.jsx?$/, loader: 'babel', exclude: /node_modules/, query:{cacheDirectory: true} },
-			{ test: /\.css$/, loader: "style-loader!css-loader" },
+			{ 
+				test: /\.jsx?$/, 
+				loader: 'babel-loader', 
+				exclude: /node_modules/, 
+				query:{
+					cacheDirectory: true,					
+				} 
+			},
+			{ 
+				test: /\.css$/, 				
+				loaders: [
+          'style-loader',
+          'css-loader',
+        ],
+			},
 			{ test: /\.json$/, loader: 'json-loader'},
 			{ test: /\.(eot|svg|ttf|woff|woff2)$/, loader: 'file?name=public/fonts/[name].[ext]' },   
 			// inline file as base64       
