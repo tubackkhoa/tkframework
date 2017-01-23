@@ -5,10 +5,11 @@ import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 import com.airbnb.android.react.maps.MapsPackage;
-import com.zmxv.RNSound.RNSoundPackage;
-import com.rnim.rn.audio.ReactNativeAudioPackage;
+import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.zmxv.RNSound.RNSoundPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
+import com.rnim.rn.audio.ReactNativeAudioPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -29,14 +30,13 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-              new MainReactPackage(),
+          new MainReactPackage(),
             new MapsPackage(),
+            new ReactVideoPackage(),
+            new VectorIconsPackage(),
             new RNSoundPackage(),
-            new ReactNativeAudioPackage(),
-              new VectorIconsPackage(),
-              new RCTCameraPackage()
-//              ,
-//              new ReactNativeYouTube()
+            new RCTCameraPackage(),
+            new ReactNativeAudioPackage()
       );
     }
   };

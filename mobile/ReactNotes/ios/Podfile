@@ -3,6 +3,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '8.0'
 
+# this pod config is for gmap, and you have to remove libreact then re-select from pod project
 # Change 'AirMapsExplorer' to match the target in your Xcode project.
 target 'ReactNotes' do
   pod 'React', path: '../node_modules/react-native', :subspecs => [

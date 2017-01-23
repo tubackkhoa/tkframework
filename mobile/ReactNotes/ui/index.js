@@ -20,3 +20,10 @@ export default props => (
     <App/>
   </Provider>
 )
+
+// hotfix in case babel remove console does not work
+if(!__DEV__) {
+    console = {};
+    console.log = () => {};
+    console.error = () => {};
+}

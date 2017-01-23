@@ -23,12 +23,12 @@ to link only react-native
 ## iOS
 
 >This step is not necessary if you ran "react-native link"
-(If you do not need `GoogleMaps` support for iOS, then you can probably completely skip these following steps.)
+(If you do not need `GoogleMaps` support for iOS, then you can probably completely skip these following steps. Or you can remove libReact and re-add using libReact from Pod to keep React Libraries work with Pod)
 
 1. Setup your `Podfile` like the included [example/ios/Podfile](./assets/Podfile), replace all references to `AirMapExplorer` with your project name, and then run `pod install`.
    (If you has run `react-native link`, simply run `react-native unlink react-native-maps`, or manually remove the AirMap project from libraries folder and libAirmap.a from Link Library)
 1. Open your project in Xcode workspace
-1. Drag the following folders into your project:
+1. Drag the following folders into your project:(use reference to update later)
     - `node_modules/react-native-maps/ios/AirMaps/`
     - `node_modules/react-native-maps/ios/AirGoogleMaps/`
 
