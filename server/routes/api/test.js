@@ -3,6 +3,8 @@ import models from 'models'
 import { getPagingRouter, getDetailRouter, getDeleteRouter, uploadImage } from 'routes/shared/utils'
 import authorize from 'passport/authorize'
 
+import acl from 'passport/acl'
+
 const router  = new Router()
 
 const test_fields = ['id','name']
@@ -33,5 +35,32 @@ router.post('/update', async (req, res) => {
   // send back inserted id as graphql id
   res.send(item)
 })
+
+
+// acl test
+router.get('/showUser/:id', async ({params:{id=0}}, res) => {  
+  try {
+    // put multi-async in this block instead of using callback hell
+    const allowed = await acl.isAllowed(id, 'post', 'view')
+    if(!allowed){        
+      res.send('Not allowed to view post')
+    } else {        
+      res.send([{title:'hehe'},{title:'hihi'},{title:'haha'}])      
+    }
+  } catch(err){
+    console.log(err)
+    res.end()      
+  }
+
+})
+
+router.get('/addUser/:id', async ({params:{id=0}}, res) =>{
+  id && acl.addUserRoles(id, 'member', err => {
+    res.send('Added user')
+  })
+
+})
+
+
 
 export default router

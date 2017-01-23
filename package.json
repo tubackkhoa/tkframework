@@ -105,7 +105,8 @@
     "webpack-dev-server": "^2.1.0-",
     "webpack-node-externals": "^1.5.4"
   },
-  "dependencies": {    
+  "dependencies": {
+    "acl": "^0.4.10",
     "base-64": "^0.1.0",
     "bcryptjs": "^2.3.0",
     "btoa": "^1.1.2",
