@@ -57,7 +57,7 @@ export default class AuthorLogin extends Component {
       <form className="form col-md-6 col-md-offset-3" onSubmit={handleSubmit(this._handleSubmit)} >        
         <h2>Sign In</h2>
         <Field name="username" label="Enter username" component={renderTextField} />
-        <Field name="password" label="Enter password" component={renderTextField} />
+        <Field name="password" type='password' label="Enter password" component={renderTextField} />
         <Field name="remember" label="Remember" component={renderCheckbox} />
         <div className="text-center">
           {loginRequest.status === 'failure' &&

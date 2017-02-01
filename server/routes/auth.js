@@ -27,11 +27,7 @@ const doLogin = (req, res, next ) => {
 const generateAccessToken = (req, res, next) => {  
   // we just get back user with id and email is good enough  
   // we use role to differentiate with other users
-  jwt.sign({
-    id: req.user.id,
-    email: req.user.email,
-    role: 'admin',
-  }, jwtSecret, {
+  jwt.sign(req.user, jwtSecret, {
     // just 1 day, user can refresh token automatically at client, otherwise one year for permanent
     // even permanent still expired
     expiresIn: 60*60*24*(req.query.permanent === 'true' ? 365 : 1),   

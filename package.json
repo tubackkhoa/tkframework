@@ -130,7 +130,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jsonwebtoken": "^7.1.9",
     "localStorage": "^1.0.3",
-    "material-ui": "^0.16.4",
+    "material-ui": "^0.16.7",
     "multer": "^1.2.0",
     "mongoose": "^4.8.1",
     "normalizr": "^2.2.1",

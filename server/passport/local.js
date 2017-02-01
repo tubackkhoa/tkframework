@@ -28,7 +28,7 @@ passport.use(new LocalStrategy(async (email, password, done) => {
           const {type, ...data} = social_account.dataValues
           return data
         })
-
+        user.role = 'admin'
         return done(null, user)        
       }
     }  

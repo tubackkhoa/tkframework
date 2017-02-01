@@ -2,7 +2,7 @@
 require('babel-polyfill')
 const Path = require('path')
 const Webpack = require('webpack')
-
+const API_SERVER_PORT = process.env.SERVER_PORT = process.env.SERVER_PORT || 4444
 const DEV_SERVER_PORT = process.env.PORT = process.env.PORT || 7000
 const NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : 'development'
 const MODE_DEV_SERVER = process.argv[1].indexOf('webpack-dev-server') > -1 ? true : false
@@ -15,7 +15,8 @@ const plugins = [
 	new Webpack.DefinePlugin({
 		'process.env': {
 			// Necessary for applying the correct environment everywhere
-			'NODE_ENV': JSON.stringify(NODE_ENV)
+			'NODE_ENV': JSON.stringify(NODE_ENV),
+			'SERVER_PORT': JSON.stringify(API_SERVER_PORT),
 		}
 	})
 ]
