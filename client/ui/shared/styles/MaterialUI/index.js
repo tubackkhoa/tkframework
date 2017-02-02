@@ -63,6 +63,9 @@ export default {
   textField: {
     marginBottom: 10,
   },
+  selectField:{
+
+  },
   floatButton: {
     position: 'fixed',
     zIndex: 100,

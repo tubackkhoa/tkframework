@@ -12,11 +12,12 @@ import TagField from 'ui/backend/components/shared/TagField'
 import PostFormItem from 'ui/backend/components/Post/Forms/Item'
 import EditBox from 'ui/backend/components/Post/Forms/Item/Form/EditBox'
 import Checkbox from 'material-ui/Checkbox'
+import SelectField from 'material-ui/SelectField'
 import { RadioButtonGroup } from 'material-ui/RadioButton'
 import TARGET_TYPES from 'ui/shared/constants/targetTypes'
 
 // do not use higher order function for component or it will re-render everytime
-export const renderTextField = ({ input, label, type, meta: { touched, error, warning } }) => (  
+export const renderTextField = ({ input, label, type, meta: { touched, error, warning }, ...custom }) => (  
   <TextField    
     floatingLabelText={label}
     hintText={label}
@@ -25,7 +26,22 @@ export const renderTextField = ({ input, label, type, meta: { touched, error, wa
     style={inlineStyles.textField}
     {...input}
     errorText={touched && error ? error : ''}
+    {...custom}
   />
+)
+
+export const renderSelectField = ({ input, label, meta: { touched, error }, children, dropdown, ...custom }) => (
+  <SelectField 
+    floatingLabelText={label}
+    hintText={label}
+    fullWidth={true}   
+    style={inlineStyles.selectField}
+    errorText={touched && error}
+    {...input}
+    children={children}
+    value={(input.value === undefined && dropdown) ? children[0].key : input.value}
+    onChange={(e, index, value) => input.onChange(value)}
+    {...custom}/>
 )
 
 export const renderAutoComplete = ({ input, label, meta: { touched, error, warning }, ...args}) => (
@@ -39,11 +55,12 @@ export const renderAutoComplete = ({ input, label, meta: { touched, error, warni
   />
 )
 
-export const renderCheckbox = ({ input, label }) => (
+export const renderCheckbox = ({ input, label, meta, ...args}) => (
   <Checkbox 
-    checked={input.value} 
+    checked={!!input.value} 
     onCheck={(e, isInputChecked) => input.onChange(isInputChecked)}
     label={label} 
+    {...args}
   />
 )
 
@@ -80,15 +97,20 @@ export const renderSocialAccount = ({ input }) => (
   />
 )
 
-export const renderDatePicker = ({ input, label, meta: {touched, error, warning }}) => (
+export const renderDatePicker = ({ input, label, meta: {touched, error, warning }, ...custom}) => (
   <DatePicker
+    floatingLabelText={label}
+    hintText={label}
     container="inline"
+    fullWidth={true}
     autoOk={true}
     placeholder={label}
     {...input}
-    errorText={touched && error ? error : ''}    
+    errorText={touched && error ? error : ''}   
+    {...custom} 
   />
 )
+
 
 export const renderPostFormItem = ({ input:{value, onChange}, fields, index }) => (  
   <PostFormItem    
