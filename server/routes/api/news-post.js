@@ -1,6 +1,7 @@
 import {Router} from 'express'
 import news_posts from 'models/tables/Alop/news-posts'
-import { getPagingRouter, getDetailRouter, getDeleteRouter, uploadImage } from 'routes/shared/utils'
+import { uploadImage } from 'data/helper/image'
+import { getPagingRouter, getDetailRouter, getDeleteRouter } from 'routes/shared/utils'
 import authorize from 'passport/authorize'
 
 const router  = new Router()

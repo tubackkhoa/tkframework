@@ -1,6 +1,7 @@
 import {Router} from 'express'
 import service_points from 'models/tables/Alop/service-points'
-import { getPagingRouter, getDetailRouter, getDeleteRouter, uploadImage } from 'routes/shared/utils'
+import { uploadImage } from 'data/helper/image'
+import { getPagingRouter, getDetailRouter, getDeleteRouter } from 'routes/shared/utils'
 
 import authorize from 'passport/authorize'
 import {sequelize, DataTypes} from 'models/config'

@@ -1,6 +1,7 @@
 import {Router} from 'express'
 import sellposts from 'models/tables/Alop/sellposts'
-import { getPagingRouter, getDetailRouter, getDeleteRouter, uploadImage } from 'routes/shared/utils'
+import { uploadImage } from 'data/helper/image'
+import { getPagingRouter, getDetailRouter, getDeleteRouter } from 'routes/shared/utils'
 import authorize from 'passport/authorize'
 
 const router  = new Router()

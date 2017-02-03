@@ -1,37 +1,30 @@
 import React, { Component, PropTypes } from 'react'
 import Dropzone from 'react-dropzone'
+import injectSheet from 'react-jss'
+import styles from './styles'
+import { readBase64, isImage } from '../utils'
 
-
+@injectSheet(styles)
 class DropzoneImage extends Component {
+
+  static propTypes = {
+    handleUpdate: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
     this.state = { errorMessage: '' }    
-  }
-
-  static readBase64(file, success, failure){
-    const reader = new FileReader()
-
-    reader.onload = (upload) => {
-      success(upload.target.result)      
-    }
-
-    reader.onerror = () => {
-      failure && failure()
-    }
-
-    reader.readAsDataURL(file)  
-  }
+  }  
 
   _handleDrop = (files) => {
     const file = files[0]
 
-    if (!(/.*image\/(gift|jpg|jpeg|png)$/i).test(file.type)) {
+    if (!isImage(file)) {
       return this.setState({ errorMessage: 'Cannot upload image file' })
     }
 
     if(this.props.base64) {
-      this.constructor.readBase64(file, result => {
+      readBase64(file, result => {
         this.props.handleUpdate(result)
         this.setState({ errorMessage: '' })
       }, () => {
@@ -44,7 +37,7 @@ class DropzoneImage extends Component {
         this.props.handleUpdate(file)  
       } else {
         // wait for preview
-        this.constructor.readBase64(file, result => {
+        readBase64(file, result => {
           file.preview = result
           this.props.handleUpdate(file)
         })
@@ -55,24 +48,27 @@ class DropzoneImage extends Component {
   
 
   render() {
-    const {props:{value, name}, state: {errorMessage}} = this
+    const {props:{value, name, label, classes}, state: {errorMessage}} = this
     return (
-      <div className="pt-20 pb-20">
+      <div className={classes.container}>
+        <label>{label}</label>
         <Dropzone
           name={name}
-          className='dropzone'
-          activeClassName="dropzone active"
+          className={classes.normal}
+          activeClassName={`${classes.normal} ${classes.active}`}
           accept="image/*"
           multipe={false}
           onDrop={this._handleDrop}
-        >
-          {value // value can be File so we have to check for preview first
-            ? <img src={value.preview || value} width="100" alt=""/>
-            : <span >Drop file here or click to upload.</span>
-          }          
-          {errorMessage &&
-            <span >{errorMessage}</span>
-          }
+        >                    
+            {value // value can be File so we have to check for preview first
+              ? <img className={classes.center} src={value.preview || value} alt=""/>
+              : <span className={classes.center}>Drop file here or click to upload.</span>
+            }          
+            {errorMessage &&
+              <span className={classes.center}>{errorMessage}</span>
+            }
+          
+          
         </Dropzone>
       </div>
     )

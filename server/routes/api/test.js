@@ -1,6 +1,6 @@
 import {Router} from 'express'
 import models from 'models'
-import { getPagingRouter, getDetailRouter, getDeleteRouter, uploadImage } from 'routes/shared/utils'
+import { getPagingRouter, getDetailRouter, getDeleteRouter } from 'routes/shared/utils'
 import authorize from 'passport/authorize'
 
 import acl from 'passport/acl'

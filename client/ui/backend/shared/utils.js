@@ -6,6 +6,7 @@ import { Field } from 'redux-form'
 import inlineStyles from 'ui/shared/styles/MaterialUI'
 import TextEditor from 'ui/shared/components/Text/Editor'
 import DropzoneImage from 'ui/backend/components/shared/DropzoneImage'
+import DropzoneImages from 'ui/backend/components/shared/DropzoneImages'
 import SocialAccount from 'ui/backend/components/Author/Form/SocialAccount'
 import DatePicker from 'ui/backend/components/shared/CustomDatePicker'
 import TagField from 'ui/backend/components/shared/TagField'
@@ -86,6 +87,16 @@ export const renderDropzoneImage = ({ input, base64=false }) => (
     {...input}
     base64={base64}
     handleUpdate={file => input.onChange(file)}
+  />
+)
+
+export const renderDropzoneImages = ({ input, label, base64=false }) => (
+  <DropzoneImages
+    label={label}
+    {...input}
+    base64={base64}
+    handleDeleteFile={(index, file) => input.onChange([...input.value.slice(0, index), ...input.value.slice(index+1)])}
+    handleAddFile={file => input.onChange([...input.value, file])}        
   />
 )
 
