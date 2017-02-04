@@ -8,7 +8,7 @@ import expressJwt from 'express-jwt'
 import passport from 'passport/local'
 import compression from 'compression'
 import http from 'http'
-
+import StatusCode from 'routes/status'
 import chatServer from './chat-server'
 
 const authenticate = expressJwt({
@@ -44,6 +44,9 @@ app.use(express.static(publicPath))
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(publicPath + '/index.html'))
 })
+
+// exception goes here, log here
+app.use((err, req, res, next) => res.send({code:StatusCode.SERVER_ERROR, message: err.message}))
 
 server.listen(app.get('port'), () => {
   //eslint-disable-next-line no-console
