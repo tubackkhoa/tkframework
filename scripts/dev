@@ -1,1 +1,1 @@
-cross-conf-env cross-env PORT=npm_package_config_DEV_PORT NODE_ENV=development GRAPHQL_ENDPOINT=npm_package_config_GRAPHQL nodemon --watch build/schema/schema.json -- webpack-dev-server.js
+cross-conf-env cross-env PORT=npm_package_config_DEV_PORT SERVER_PORT=npm_package_config_SERVER_PORT NODE_ENV=development GRAPHQL_ENDPOINT=npm_package_config_GRAPHQL nodemon --watch build/schema/schema.json -- webpack-dev-server.js
