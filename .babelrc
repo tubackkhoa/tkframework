@@ -9,7 +9,7 @@
 	"env": {
 		"development": {
 			"plugins": [
-        "./build/babelRelayPlugin", 
+        "./build/babelRelayPlugin",         
         "transform-decorators-legacy", 
         "transform-runtime", 
         "transform-class-properties", 
@@ -20,7 +20,7 @@
 
     "production": {
       "plugins": [
-        "./build/babelRelayPlugin",
+        "./build/babelRelayPlugin",        
         "transform-decorators-legacy", 
         "transform-runtime", 
         "transform-class-properties", 

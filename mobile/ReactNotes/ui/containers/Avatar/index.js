@@ -32,6 +32,10 @@ class AvatarSpec extends Component {
                 <View style={styles.avatarContainer}>
                     <Avatar icon="person" />
                 </View>
+                <Subheader text="theme" />
+                <View style={styles.avatarContainer}>
+                    <Avatar icon="person" />
+                </View>
             </Container>
         );
     }

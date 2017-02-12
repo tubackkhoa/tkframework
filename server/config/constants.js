@@ -7,3 +7,6 @@ export const jwtSecret = "4A40333B-EC26-4E18-A976-9B030C23A484"
 // just like from uploads of root is public path
 export const filePath = path.join(publicPathENV, 'uploads')
 export const publicPath = publicPathENV
+export const certPath = path.resolve(process.env.NODE_PATH || './', 'certificates')
+
+export const FIREBASE_AUTH_KEY = "xxx"

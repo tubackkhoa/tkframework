@@ -25,13 +25,13 @@ const getNativeType = (string) => {
       return 'String'
 
     case "objectid":
-      return 'ObjectId'
+      return 'Schema.Types.ObjectId'
 
     case "null":
     case "undefined":
     case "regexp":
     default:
-      return 'Mixed'
+      return 'Schema.Types.Mixed'
   }
 }
 
@@ -104,5 +104,5 @@ const object = require(`./schema/${model}`).default
 const output = generateSchema(object)
 // const outputStr = JSON.stringify(output, null, 2)
 const outputStr = util.inspect(output, {showHidden: false, depth: null})
-const niceOutputStr = outputStr.replace(/'([^']+)'/g, '$1').replace(/^{/,"{\n ").replace(/}$/,"\n}")
+const niceOutputStr = 'Schema(' + outputStr.replace(/'([^']+)'/g, '$1').replace(/^{/,"{\n ").replace(/}$/,"\n}") + ')'
 console.log(niceOutputStr)
