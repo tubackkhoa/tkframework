@@ -3,7 +3,7 @@ import apn from 'apn'
 import { FIREBASE_AUTH_KEY } from 'config/constants'
 import path from 'path'
 
-import { certPath } from 'config/constants'
+import { certPath, APP_BUNDLE_ID } from 'config/constants'
 
 const IOS_DEVICE = "iOS"
 const ANDROID_DEVICE = "Android"
@@ -15,47 +15,62 @@ export const apnProvider = new apn.Provider({
   production: true
 })
 
-export const pushNotification = (deviceList, title, body, data, cb) => {
-  const notification = {title, body}
-  deviceList.forEach(({deviceId, deviceType}) => {
-    const message = {
-      to: deviceId, // required fill with device token or topics      
-      data,
-      notification,
-    }
+/**
+ *
+ * return chunks object like {iOs:[], Android:[]}
+ *
+ */
 
-    if(deviceType === ANDROID_DEVICE){
-      pushAndroid(message, cb)
-    } else {
-      pushIOS(message, cb)
-    }    
+export const getChunks = (deviceList, max=100) => {
+  const deviceMap = {}  
+  const check = {}
+  for (const {deviceId, deviceType} of deviceList) {
+    if(check[deviceId])
+      continue
+    check[deviceId] = true
+    if(!deviceMap[deviceType])
+      deviceMap[deviceType] = []    
+    deviceMap[deviceType].push(deviceId)
+  }
 
+  const chunks = {}
+  Object.keys(deviceMap).forEach(key => {
+    chunks[key] = []
+    while(deviceMap[key].length)
+      chunks[key].push(deviceMap[key].splice(0, max))
   })
+
+  return chunks
 }
 
-export const pushAndroid = (message, cb) => {
-  fcm.send(message, (err, response)=>{
-      if (err) {
-          console.log("Something has gone wrong!")
-      } else {
-          console.log("Successfully sent with response: ", response)
-          cb && cb(response)
-      }
-  })
+export const pushNotification = async (deviceList, title, body, data) => {  
+  // if more than 1000 device we will split it out :D
+  const chunks = getChunks(deviceList)
+  const result = {}
+  if(chunks[ANDROID_DEVICE]) 
+    result[ANDROID_DEVICE] = await Promise.all(chunks[ANDROID_DEVICE].map(deviceIds => pushAndroid(deviceIds, title, body, data)))
+  if(chunks[IOS_DEVICE])
+    result[IOS_DEVICE] = await Promise.all(chunks[IOS_DEVICE].map(deviceIds => pushIOS(deviceIds, title, body, data)))
+  return result
 }
 
-export const pushIOS = (message, cb) => {
+export const pushAndroid = (deviceIds, title, body, data) => {
+  const message = {
+    registration_ids: deviceIds,
+    data,
+    notification: {title, body},
+  }
+  return fcm.send(message).then(message=>JSON.parse(message))
+}
+
+export const pushIOS = (deviceIds, title, body, data) => {
   const note = new apn.Notification()
   // note.expiry = Math.floor(Date.now() / 1000) + 3600 // Expires 1 hour from now.
   // note.badge = 3
   // note.sound = "ping.aiff"
-  note.alert = message.notification.title
-  note.payload = message.data
-  note.topic = 'net.ecmmedia.Rudicaf' // "<your-app-bundle-id>";
-  console.log(message)
-  apnProvider.send(note, message.to).then((result) => {
-    // see documentation for an explanation of result
-    // console.log(result)
-    cb && cb(result)
-  })
+  note.alert = title
+  note.payload = data
+  note.topic = APP_BUNDLE_ID // "<your-app-bundle-id>";
+  return apnProvider.send(note, deviceIds)
 }
+
