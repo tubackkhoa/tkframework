@@ -68,7 +68,8 @@ export const pushIOS = (deviceIds, title, body, data) => {
   // note.expiry = Math.floor(Date.now() / 1000) + 3600 // Expires 1 hour from now.
   // note.badge = 3
   // note.sound = "ping.aiff"
-  note.alert = title
+  note.alert.title = title
+  note.alert.body = body
   note.payload = data
   note.topic = APP_BUNDLE_ID // "<your-app-bundle-id>";
   return apnProvider.send(note, deviceIds)

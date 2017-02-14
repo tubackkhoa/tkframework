@@ -82,23 +82,28 @@ export const renderRadioGroup = ({ input, children }) => (
 )
 
 // also accept extra params to extend to it ?
-export const renderDropzoneImage = ({ input, base64=false }) => (
-  <DropzoneImage
-    {...input}
-    base64={base64}
-    handleUpdate={file => input.onChange(file)}
-  />
-)
-
-export const renderDropzoneImages = ({ input, label, base64=false }) => (
+export const renderDropzoneImages = ({ input, label, base64=false, path=''}) => (
   <DropzoneImages
     label={label}
+    path={path.replace(/\/?$/,'/')}
     {...input}
     base64={base64}
     handleDeleteFile={(index, file) => input.onChange([...input.value.slice(0, index), ...input.value.slice(index+1)])}
     handleAddFile={file => input.onChange([...input.value, file])}        
   />
 )
+
+// also accept extra params to extend to it ?
+export const renderDropzoneImage = ({ input, label, base64=false, path=''}) => (
+  <DropzoneImage
+    label={label}
+    path={path.replace(/\/?$/,'/')}
+    {...input}
+    base64={base64}
+    handleUpdate={file => input.onChange(file)}
+  />
+)
+
 
 export const renderSocialAccount = ({ input }) => (  
   <SocialAccount

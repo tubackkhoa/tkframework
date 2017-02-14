@@ -48,7 +48,7 @@ class DropzoneImage extends Component {
   
 
   render() {
-    const {props:{value, name, label, classes}, state: {errorMessage}} = this
+    const {props:{value, name, label, classes, path}, state: {errorMessage}} = this
     return (
       <div className={classes.container}>
         <label>{label}</label>
@@ -61,7 +61,7 @@ class DropzoneImage extends Component {
           onDrop={this._handleDrop}
         >                    
             {value // value can be File so we have to check for preview first
-              ? <img className={classes.center} src={value.preview || value} alt=""/>
+              ? <img className={classes.center} src={value.preview || (path+value)} alt=""/>
               : <span className={classes.center}>Drop file here or click to upload.</span>
             }          
             {errorMessage &&

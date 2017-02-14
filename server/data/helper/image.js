@@ -4,14 +4,16 @@ import path from 'path'
 import { filePath } from 'config/constants'
 import { decodeBase64Image } from 'data/decoder/image'
 
-export const uploadImage = (field, folder, setter, clear=true) => {
+export const uploadImage = (field, oldField, folder, setter, clear=true) => {
   const imageDecode = decodeBase64Image(field)
   // delete old one
   if(imageDecode.buffer) {
     const imagePath = path.join(filePath, folder)
     // delete folder, by default we treat the whole folder like a collection of files, including thumb.v..v
     // for later
-    clear && fse.removeSync(imagePath)   
+    if(clear && oldField) {
+      fse.removeSync(path.join(imagePath, path.basename(oldField)))   
+    }
     // update new image
     const filename = v4() + '.png'  
     // must save done then return   
@@ -51,7 +53,7 @@ export const uploadImages = (fields, oldFields, folder, setter, clear=true) => {
 
   // delete folder, by default we treat the whole folder like a collection of files, including thumb.v..v
   // for later
-  if(clear) {
+  if(clear && oldFields) {
     oldFields.filter(field => currentFields.indexOf(field) === -1).forEach(field=>{
       const filename = path.basename(field)
       fse.removeSync(path.join(imagePath, filename))

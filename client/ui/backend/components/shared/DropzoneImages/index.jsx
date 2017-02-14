@@ -50,7 +50,7 @@ class DropzoneImages extends Component {
   }
 
   render() {
-    const {props:{value, name, label, classes}, state: {errorMessage}} = this
+    const {props:{value, name, label, classes, path=''}, state: {errorMessage}} = this    
     return (
       <div className={classes.container}>
         <label>{label}</label>
@@ -77,7 +77,7 @@ class DropzoneImages extends Component {
                 title={index+1}
                 actionIcon={<IconButton onClick={e => this.props.handleDeleteFile(index, file)}><ActionDelete color="white" /></IconButton>}
               >
-                <img src={file.preview || file} alt=""/>
+                <img src={file.preview || (path+file)} alt=""/>
               </GridTile>
             )}
           </GridList>          
