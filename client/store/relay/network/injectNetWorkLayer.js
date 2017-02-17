@@ -10,7 +10,7 @@ import {API_BASE} from 'store/constants/api'
 import * as authSelectors from 'store/selectors/auth'
 // import {saveRefreshToken} from 'store/actions/auth'
 
-const injectNetWorkLayer = (store) => {
+const injectNetworkLayer = (store) => {
 
   const relayMiddlewares = [
     urlMiddleware({
@@ -72,5 +72,5 @@ const injectNetWorkLayer = (store) => {
 
 }
 
-export default injectNetWorkLayer
+export default injectNetworkLayer
 

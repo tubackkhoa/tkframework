@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, ScrollView, Platform } from 'react-native'
 import React, { Component, PropTypes } from 'react'
 
-import { ListItem, Subheader, Toolbar } from 'react-native-material-ui'
+import { ListItem, Subheader, Toolbar, Button, Icon } from 'react-native-material-ui'
 
 import { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps'
 import MapView from 'react-native-maps'
@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
      },
      map: {
        ...StyleSheet.absoluteFillObject,
-     },
+       height:400,
+     },     
 })
 
 
@@ -48,6 +49,29 @@ export default class MapSpec extends Component {
                            longitudeDelta: 0.0121,
                          }}
                     />
+
+                    <View style={{
+                      flex: 1,
+                      height: 50,
+                      justifyContent: 'flex-end',
+                      marginBottom:200,                      
+                    }}>
+
+                    <Button style={{
+                        container:{
+                          borderRadius:20,
+                        }
+                     }}   
+                            upperCase={false}
+                                raised
+                                primary
+                                text="Receiver"
+                                icon="phone"
+                            />
+
+                            
+
+                    </View>
                 </View>
                 
             </Container>

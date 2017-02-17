@@ -1,6 +1,6 @@
 import React, {PropTypes as T} from 'react'
 import ReactDOM from 'react-dom'
-import { pad, toTime } from './libs/utils'
+import { pad, toTime } from 'ui/shared/components/shared/utils'
 
 import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 import AVPause from 'material-ui/svg-icons/av/pause'
