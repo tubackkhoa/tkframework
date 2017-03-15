@@ -14,3 +14,7 @@ export const readBase64 = (file, success, failure) => {
 
 export const isImage = file => 
   (/.*image\/(gift|jpg|jpeg|png)$/i).test(file.type)
+
+export const getThumb = (path, value) =>
+  value.preview || (value.split('/')[0] ==='data:image' ? value : (path+value))
+  

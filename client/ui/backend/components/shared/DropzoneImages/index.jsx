@@ -7,7 +7,7 @@ import ActionDelete from 'material-ui/svg-icons/action/delete'
 import Dropzone from 'react-dropzone'
 import injectSheet from 'react-jss'
 import styles from './styles'
-import { readBase64, isImage } from '../utils'
+import { readBase64, isImage, getThumb } from '../utils'
 
 @injectSheet(styles)
 class DropzoneImages extends Component {
@@ -50,7 +50,7 @@ class DropzoneImages extends Component {
   }
 
   render() {
-    const {props:{value, name, label, classes, path=''}, state: {errorMessage}} = this    
+    const {props:{value, name, label, classes, path}, state: {errorMessage}} = this
     return (
       <div className={classes.container}>
         <label>{label}</label>
@@ -77,7 +77,7 @@ class DropzoneImages extends Component {
                 title={index+1}
                 actionIcon={<IconButton onClick={e => this.props.handleDeleteFile(index, file)}><ActionDelete color="white" /></IconButton>}
               >
-                <img src={file.preview || (path+file)} alt=""/>
+                <img src={getThumb(path, file)} alt=""/>
               </GridTile>
             )}
           </GridList>          

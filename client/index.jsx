@@ -10,8 +10,6 @@ import Root from './ui/root'
 import configureStore from './store/config'
 import { configureRelayWithStore } from './store/relay/config'
 
-import 'babel-polyfill'
-
 const rootElement = document.getElementById('root')
 
 // Needed for onTouchTap

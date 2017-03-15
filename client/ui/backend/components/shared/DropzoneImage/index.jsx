@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import Dropzone from 'react-dropzone'
 import injectSheet from 'react-jss'
 import styles from './styles'
-import { readBase64, isImage } from '../utils'
+import { readBase64, isImage, getThumb } from '../utils'
 
 @injectSheet(styles)
 class DropzoneImage extends Component {
@@ -45,6 +45,7 @@ class DropzoneImage extends Component {
     }
     
   }
+
   
 
   render() {
@@ -61,7 +62,7 @@ class DropzoneImage extends Component {
           onDrop={this._handleDrop}
         >                    
             {value // value can be File so we have to check for preview first
-              ? <img className={classes.center} src={value.preview || (path+value)} alt=""/>
+              ? <img className={classes.center} src={getThumb(path, value)} alt=""/>
               : <span className={classes.center}>Drop file here or click to upload.</span>
             }          
             {errorMessage &&

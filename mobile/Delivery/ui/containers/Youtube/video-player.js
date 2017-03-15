@@ -12,16 +12,21 @@ import {
 } from 'react-native'
 
 import { Avatar, Card, ListItem, Toolbar, Button } from 'react-native-material-ui'
-
+import { connect } from 'react-redux'
 import Video from 'react-native-video'
+import { detailYoutube } from 'Delivery/store/actions/youtube'
+import * as youtubeSelectors from 'Delivery/store/selectors/youtube'
+import Container from 'Delivery/ui/components/Container'
 
-import Container from 'ReactNotes/ui/components/Container'
-
+@connect(state => ({  
+  item: youtubeSelectors.getOpenItem(state),  
+}), { detailYoutube })
 class VideoPlayer extends Component {
   constructor(props) {
     super(props)
     this.onLoad = this.onLoad.bind(this)
     this.onProgress = this.onProgress.bind(this)
+    props.detailYoutube(props.route.videoId)
   }
   state = {
     rate: 1,
@@ -105,8 +110,7 @@ class VideoPlayer extends Component {
   renderCustomSkin() {
     const flexCompleted = this.getCurrentTimePercentage() * 100
     const flexRemaining = (1 - this.getCurrentTimePercentage()) * 100
-    const {route, navigator} = this.props
-    const uri = "https://r10---sn-ab5l6n7s.googlevideo.com/videoplayback?ip=162.243.103.203&ratebypass=yes&itag=22&mm=31&ipbits=0&mn=sn-ab5l6n7s&mime=video%2Fmp4&ms=au&signature=9848887C080B8D5573CA66DCB1819632EAF68DD4.7C0343375DD030E314F6183BF2315E966360253F&source=youtube&mv=m&initcwndbps=345000&id=o-AL-J2Uvi9jsF7YawT8a3AnIkEQO4SfeI3N1sRbLNM8CN&pl=23&dur=167.230&mt=1487739682&ei=gxutWKOoL8348gTp6Yz4Dg&upn=dCBZschVaw0&lmt=1478538302299384&expire=1487761379&sparams=dur%2Cei%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cupn%2Cexpire&requiressl=yes&key=yt6"
+    const {route, navigator, item} = this.props    
     return (
       <Container>
         <Toolbar
@@ -114,21 +118,24 @@ class VideoPlayer extends Component {
             onLeftElementPress={() => navigator.pop()}
             centerElement={route.title}
         />
-        <TouchableOpacity style={styles.fullScreen} onPress={() => {this.setState({paused: !this.state.paused})}}>
-          <Video
-            source={{uri}}
-            style={styles.fullScreen}
-            rate={this.state.rate}
-            paused={this.state.paused}
-            volume={this.state.volume}
-            muted={this.state.muted}
-            resizeMode={this.state.resizeMode}
-            onLoad={this.onLoad}
-            onProgress={this.onProgress}
-            onEnd={() => { AlertIOS.alert('Done!') }}
-            repeat={true}
-          />
-        </TouchableOpacity>
+        {item.formats && 
+          <TouchableOpacity style={styles.fullScreen} onPress={() => {this.setState({paused: !this.state.paused})}}>
+            <Video
+              source={{uri:item.formats[0].url}}
+              style={styles.fullScreen}
+              rate={this.state.rate}
+              paused={this.state.paused}
+              volume={this.state.volume}
+              muted={this.state.muted}              
+              onLoad={this.onLoad}
+              onProgress={this.onProgress}
+              onEnd={() => { AlertIOS.alert('Done!') }}
+              playInBackground={true}
+              playWhenInactive={true}
+              repeat={true}
+            />
+          </TouchableOpacity>
+        }
         
       </Container>
     )
