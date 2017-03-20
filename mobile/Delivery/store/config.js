@@ -22,7 +22,7 @@ if (__DEV__) {
 
 
 // mount it on the Store
-export const store = createStore(
+const store = createStore(
   rootReducer,
   initialState,
   compose(
@@ -32,11 +32,14 @@ export const store = createStore(
   )
 )
 
-// Enable persistence
-persistStore(store, {storage: AsyncStorage})
-
 // then run the saga
 sagaMiddleware.run(rootSaga)
+
+// Enable persistence
+const configStore = callback =>   
+  persistStore(store, {storage: AsyncStorage}, ()=> callback(store))
+
+export default configStore
 
 
 
