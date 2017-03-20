@@ -11,8 +11,8 @@ export const rejectErrors = (res) => {
     return res
   }
   // we can get message from Promise but no need, just use statusText instead of
-  // server return errors
-  return Promise.reject({ message: res.statusText })
+  // server return errors, also status code
+  return Promise.reject({ message: res.statusText, status })
 }
 
 // try invoke callback for refresh token here

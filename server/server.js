@@ -46,7 +46,12 @@ app.get('*', (req, res) => {
 })
 
 // exception goes here, log here
-app.use((err, req, res, next) => res.send({code:StatusCode.SERVER_ERROR, message: err.message}))
+// app.use((err, req, res, next) => res.send({code:StatusCode.SERVER_ERROR, message: err.message}))
+// exception goes here, log here, not for promise, should not return json as success, should return error to handle
+app.use(async (err, req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*")  
+  res.status(err.status).send(err.message)  
+})
 
 server.listen(app.get('port'), () => {
   //eslint-disable-next-line no-console

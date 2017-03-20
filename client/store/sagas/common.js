@@ -7,11 +7,15 @@ import {
   markRequestCancelled,
   markRequestFailed,
   setToast,
+  forwardTo,
 } from 'store/actions/common'
 
 import {
-  saveRefreshToken
+  saveRefreshToken,
+  setAuthState,     
+  removeLoggedUser, 
 } from 'store/actions/auth'
+
 
 import api from 'store/api'
 
@@ -78,18 +82,27 @@ export const createRequestSaga = ({request, key, start, stop, success, failure, 
       }            
       
     } catch (reason) {
-      // try refresh token
-      const token = action.args[0]
-      // catch exception is safer than just read response status
-      if(token && token.refreshToken){
-        // tell user to wait, no need to catch for more errors this step!!!
-        yield put(setToast('Refreshing token... You should reload page for sure!'))
-        // try refresh token, then reload page ?
-        const { token: newToken } = yield call(api.auth.refreshAccessToken, token.refreshToken)          
-        // it can return more such as user info, expired date ?            
-        // call action creator to update        
-        yield put(saveRefreshToken(newToken))
-      } 
+      // unauthorized
+      if(reason.status === 401){
+        // try refresh token
+        const token = action.args[0]
+        // catch exception is safer than just read response status
+        if(token && token.refreshToken){
+          // tell user to wait, no need to catch for more errors this step!!!
+          yield put(setToast('Refreshing token... You should reload page for sure!'))
+          // try refresh token, then reload page ?
+          const { token: newToken } = yield call(api.auth.refreshAccessToken, token.refreshToken)          
+          // it can return more such as user info, expired date ?            
+          // call action creator to update        
+          yield put(saveRefreshToken(newToken))
+        } else {
+          // call logout user because we do not have refresh token
+          yield put(removeLoggedUser())
+          yield put(setAuthState(false))
+          yield put(forwardTo('/admin'))
+        }
+      }
+      // anyway, we should treat this as error to log
       if(failure) for(let actionCreator of failure){          
         yield put(actionCreator(reason, action))
       }        
