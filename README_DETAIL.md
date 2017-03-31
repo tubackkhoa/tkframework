@@ -138,7 +138,8 @@ mobile/project-name
 │       └── *.jsx
 ├── ui
 |   ├── container (include screen/page of application)
-|   └── components (include all components need for project)
+|   ├── components (include all components need for project)
+|   └── elements (pure react-component with redux-form connect)
 |
 ├── package.json (scripts, dependencies, and other configurations for React Native project)
 └── index.*.js (entry point for iOS app or Android app into the React Native)
