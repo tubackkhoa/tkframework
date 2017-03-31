@@ -7,7 +7,7 @@ import React, { Component } from 'react'
 
 import App from './containers/App'
 import { Provider } from 'react-redux'
-import configStore from 'Delivery/store/config'
+import configureStore from 'Delivery/store/config'
 
 // Relay.injectNetworkLayer(
 //   new DefaultNetworkLayer(`${API_BASE}/graphql`)
@@ -20,9 +20,8 @@ export default class Delivery extends Component {
   
     this.state = {
       store: null,
-    }
-
-    configStore(store=> this.setState({store}))
+    }    
+    configureStore(store=> this.setState({store}))
   }
 
   render() {    
