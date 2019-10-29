@@ -133,7 +133,7 @@
     "jsonwebtoken": "^7.1.9",
     "localStorage": "^1.0.3",
     "material-ui": "^0.16.7",
-    "mongoose": "^4.8.1",
+    "mongoose": "^5.7.6",
     "multer": "^1.2.0",
     "normalizr": "^2.2.1",
     "npm": "^4.0.2",
