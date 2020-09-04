@@ -164,7 +164,7 @@
     "redux-persist": "^4.0.0-alpha6",
     "redux-saga": "^0.13.0",
     "relay-cursor-paging": "^0.1.1",
-    "sequelize": "^3.25.0",
+    "sequelize": "^6.3.5",
     "socket.io": "^1.7.2",    
     "uuid": "^2.0.3",
     "youtube-node": "^1.3.0"
